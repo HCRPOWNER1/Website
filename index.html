@@ -1,551 +1,759 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Texas State Roleplay</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #070b12;
-            color: white;
-        }
-
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 70px;
-            padding: 0 7%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #0a0f18;
-            border-bottom: 1px solid #202b3a;
-        }
-
-        .logo {
-            font-size: 25px;
-            font-weight: 900;
-            letter-spacing: 2px;
-        }
-
-        nav a {
-            color: #aeb8c7;
-            text-decoration: none;
-            margin: 0 12px;
-            font-size: 14px;
-        }
-
-        nav a:hover {
-            color: white;
-        }
-
-        .discord {
-            background: white;
-            color: #070b12 !important;
-            padding: 11px 18px;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .hero {
-            min-height: 620px;
-            padding: 100px 7%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 50px;
-            background:
-                radial-gradient(
-                    circle at 75% 45%,
-                    #17253a 0%,
-                    #070b12 45%
-                );
-        }
-
-        .hero-content {
-            max-width: 700px;
-        }
-
-        .badge {
-            display: inline-block;
-            border: 1px solid #344256;
-            border-radius: 30px;
-            padding: 7px 13px;
-            color: #aeb8c7;
-            font-size: 12px;
-            letter-spacing: 2px;
-        }
-
-        h1 {
-            font-size: clamp(55px, 8vw, 100px);
-            line-height: .9;
-            margin: 25px 0;
-        }
-
-        h1 span {
-            color: #8da9c8;
-        }
-
-        .hero p {
-            color: #aeb8c7;
-            font-size: 18px;
-            max-width: 580px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .button {
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .primary {
-            background: white;
-            color: #070b12;
-        }
-
-        .secondary {
-            border: 1px solid #344256;
-            color: white;
-        }
-
-        .server-card {
-            width: 270px;
-            padding: 30px;
-            background: #0d141f;
-            border: 1px solid #293548;
-            border-radius: 16px;
-        }
-
-        .status {
-            color: #7f8da1;
-            font-size: 11px;
-            letter-spacing: 2px;
-        }
-
-        .server-card h2 {
-            margin: 8px 0;
-        }
-
-        .server-card p {
-            color: #8c99aa;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border-top: 1px solid #202b3a;
-            border-bottom: 1px solid #202b3a;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 30px;
-            border-right: 1px solid #202b3a;
-        }
-
-        .stat:last-child {
-            border: none;
-        }
-
-        .stat h2 {
-            font-size: 24px;
-        }
-
-        .stat p {
-            color: #7f8da1;
-            font-size: 13px;
-        }
-
-        section {
-            max-width: 1250px;
-            margin: auto;
-            padding: 100px 7%;
-        }
-
-        .section-title {
-            margin-bottom: 40px;
-        }
-
-        .section-title small {
-            color: #718096;
-        }
-
-        .section-title h2 {
-            font-size: 45px;
-            margin-top: 8px;
-        }
-
-        .section-title p {
-            color: #7f8da1;
-        }
-
-        .departments {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .department {
-            padding: 25px;
-            background: #0c121c;
-            border: 1px solid #202b3a;
-            border-radius: 14px;
-            transition: .2s;
-        }
-
-        .department:hover {
-            transform: translateY(-4px);
-            border-color: #52647c;
-        }
-
-        .department .icon {
-            font-size: 32px;
-        }
-
-        .department h3 {
-            margin: 18px 0 8px;
-        }
-
-        .department p {
-            color: #8794a6;
-        }
-
-        .session {
-            background: #090f18;
-        }
-
-        .session-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 35px;
-            background: #0d141f;
-            border: 1px solid #293548;
-            border-radius: 16px;
-        }
-
-        .session-box h3 {
-            font-size: 30px;
-            margin: 8px 0;
-        }
-
-        .session-box p {
-            color: #8794a6;
-        }
-
-        .server-code {
-            text-align: right;
-        }
-
-        .server-code strong {
-            display: block;
-            font-size: 30px;
-            margin-top: 5px;
-        }
-
-        .rules {
-            border-top: 1px solid #202b3a;
-        }
-
-        .rule {
-            display: grid;
-            grid-template-columns: 60px 1fr;
-            padding: 20px 0;
-            border-bottom: 1px solid #202b3a;
-        }
-
-        .rule b {
-            color: #66758a;
-        }
-
-        .rule span {
-            color: #c2cad5;
-        }
-
-        .staff {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .staff-card {
-            padding: 25px;
-            background: #0c121c;
-            border: 1px solid #202b3a;
-            border-radius: 14px;
-        }
-
-        .avatar {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            background: #172234;
-            font-weight: bold;
-            margin-bottom: 18px;
-        }
-
-        .staff-card p {
-            color: #8794a6;
-        }
-
-        .cta {
-            margin: 40px 7% 90px;
-            padding: 70px 8%;
-            text-align: center;
-            background: #101a29;
-            border: 1px solid #293548;
-            border-radius: 20px;
-        }
-
-        .cta h2 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
-
-        .cta p {
-            color: #8997aa;
-            margin-bottom: 25px;
-        }
-
-        footer {
-            padding: 30px 7%;
-            border-top: 1px solid #202b3a;
-            display: flex;
-            justify-content: space-between;
-            color: #748197;
-            font-size: 13px;
-        }
-
-        @media (max-width: 850px) {
-            nav .links {
-                display: none;
-            }
-
-            .hero {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .server-card {
-                width: 100%;
-            }
-
-            .departments {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .staff {
-                grid-template-columns: 1fr;
-            }
-
-            .session-box {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 30px;
-            }
-
-            .server-code {
-                text-align: left;
-            }
-        }
-
-        @media (max-width: 550px) {
-            .departments {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .stat {
-                border-right: none;
-                border-bottom: 1px solid #202b3a;
-            }
-
-            footer {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Texas State Roleplay</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b12;
+    color:white;
+}
+
+/* NAV */
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:70px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#0a0f18;
+    border-bottom:1px solid #202b3a;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+nav a{
+    color:#aeb8c7;
+    text-decoration:none;
+    margin:0 12px;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:white;
+}
+
+.discord{
+    background:white;
+    color:#070b12 !important;
+    padding:11px 18px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+    min-height:620px;
+    padding:100px 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:50px;
+
+    background:
+    radial-gradient(
+        circle at 75% 45%,
+        #17253a 0%,
+        #070b12 45%
+    );
+}
+
+.hero-content{
+    max-width:700px;
+}
+
+.badge{
+    display:inline-block;
+    border:1px solid #344256;
+    border-radius:30px;
+    padding:7px 13px;
+    color:#aeb8c7;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+h1{
+    font-size:clamp(55px,8vw,100px);
+    line-height:.9;
+    margin:25px 0;
+}
+
+h1 span{
+    color:#8da9c8;
+}
+
+.hero p{
+    color:#aeb8c7;
+    font-size:18px;
+    max-width:580px;
+}
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.button{
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.primary{
+    background:white;
+    color:#070b12;
+}
+
+.secondary{
+    border:1px solid #344256;
+    color:white;
+}
+
+/* SERVER CARD */
+
+.server-card{
+    width:270px;
+    padding:30px;
+    background:#0d141f;
+    border:1px solid #293548;
+    border-radius:16px;
+}
+
+.status{
+    color:#7f8da1;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.server-card h2{
+    margin:8px 0;
+}
+
+.server-card p{
+    color:#8c99aa;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid #202b3a;
+    border-bottom:1px solid #202b3a;
+}
+
+.stat{
+    text-align:center;
+    padding:30px;
+    border-right:1px solid #202b3a;
+}
+
+.stat:last-child{
+    border:none;
+}
+
+.stat h2{
+    font-size:24px;
+}
+
+.stat p{
+    color:#7f8da1;
+    font-size:13px;
+}
+
+/* SECTIONS */
+
+section{
+    max-width:1250px;
+    margin:auto;
+    padding:100px 7%;
+}
+
+.section-title{
+    margin-bottom:40px;
+}
+
+.section-title small{
+    color:#718096;
+}
+
+.section-title h2{
+    font-size:45px;
+    margin-top:8px;
+}
+
+.section-title p{
+    color:#7f8da1;
+}
+
+/* DEPARTMENTS */
+
+.departments{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.department{
+    padding:25px;
+    background:#0c121c;
+    border:1px solid #202b3a;
+    border-radius:14px;
+    transition:.2s;
+}
+
+.department:hover{
+    transform:translateY(-4px);
+    border-color:#52647c;
+}
+
+.department .icon{
+    font-size:32px;
+}
+
+.department h3{
+    margin:18px 0 8px;
+}
+
+.department p{
+    color:#8794a6;
+}
+
+/* SESSION */
+
+.session{
+    background:#090f18;
+}
+
+.session-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:35px;
+    background:#0d141f;
+    border:1px solid #293548;
+    border-radius:16px;
+}
+
+.session-box h3{
+    font-size:30px;
+    margin:8px 0;
+}
+
+.session-box p{
+    color:#8794a6;
+}
+
+.server-code{
+    text-align:right;
+}
+
+.server-code strong{
+    display:block;
+    font-size:30px;
+    margin-top:5px;
+}
+
+/* SESSION CONTROLS */
+
+.session-controls{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.session-controls input{
+    flex:1;
+    min-width:200px;
+    padding:14px 15px;
+    border:1px solid #293548;
+    border-radius:8px;
+    background:#0c121c;
+    color:white;
+    outline:none;
+    font-size:15px;
+}
+
+.session-controls input:focus{
+    border-color:#64748b;
+}
+
+.session-controls input::placeholder{
+    color:#6f7d90;
+}
+
+.session-controls button{
+    padding:14px 20px;
+    border:0;
+    border-radius:8px;
+    background:white;
+    color:#070b12;
+    font-weight:800;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.session-controls button:hover{
+    opacity:.85;
+}
+
+.session-controls button.danger{
+    background:#b91c1c;
+    color:white;
+}
+
+/* RULES */
+
+.rules{
+    border-top:1px solid #202b3a;
+}
+
+.rule{
+    display:grid;
+    grid-template-columns:60px 1fr;
+    padding:20px 0;
+    border-bottom:1px solid #202b3a;
+}
+
+.rule b{
+    color:#66758a;
+}
+
+.rule span{
+    color:#c2cad5;
+}
+
+/* STAFF */
+
+.staff{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.staff-card{
+    padding:25px;
+    background:#0c121c;
+    border:1px solid #202b3a;
+    border-radius:14px;
+}
+
+.avatar{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#172234;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.staff-card p{
+    color:#8794a6;
+}
+
+/* CTA */
+
+.cta{
+    margin:40px 7% 90px;
+    padding:70px 8%;
+    text-align:center;
+    background:#101a29;
+    border:1px solid #293548;
+    border-radius:20px;
+}
+
+.cta h2{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.cta p{
+    color:#8997aa;
+    margin-bottom:25px;
+}
+
+/* FOOTER */
+
+footer{
+    padding:30px 7%;
+    border-top:1px solid #202b3a;
+    display:flex;
+    justify-content:space-between;
+    color:#748197;
+    font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav .links{
+        display:none;
+    }
+
+    .hero{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .server-card{
+        width:100%;
+    }
+
+    .departments{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .staff{
+        grid-template-columns:1fr;
+    }
+
+    .session-box{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:30px;
+    }
+
+    .server-code{
+        text-align:left;
+    }
+}
+
+@media(max-width:550px){
+
+    .departments{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .stat{
+        border-right:none;
+        border-bottom:1px solid #202b3a;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .session-controls{
+        flex-direction:column;
+    }
+
+    .session-controls input,
+    .session-controls button{
+        width:100%;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <nav>
-        <div class="logo">TSRP</div>
 
-        <div class="links">
-            <a href="#home">Home</a>
-            <a href="#departments">Departments</a>
-            <a href="#session">Session</a>
-            <a href="#rules">Rules</a>
-            <a href="#staff">Staff</a>
-        </div>
+<!-- NAVIGATION -->
 
-        <!-- CHANGE THIS TO YOUR DISCORD INVITE -->
-        <a class="discord" href="https://discord.gg/YOURINVITE">
-            Discord
+<nav>
+
+    <div class="logo">
+        TSRP
+    </div>
+
+    <div class="links">
+
+        <a href="#home">Home</a>
+
+        <a href="#departments">
+            Departments
         </a>
-    </nav>
+
+        <a href="#session">
+            Session
+        </a>
+
+        <a href="#rules">
+            Rules
+        </a>
+
+        <a href="#staff">
+            Staff
+        </a>
+
+    </div>
+
+    <!-- CHANGE THIS -->
+    <a
+        class="discord"
+        href="https://discord.gg/YOURINVITE"
+        target="_blank"
+    >
+        Discord
+    </a>
+
+</nav>
 
 
-    <main id="home">
-
-        <div class="hero">
-
-            <div class="hero-content">
-
-                <span class="badge">
-                    ER:LC • TEXAS
-                </span>
-
-                <h1>
-                    Texas State<br>
-                    <span>Roleplay</span>
-                </h1>
-
-                <p>
-                    A professional Texas-based Emergency Response:
-                    Liberty County roleplay community.
-                </p>
-
-                <div class="buttons">
-
-                    <a class="button primary" href="#session">
-                        View Session
-                    </a>
-
-                    <a class="button secondary" href="#departments">
-                        Departments
-                    </a>
-
-                </div>
-
-            </div>
+<main id="home">
 
 
-            <div class="server-card">
+<!-- HERO -->
 
-                <div class="status">
-                    SERVER STATUS
-                </div>
+<div class="hero">
 
-                <h2>Offline</h2>
+    <div class="hero-content">
 
-                <p>
-                    No active session
-                </p>
+        <span class="badge">
+            ER:LC • TEXAS
+        </span>
 
-            </div>
+        <h1>
+            Texas State<br>
+            <span>Roleplay</span>
+        </h1>
 
-        </div>
+        <p>
+            A professional Texas-based
+            Emergency Response:
+            Liberty County roleplay community.
+        </p>
 
+        <div class="buttons">
 
-        <div class="stats">
+            <a
+                class="button primary"
+                href="#session"
+            >
+                View Session
+            </a>
 
-            <div class="stat">
-                <h2>24/7</h2>
-                <p>Community</p>
-            </div>
-
-            <div class="stat">
-                <h2>ER:LC</h2>
-                <p>Roleplay</p>
-            </div>
-
-            <div class="stat">
-                <h2>TSRP</h2>
-                <p>Professional Staff</p>
-            </div>
+            <a
+                class="button secondary"
+                href="#departments"
+            >
+                Departments
+            </a>
 
         </div>
 
-
-        <section id="departments">
-
-            <div class="section-title">
-                <small>01</small>
-                <h2>Departments</h2>
-                <p>Choose your role and serve Texas.</p>
-            </div>
-
-            <div class="departments">
-
-                <div class="department">
-                    <div class="icon">🚓</div>
-                    <h3>Texas State Police</h3>
-                    <p>
-                        Law enforcement and highway safety.
-                    </p>
-                </div>
-
-                <div class="department">
-                    <div class="icon">🚒</div>
-                    <h3>Fire & Rescue</h3>
-                    <p>
-                        Emergency response and rescue services.
-                    </p>
-                </div>
-
-                <div class="department">
-                    <div class="icon">🚑</div>
-                    <h3>EMS</h3>
-                    <p>
-                        Medical response and emergency care.
-                    </p>
-                </div>
-
-                <div class="department">
-                    <div class="icon">🚕</div>
-                    <h3>Civilian Operations</h3>
-                    <p>
-                        Realistic civilian roleplay across Texas.
-                    </p>
-                </div>
-
-            </div>
-
-        </section>
+    </div>
 
 
-        <section id="session" <section id="session" class="session">
+    <div class="server-card">
+
+        <div class="status">
+            SERVER STATUS
+        </div>
+
+        <h2 id="topStatus">
+            Offline
+        </h2>
+
+        <p id="topStatusText">
+            No active session
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+    <div class="stat">
+
+        <h2>24/7</h2>
+
+        <p>
+            Community
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>ER:LC</h2>
+
+        <p>
+            Roleplay
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>TSRP</h2>
+
+        <p>
+            Professional Staff
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- DEPARTMENTS -->
+
+<section id="departments">
 
     <div class="section-title">
-        <small>02</small>
-        <h2>Session Dashboard</h2>
-        <p>Manage your Texas State Roleplay session.</p>
+
+        <small>
+            01
+        </small>
+
+        <h2>
+            Departments
+        </h2>
+
+        <p>
+            Choose your role and serve Texas.
+        </p>
+
     </div>
+
+
+    <div class="departments">
+
+        <div class="department">
+
+            <div class="icon">
+                🚓
+            </div>
+
+            <h3>
+                Texas State Police
+            </h3>
+
+            <p>
+                Law enforcement and highway safety.
+            </p>
+
+        </div>
+
+
+        <div class="department">
+
+            <div class="icon">
+                🚒
+            </div>
+
+            <h3>
+                Fire & Rescue
+            </h3>
+
+            <p>
+                Emergency response and rescue services.
+            </p>
+
+        </div>
+
+
+        <div class="department">
+
+            <div class="icon">
+                🚑
+            </div>
+
+            <h3>
+                EMS
+            </h3>
+
+            <p>
+                Medical response and emergency care.
+            </p>
+
+        </div>
+
+
+        <div class="department">
+
+            <div class="icon">
+                🚕
+            </div>
+
+            <h3>
+                Civilian Operations
+            </h3>
+
+            <p>
+                Realistic civilian roleplay across Texas.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SESSION DASHBOARD -->
+
+<section id="session" class="session">
+
+    <div class="section-title">
+
+        <small>
+            02
+        </small>
+
+        <h2>
+            Session Dashboard
+        </h2>
+
+        <p>
+            Manage your Texas State Roleplay session.
+        </p>
+
+    </div>
+
 
     <div class="session-box">
 
-        <div class="session-info">
+        <div>
 
-            <span class="status">SESSION STATUS</span>
+            <span class="status">
+                SESSION STATUS
+            </span>
 
             <h3 id="sessionStatus">
                 No Session
@@ -591,200 +799,317 @@
             🟢 Start Session
         </button>
 
-        <button onclick="endSession()" class="danger">
+        <button
+            onclick="endSession()"
+            class="danger"
+        >
             🔴 End Session
         </button>
 
     </div>
 
-</section>class="session">
-
-            <div class="section-title">
-                <small>02</small>
-                <h2>Current Session</h2>
-                <p>Live community session information.</p>
-            </div>
-
-            <div class="session-box">
-
-                <div>
-                    <small class="status">
-                        STATUS
-                    </small>
-
-                    <h3>No Session</h3>
-
-                    <p>
-                        Waiting for a host to start a session.
-                    </p>
-                </div>
-
-                <div class="server-code">
-
-                    <small class="status">
-                        SERVER CODE
-                    </small>
-
-                    <strong>—</strong>
-
-                </div>
-
-            </div>
-
-        </section>
+</section>
 
 
-        <section id="rules">
+<!-- RULES -->
 
-            <div class="section-title">
-                <small>03</small>
-                <h2>Server Rules</h2>
-                <p>
-                    Keep roleplay fair, realistic, and fun.
-                </p>
-            </div>
+<section id="rules">
 
-            <div class="rules">
+    <div class="section-title">
 
-                <div class="rule">
-                    <b>01</b>
-                    <span>
-                        Follow staff instructions and community policies.
-                    </span>
-                </div>
+        <small>
+            03
+        </small>
 
-                <div class="rule">
-                    <b>02</b>
-                    <span>
-                        Remain realistic during roleplay scenes.
-                    </span>
-                </div>
+        <h2>
+            Server Rules
+        </h2>
 
-                <div class="rule">
-                    <b>03</b>
-                    <span>
-                        No random deathmatching or unnecessary disruption.
-                    </span>
-                </div>
+        <p>
+            Keep roleplay fair, realistic, and fun.
+        </p>
 
-                <div class="rule">
-                    <b>04</b>
-                    <span>
-                        Respect every member and department.
-                    </span>
-                </div>
-
-                <div class="rule">
-                    <b>05</b>
-                    <span>
-                        Use appropriate radio and communication etiquette.
-                    </span>
-                </div>
-
-                <div class="rule">
-                    <b>06</b>
-                    <span>
-                        Do not exploit, glitch, or abuse game mechanics.
-                    </span>
-                </div>
-
-            </div>
-
-        </section>
+    </div>
 
 
-        <section id="staff">
+    <div class="rules">
 
-            <div class="section-title">
-                <small>04</small>
-                <h2>Staff Team</h2>
-                <p>
-                    Meet the people helping run TSRP.
-                </p>
-            </div>
+        <div class="rule">
 
-            <div class="staff">
+            <b>01</b>
 
-                <div class="staff-card">
-                    <div class="avatar">OW</div>
-                    <h3>Ownership</h3>
-                    <p>Community Leadership</p>
-                </div>
-
-                <div class="staff-card">
-                    <div class="avatar">AD</div>
-                    <h3>Administration</h3>
-                    <p>Server Management</p>
-                </div>
-
-                <div class="staff-card">
-                    <div class="avatar">MD</div>
-                    <h3>Moderation</h3>
-                    <p>Community Safety</p>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <div class="cta">
-
-            <h2>
-                Ready to join Texas State Roleplay?
-            </h2>
-
-            <p>
-                Join the Discord and watch for the next session.
-            </p>
-
-            <!-- CHANGE THIS TO YOUR DISCORD INVITE -->
-            <a class="button primary"
-               href="https://discord.gg/YOURINVITE">
-                Join Discord
-            </a>
+            <span>
+                Follow staff instructions and community policies.
+            </span>
 
         </div>
 
-    </main>
+
+        <div class="rule">
+
+            <b>02</b>
+
+            <span>
+                Remain realistic during roleplay scenes.
+            </span>
+
+        </div>
 
 
-    <footer>
+        <div class="rule">
 
-        <strong>TSRP</strong>
+            <b>03</b>
 
-        <span>
-            Texas State Roleplay • ER:LC Community
-        </span>
+            <span>
+                No random deathmatching or unnecessary disruption.
+            </span>
 
-    </footer>
+        </div>
 
-</<script>
-function startSession() {
-    const host = document.getElementById("hostName").value;
-    const code = document.getElementById("serverCodeInput").value;
 
-    if (!host || !code) {
-        alert("Enter a host name and server code.");
+        <div class="rule">
+
+            <b>04</b>
+
+            <span>
+                Respect every member and department.
+            </span>
+
+        </div>
+
+
+        <div class="rule">
+
+            <b>05</b>
+
+            <span>
+                Use appropriate radio and communication etiquette.
+            </span>
+
+        </div>
+
+
+        <div class="rule">
+
+            <b>06</b>
+
+            <span>
+                Do not exploit, glitch, or abuse game mechanics.
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STAFF -->
+
+<section id="staff">
+
+    <div class="section-title">
+
+        <small>
+            04
+        </small>
+
+        <h2>
+            Staff Team
+        </h2>
+
+        <p>
+            Meet the people helping run TSRP.
+        </p>
+
+    </div>
+
+
+    <div class="staff">
+
+        <div class="staff-card">
+
+            <div class="avatar">
+                OW
+            </div>
+
+            <h3>
+                Ownership
+            </h3>
+
+            <p>
+                Community Leadership
+            </p>
+
+        </div>
+
+
+        <div class="staff-card">
+
+            <div class="avatar">
+                AD
+            </div>
+
+            <h3>
+                Administration
+            </h3>
+
+            <p>
+                Server Management
+            </p>
+
+        </div>
+
+
+        <div class="staff-card">
+
+            <div class="avatar">
+                MD
+            </div>
+
+            <h3>
+                Moderation
+            </h3>
+
+            <p>
+                Community Safety
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DISCORD CTA -->
+
+<div class="cta">
+
+    <h2>
+        Ready to join Texas State Roleplay?
+    </h2>
+
+    <p>
+        Join the Discord and watch for the next session.
+    </p>
+
+    <!-- CHANGE THIS -->
+    <a
+        class="button primary"
+        href="https://discord.gg/YOURINVITE"
+        target="_blank"
+    >
+        Join Discord
+    </a>
+
+</div>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <strong>
+        TSRP
+    </strong>
+
+    <span>
+        Texas State Roleplay • ER:LC Community
+    </span>
+
+</footer>
+
+
+<!-- SESSION JAVASCRIPT -->
+
+<script>
+
+function startSession(){
+
+    var host =
+        document.getElementById("hostName").value.trim();
+
+    var code =
+        document.getElementById("serverCodeInput").value.trim();
+
+
+    if(host === ""){
+
+        alert("Please enter the host name.");
+
         return;
+
     }
 
-    document.getElementById("sessionStatus").textContent = "Session Active";
+
+    if(code === ""){
+
+        alert("Please enter the ER:LC server code.");
+
+        return;
+
+    }
+
+
+    document.getElementById("sessionStatus").textContent =
+        "Session Active";
+
+
     document.getElementById("sessionHost").textContent =
         "Hosted by " + host;
 
-    document.getElementById("serverCode").textContent = code;
+
+    document.getElementById("serverCode").textContent =
+        code;
+
+
+    document.getElementById("topStatus").textContent =
+        "Online";
+
+
+    document.getElementById("topStatusText").textContent =
+        "Session hosted by " + host;
+
 }
 
-function endSession() {
-    document.getElementById("sessionStatus").textContent = "No Session";
+
+function endSession(){
+
+    document.getElementById("sessionStatus").textContent =
+        "No Session";
+
+
     document.getElementById("sessionHost").textContent =
         "No host has started a session.";
 
-    document.getElementById("serverCode").textContent = "—";
 
-    document.getElementById("hostName").value = "";
-    document.getElementById("serverCodeInput").value = "";
+    document.getElementById("serverCode").textContent =
+        "—";
+
+
+    document.getElementById("topStatus").textContent =
+        "Offline";
+
+
+    document.getElementById("topStatusText").textContent =
+        "No active session";
+
+
+    document.getElementById("hostName").value =
+        "";
+
+
+    document.getElementById("serverCodeInput").value =
+        "";
+
 }
-</script>body>
+
+</script>
+
+
+</body>
 </html>
