@@ -4,128 +4,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSRP | Management Dashboard</title>
+<title>TSRP Dashboard</title>
 
 <style>
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    font-family: Inter, Arial, sans-serif;
-    background: #0b0d12;
-    color: #f4f5f7;
+    background: #0b0f14;
+    color: #ffffff;
 }
 
-/* SIDEBAR */
+button,
+input {
+    font: inherit;
+}
 
 .sidebar {
     position: fixed;
-    width: 245px;
+    left: 0;
+    top: 0;
+    width: 240px;
     height: 100vh;
-    background: #10131a;
-    border-right: 1px solid #202530;
-    padding: 20px 14px;
+    background: #10151d;
+    border-right: 1px solid #202936;
+    padding: 22px 15px;
+    z-index: 10;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    margin-bottom: 28px;
-}
-
-.logo-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: #5865f2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 24px;
     font-weight: 800;
+    padding: 10px 12px 28px;
 }
 
-.logo-text {
-    font-weight: 800;
-    font-size: 16px;
+.logo span {
+    color: #4d8dff;
 }
 
-.logo-sub {
-    color: #737b8c;
+.nav-title {
+    color: #697586;
     font-size: 11px;
-    margin-top: 3px;
-}
-
-.section-title {
-    color: #606878;
-    font-size: 10px;
-    font-weight: bold;
     text-transform: uppercase;
-    margin: 20px 10px 7px;
+    margin: 15px 12px 8px;
+    letter-spacing: 1px;
 }
 
 .nav button {
     width: 100%;
-    padding: 11px 12px;
-    margin-bottom: 3px;
     border: 0;
-    border-radius: 8px;
     background: transparent;
-    color: #8f98a9;
+    color: #aeb8c7;
+    padding: 12px;
     text-align: left;
+    border-radius: 8px;
     cursor: pointer;
+    margin-bottom: 3px;
 }
 
 .nav button:hover,
 .nav button.active {
-    background: #1b202b;
+    background: #1a2533;
     color: white;
 }
 
-.user-box {
-    position: absolute;
-    bottom: 15px;
-    left: 14px;
-    right: 14px;
-    background: #171b24;
-    border: 1px solid #252b37;
-    border-radius: 10px;
-    padding: 11px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #5865f2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.user-name {
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.user-role {
-    font-size: 10px;
-    color: #737d90;
-}
-
-/* MAIN */
-
 .main {
-    margin-left: 245px;
+    margin-left: 240px;
+    min-height: 100vh;
     padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    font-size: 27px;
+}
+
+.user {
+    background: #151c26;
+    border: 1px solid #253040;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #c9d2df;
 }
 
 .page {
@@ -136,117 +105,100 @@ body {
     display: block;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.header h1 {
-    font-size: 25px;
-}
-
-.header p {
-    color: #747e91;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-/* CARDS */
-
 .cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    gap: 16px;
+    margin-bottom: 25px;
 }
 
 .card {
-    background: #11151d;
-    border: 1px solid #222833;
-    border-radius: 12px;
-    padding: 18px;
-}
-
-.card-title {
-    color: #737e91;
-    font-size: 12px;
-}
-
-.card-value {
-    font-size: 25px;
-    font-weight: 800;
-    margin-top: 10px;
-}
-
-/* PANELS */
-
-.panel {
-    margin-top: 20px;
-    background: #11151d;
-    border: 1px solid #222833;
+    background: #111821;
+    border: 1px solid #202b39;
     border-radius: 12px;
     padding: 20px;
 }
 
-.panel-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 16px;
+.card-title {
+    color: #7f8b9d;
+    font-size: 13px;
+    margin-bottom: 12px;
 }
 
-/* SESSION */
+.card-number {
+    font-size: 30px;
+    font-weight: bold;
+}
 
-.session-grid {
+.status {
+    color: #ff5f5f;
+    font-weight: bold;
+}
+
+.status.online {
+    color: #45d483;
+}
+
+.grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.info {
-    background: #0c1016;
-    border: 1px solid #202632;
-    border-radius: 9px;
-    padding: 15px;
+.panel {
+    background: #111821;
+    border: 1px solid #202b39;
+    border-radius: 12px;
+    padding: 20px;
 }
 
-.info-label {
-    color: #737d8e;
-    font-size: 11px;
+.panel h2 {
+    font-size: 18px;
+    margin-bottom: 18px;
 }
 
-.info-value {
-    margin-top: 7px;
-    font-weight: bold;
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* BUTTONS */
-
-.button {
-    border: 0;
-    padding: 10px 15px;
-    border-radius: 8px;
+input {
+    background: #0c1118;
     color: white;
-    background: #5865f2;
+    border: 1px solid #273342;
+    border-radius: 7px;
+    padding: 12px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #4d8dff;
+}
+
+.btn {
+    border: 0;
+    border-radius: 7px;
+    padding: 11px 15px;
     cursor: pointer;
     font-weight: bold;
+    background: #4d8dff;
+    color: white;
 }
 
-.button:hover {
+.btn:hover {
     opacity: .85;
 }
 
-.button.red {
-    background: #d83a3a;
+.btn.danger {
+    background: #d94c5b;
 }
 
-.button.gray {
-    background: #252b36;
+.btn.gray {
+    background: #273342;
 }
 
-/* TABLE */
-
-.table-container {
+.table-wrap {
     overflow-x: auto;
 }
 
@@ -255,80 +207,94 @@ table {
     border-collapse: collapse;
 }
 
-th {
-    color: #697487;
-    font-size: 11px;
+th,
+td {
     text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #242b37;
+    padding: 13px;
+    border-bottom: 1px solid #202b39;
+}
+
+th {
+    color: #7f8b9d;
+    font-size: 12px;
+    text-transform: uppercase;
 }
 
 td {
-    padding: 13px 12px;
-    font-size: 13px;
-    border-bottom: 1px solid #1d232e;
+    color: #d7dde6;
 }
 
 .badge {
-    padding: 4px 8px;
+    display: inline-block;
+    padding: 5px 9px;
     border-radius: 20px;
-    font-size: 10px;
+    font-size: 12px;
+    background: #26364d;
+    color: #b9d0ff;
+}
+
+.empty {
+    color: #697586;
+    padding: 20px 0;
+}
+
+.session-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.session-info p {
+    margin-bottom: 8px;
+    color: #aeb8c7;
+}
+
+.session-code {
+    color: white;
     font-weight: bold;
 }
 
-.online {
-    color: #55d98b;
-    background: rgba(50,200,120,.1);
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
-.offline {
-    color: #ff6c6c;
-    background: rgba(255,80,80,.1);
-}
-
-/* FORM */
-
-.form {
-    max-width: 600px;
-}
-
-label {
-    display: block;
-    color: #858fa1;
-    font-size: 12px;
-    margin-bottom: 6px;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-    background: #0b0f15;
-    border: 1px solid #29303c;
+.toast {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: #151d28;
+    border: 1px solid #2a3748;
+    padding: 14px 18px;
     border-radius: 8px;
-    padding: 11px;
-    color: white;
-    margin-bottom: 14px;
-    outline: none;
+    display: none;
+    z-index: 50;
 }
 
-textarea {
-    min-height: 100px;
-    resize: vertical;
+.toast.show {
+    display: block;
 }
 
-/* MOBILE */
-
-.mobile {
+.mobile-menu {
     display: none;
 }
 
 @media(max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 650px) {
     .sidebar {
         transform: translateX(-100%);
         transition: .2s;
-        z-index: 5;
     }
 
     .sidebar.open {
@@ -340,26 +306,21 @@ textarea {
         padding: 20px;
     }
 
-    .mobile {
+    .mobile-menu {
         display: block;
-        background: #1b202a;
-        border: 1px solid #2a303c;
+        background: #151c26;
         color: white;
+        border: 1px solid #273342;
         padding: 9px 12px;
         border-radius: 7px;
-        margin-bottom: 15px;
+        cursor: pointer;
+        margin-right: 10px;
     }
 
-    .cards {
-        grid-template-columns: 1fr 1fr;
+    .topbar {
+        gap: 10px;
     }
 
-    .session-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media(max-width: 500px) {
     .cards {
         grid-template-columns: 1fr;
     }
@@ -369,740 +330,820 @@ textarea {
 
 <body>
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar" id="sidebar">
 
     <div class="logo">
-        <div class="logo-icon">TS</div>
-
-        <div>
-            <div class="logo-text">Texas State RP</div>
-            <div class="logo-sub">Management Dashboard</div>
-        </div>
+        <span>TS</span>RP
     </div>
+
+    <div class="nav-title">Management</div>
 
     <div class="nav">
-
-        <div class="section-title">Overview</div>
-
-        <button class="active" onclick="openPage('dashboard', this)">
-            🏠 Dashboard
-        </button>
-
-        <button onclick="openPage('session', this)">
-            🟢 Session
-        </button>
-
-        <div class="section-title">Management</div>
-
-        <button onclick="openPage('players', this)">
-            👥 Players
-        </button>
-
-        <button onclick="openPage('bans', this)">
-            🚫 Bans
-        </button>
-
-        <button onclick="openPage('warnings', this)">
-            ⚠️ Warnings
-        </button>
-
-        <button onclick="openPage('bolo', this)">
-            🔎 BOLO
-        </button>
-
-        <button onclick="openPage('notes', this)">
-            📝 Notes
-        </button>
-
+        <button class="active" onclick="showPage('dashboard', this)">Dashboard</button>
+        <button onclick="showPage('session', this)">Session</button>
+        <button onclick="showPage('players', this)">Players</button>
     </div>
 
-    <div class="user-box">
-        <div class="avatar">A</div>
+    <div class="nav-title">Moderation</div>
 
-        <div>
-            <div class="user-name">Admin</div>
-            <div class="user-role">Administrator</div>
-        </div>
+    <div class="nav">
+        <button onclick="showPage('bans', this)">Bans</button>
+        <button onclick="showPage('warnings', this)">Warnings</button>
+        <button onclick="showPage('bolo', this)">BOLO</button>
+        <button onclick="showPage('notes', this)">Notes</button>
     </div>
 
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="main">
 
-<button class="mobile" onclick="toggleSidebar()">☰ Menu</button>
+    <div class="topbar">
+        <div style="display:flex;align-items:center;">
+            <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+            <h1 id="pageTitle">Dashboard</h1>
+        </div>
 
-
-<!-- DASHBOARD -->
-
-<section class="page active" id="dashboard">
-
-    <div class="header">
-        <div>
-            <h1>Dashboard</h1>
-            <p>Texas State Roleplay management center.</p>
+        <div class="user">
+            Host: <strong>TSRP Staff</strong>
         </div>
     </div>
 
-    <div class="cards">
 
-        <div class="card">
-            <div class="card-title">Session</div>
-            <div class="card-value" id="sessionCard">
-                Offline
+    <!-- DASHBOARD -->
+
+    <section class="page active" id="dashboard">
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-title">Session</div>
+                <div class="card-number status" id="dashboardStatus">Offline</div>
             </div>
+
+            <div class="card">
+                <div class="card-title">Players</div>
+                <div class="card-number" id="playerCount">0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Bans</div>
+                <div class="card-number" id="banCount">0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Warnings</div>
+                <div class="card-number" id="warningCount">0</div>
+            </div>
+
         </div>
 
-        <div class="card">
-            <div class="card-title">Players</div>
-            <div class="card-value">0</div>
-        </div>
+        <div class="grid">
 
-        <div class="card">
-            <div class="card-title">Bans</div>
-            <div class="card-value" id="banCount">0</div>
-        </div>
+            <div class="panel">
 
-        <div class="card">
-            <div class="card-title">Warnings</div>
-            <div class="card-value" id="warningCount">0</div>
-        </div>
+                <h2>Current Session</h2>
 
-    </div>
+                <div class="session-box">
 
+                    <div class="session-info">
+                        <p>Status:
+                            <span class="status" id="sessionStatus">Offline</span>
+                        </p>
 
-    <div class="panel">
+                        <p>Host:
+                            <span class="session-code" id="sessionHost">None</span>
+                        </p>
 
-        <div class="panel-title">
-            Current Session
-        </div>
+                        <p>Server Code:
+                            <span class="session-code" id="serverCode">None</span>
+                        </p>
+                    </div>
 
-        <div class="session-grid">
+                    <div class="actions">
+                        <button class="btn" onclick="startSession()">Start</button>
+                        <button class="btn danger" onclick="stopSession()">Shutdown</button>
+                    </div>
 
-            <div class="info">
-                <div class="info-label">Status</div>
-                <div class="info-value" id="status">
-                    Offline
                 </div>
+
             </div>
 
-            <div class="info">
-                <div class="info-label">Host</div>
-                <div class="info-value" id="host">
-                    No host
+
+            <div class="panel">
+
+                <h2>Quick Actions</h2>
+
+                <div class="actions">
+                    <button class="btn" onclick="showPage('players')">Players</button>
+                    <button class="btn" onclick="showPage('bans')">Manage Bans</button>
+                    <button class="btn" onclick="showPage('warnings')">Warnings</button>
+                    <button class="btn" onclick="showPage('bolo')">BOLO</button>
                 </div>
+
             </div>
 
-            <div class="info">
-                <div class="info-label">Server Code</div>
-                <div class="info-value" id="serverCode">
-                    No code
+        </div>
+
+    </section>
+
+
+    <!-- SESSION -->
+
+    <section class="page" id="session">
+
+        <div class="panel">
+
+            <h2>Session Management</h2>
+
+            <div class="form">
+
+                <input id="hostInput" placeholder="Host name">
+
+                <input id="serverInput" placeholder="ER:LC server code">
+
+                <div class="actions">
+                    <button class="btn" onclick="startSession()">Start Session</button>
+                    <button class="btn danger" onclick="stopSession()">Shutdown Session</button>
                 </div>
+
             </div>
 
         </div>
 
-    </div>
+        <br>
 
-</section>
+        <div class="panel">
 
+            <h2>Session Information</h2>
 
-<!-- SESSION -->
+            <p>Current status:
+                <span class="status" id="sessionStatus2">Offline</span>
+            </p>
 
-<section class="page" id="session">
+            <br>
 
-    <div class="header">
-        <div>
-            <h1>Session</h1>
-            <p>Control your ER:LC server session.</p>
-        </div>
-    </div>
+            <p>Host: <strong id="sessionHost2">None</strong></p>
 
-    <div class="panel">
+            <br>
 
-        <div class="panel-title">
-            Session Controls
-        </div>
-
-        <div class="form">
-
-            <label>Host</label>
-            <input id="hostInput" placeholder="Enter host username">
-
-            <label>Server Code</label>
-            <input id="codeInput" placeholder="Enter ER:LC server code">
-
-            <button class="button" onclick="startSession()">
-                Start Session
-            </button>
-
-            <button class="button red" onclick="stopSession()">
-                Shut Down
-            </button>
+            <p>Server Code: <strong id="serverCode2">None</strong></p>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- PLAYERS -->
+    <!-- PLAYERS -->
 
-<section class="page" id="players">
+    <section class="page" id="players">
 
-    <div class="header">
-        <div>
-            <h1>Players</h1>
-            <p>Players currently listed by the dashboard.</p>
-        </div>
-    </div>
+        <div class="panel">
 
-    <div class="panel">
+            <h2>Players</h2>
 
-        <div class="table-container">
+            <div class="form" style="margin-bottom:20px;">
+                <input id="playerInput" placeholder="Enter player username">
+                <button class="btn" onclick="addPlayer()">Add Player</button>
+            </div>
 
-            <table>
+            <div class="table-wrap">
 
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>User ID</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                <table>
 
-                <tbody id="playersTable">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
 
-                    <tr>
-                        <td>ExamplePlayer</td>
-                        <td>123456789</td>
-                        <td>
-                            <span class="badge online">ONLINE</span>
-                        </td>
-                        <td>
-                            <button class="button" onclick="alert('Player selected')">
-                                Manage
-                            </button>
-                        </td>
-                    </tr>
+                    <tbody id="playersTable"></tbody>
 
-                </tbody>
+                </table>
 
-            </table>
+            </div>
+
+            <div id="playersEmpty" class="empty">
+                No players added yet.
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- BANS -->
+    <!-- BANS -->
 
-<section class="page" id="bans">
+    <section class="page" id="bans">
 
-    <div class="header">
-        <div>
-            <h1>Bans</h1>
-            <p>Manage player bans.</p>
-        </div>
-    </div>
+        <div class="panel">
 
-    <div class="panel">
+            <h2>Ban Management</h2>
 
-        <div class="form">
+            <div class="form" style="margin-bottom:20px;">
 
-            <label>Username</label>
-            <input id="banUser" placeholder="Roblox username">
+                <input id="banPlayer" placeholder="Player username">
+                <input id="banReason" placeholder="Reason">
 
-            <label>Reason</label>
-            <textarea id="banReason" placeholder="Reason for ban"></textarea>
+                <button class="btn danger" onclick="addBan()">Ban Player</button>
 
-            <button class="button red" onclick="addBan()">
-                Ban Player
-            </button>
+            </div>
 
-        </div>
+            <div class="table-wrap">
 
-    </div>
+                <table>
 
-    <div class="panel">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Reason</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-        <div class="table-container">
+                    <tbody id="bansTable"></tbody>
 
-            <table>
+                </table>
 
-                <thead>
-                    <tr>
-                        <th>Player</th>
-                        <th>Reason</th>
-                        <th>Staff</th>
-                    </tr>
-                </thead>
+            </div>
 
-                <tbody id="bansTable"></tbody>
-
-            </table>
+            <div id="bansEmpty" class="empty">
+                No bans recorded.
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- WARNINGS -->
+    <!-- WARNINGS -->
 
-<section class="page" id="warnings">
+    <section class="page" id="warnings">
 
-    <div class="header">
-        <div>
-            <h1>Warnings</h1>
-            <p>Issue and view player warnings.</p>
-        </div>
-    </div>
+        <div class="panel">
 
-    <div class="panel">
+            <h2>Warnings</h2>
 
-        <div class="form">
+            <div class="form" style="margin-bottom:20px;">
 
-            <label>Username</label>
-            <input id="warningUser" placeholder="Roblox username">
+                <input id="warningPlayer" placeholder="Player username">
+                <input id="warningReason" placeholder="Reason">
 
-            <label>Reason</label>
-            <textarea id="warningReason" placeholder="Warning reason"></textarea>
+                <button class="btn" onclick="addWarning()">Issue Warning</button>
 
-            <button class="button" onclick="addWarning()">
-                Issue Warning
-            </button>
+            </div>
 
-        </div>
+            <div class="table-wrap">
 
-    </div>
+                <table>
 
-    <div class="panel">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Reason</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-        <table>
+                    <tbody id="warningsTable"></tbody>
 
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Reason</th>
-                    <th>Staff</th>
-                </tr>
-            </thead>
+                </table>
 
-            <tbody id="warningsTable"></tbody>
+            </div>
 
-        </table>
-
-    </div>
-
-</section>
-
-
-<!-- BOLO -->
-
-<section class="page" id="bolo">
-
-    <div class="header">
-        <div>
-            <h1>BOLO</h1>
-            <p>Be On the Lookout records.</p>
-        </div>
-    </div>
-
-    <div class="panel">
-
-        <div class="form">
-
-            <label>Player / Vehicle</label>
-            <input id="boloName" placeholder="Name or vehicle">
-
-            <label>Information</label>
-            <textarea id="boloInfo" placeholder="BOLO information"></textarea>
-
-            <button class="button" onclick="addBolo()">
-                Create BOLO
-            </button>
+            <div id="warningsEmpty" class="empty">
+                No warnings recorded.
+            </div>
 
         </div>
 
-    </div>
-
-    <div class="panel">
-
-        <table>
-
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Information</th>
-                    <th>Created By</th>
-                </tr>
-            </thead>
-
-            <tbody id="boloTable"></tbody>
-
-        </table>
-
-    </div>
-
-</section>
+    </section>
 
 
-<!-- NOTES -->
+    <!-- BOLO -->
 
-<section class="page" id="notes">
+    <section class="page" id="bolo">
 
-    <div class="header">
-        <div>
-            <h1>Notes</h1>
-            <p>Internal staff notes.</p>
-        </div>
-    </div>
+        <div class="panel">
 
-    <div class="panel">
+            <h2>BOLO</h2>
 
-        <div class="form">
+            <div class="form" style="margin-bottom:20px;">
 
-            <label>Player</label>
-            <input id="notePlayer" placeholder="Roblox username">
+                <input id="boloPlayer" placeholder="Player username">
+                <input id="boloReason" placeholder="Reason">
 
-            <label>Note</label>
-            <textarea id="noteContent" placeholder="Enter note"></textarea>
+                <button class="btn" onclick="addBolo()">Create BOLO</button>
 
-            <button class="button" onclick="addNote()">
-                Add Note
-            </button>
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Reason</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="boloTable"></tbody>
+
+                </table>
+
+            </div>
+
+            <div id="boloEmpty" class="empty">
+                No active BOLOs.
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
-    <div class="panel">
 
-        <table>
+    <!-- NOTES -->
 
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Note</th>
-                    <th>Staff</th>
-                </tr>
-            </thead>
+    <section class="page" id="notes">
 
-            <tbody id="notesTable"></tbody>
+        <div class="panel">
 
-        </table>
+            <h2>Player Notes</h2>
 
-    </div>
+            <div class="form" style="margin-bottom:20px;">
 
-</section>
+                <input id="notePlayer" placeholder="Player username">
+                <input id="noteText" placeholder="Note">
+
+                <button class="btn" onclick="addNote()">Add Note</button>
+
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Note</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="notesTable"></tbody>
+
+                </table>
+
+            </div>
+
+            <div id="notesEmpty" class="empty">
+                No notes recorded.
+            </div>
+
+        </div>
+
+    </section>
 
 </main>
 
 
+<div class="toast" id="toast"></div>
+
+
 <script>
 
-let sessionActive = false;
-
+let players = [];
 let bans = [];
-
 let warnings = [];
-
 let bolos = [];
-
 let notes = [];
 
+let session = {
+    online: false,
+    host: "",
+    code: ""
+};
 
-/* NAVIGATION */
 
-function openPage(page, button) {
+function showPage(page, button) {
 
-    document.querySelectorAll(".page").forEach(function(item) {
-        item.classList.remove("active");
+    document.querySelectorAll(".page").forEach(function(p) {
+        p.classList.remove("active");
     });
 
     document.getElementById(page).classList.add("active");
 
-    document.querySelectorAll(".nav button").forEach(function(item) {
-        item.classList.remove("active");
+    document.querySelectorAll(".nav button").forEach(function(b) {
+        b.classList.remove("active");
     });
 
-    button.classList.add("active");
+    if (button) {
+        button.classList.add("active");
+    }
+
+    let titles = {
+        dashboard: "Dashboard",
+        session: "Session",
+        players: "Players",
+        bans: "Bans",
+        warnings: "Warnings",
+        bolo: "BOLO",
+        notes: "Notes"
+    };
+
+    document.getElementById("pageTitle").textContent = titles[page];
 
     document.getElementById("sidebar").classList.remove("open");
 }
 
 
-function toggleSidebar() {
-
+function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("open");
-
 }
 
 
-/* SESSION */
+function toast(message) {
+
+    let box = document.getElementById("toast");
+
+    box.textContent = message;
+    box.classList.add("show");
+
+    setTimeout(function() {
+        box.classList.remove("show");
+    }, 2500);
+}
+
 
 function startSession() {
 
-    let host = document.getElementById("hostInput").value;
+    let host = document.getElementById("hostInput").value.trim();
+    let code = document.getElementById("serverInput").value.trim();
 
-    let code = document.getElementById("codeInput").value;
-
-    if (!host || !code) {
-
-        alert("Enter a host and server code.");
-
-        return;
-
+    if (!host) {
+        host = "TSRP Staff";
     }
 
-    sessionActive = true;
+    if (!code) {
+        toast("Enter a server code first.");
+        return;
+    }
 
-    document.getElementById("sessionCard").textContent = "Online";
+    session.online = true;
+    session.host = host;
+    session.code = code;
 
-    document.getElementById("status").textContent = "Online";
+    updateSession();
 
-    document.getElementById("host").textContent = host;
-
-    document.getElementById("serverCode").textContent = code;
-
-    alert("Session started!");
-
+    toast("Session started!");
 }
 
 
 function stopSession() {
 
-    sessionActive = false;
+    session.online = false;
+    session.host = "";
+    session.code = "";
 
-    document.getElementById("sessionCard").textContent = "Offline";
+    updateSession();
 
-    document.getElementById("status").textContent = "Offline";
-
-    document.getElementById("host").textContent = "No host";
-
-    document.getElementById("serverCode").textContent = "No code";
-
-    alert("Session shut down.");
-
+    toast("Session shut down.");
 }
 
 
-/* BANS */
+function updateSession() {
+
+    let status = session.online ? "Online" : "Offline";
+
+    document.getElementById("dashboardStatus").textContent = status;
+    document.getElementById("dashboardStatus").className =
+        session.online ? "card-number status online" : "card-number status";
+
+    document.getElementById("sessionStatus").textContent = status;
+    document.getElementById("sessionStatus").className =
+        session.online ? "status online" : "status";
+
+    document.getElementById("sessionStatus2").textContent = status;
+    document.getElementById("sessionStatus2").className =
+        session.online ? "status online" : "status";
+
+    document.getElementById("sessionHost").textContent =
+        session.host || "None";
+
+    document.getElementById("sessionHost2").textContent =
+        session.host || "None";
+
+    document.getElementById("serverCode").textContent =
+        session.code || "None";
+
+    document.getElementById("serverCode2").textContent =
+        session.code || "None";
+}
+
+
+function addPlayer() {
+
+    let input = document.getElementById("playerInput");
+    let name = input.value.trim();
+
+    if (!name) {
+        toast("Enter a username.");
+        return;
+    }
+
+    players.push(name);
+
+    input.value = "";
+
+    renderPlayers();
+
+    toast("Player added.");
+}
+
+
+function renderPlayers() {
+
+    let table = document.getElementById("playersTable");
+    table.innerHTML = "";
+
+    players.forEach(function(player, index) {
+
+        let row = document.createElement("tr");
+
+        row.innerHTML =
+            "<td>" + escapeHTML(player) + "</td>" +
+            "<td><span class='badge'>Active</span></td>" +
+            "<td><button class='btn danger' onclick='removePlayer(" + index + ")'>Remove</button></td>";
+
+        table.appendChild(row);
+    });
+
+    document.getElementById("playersEmpty").style.display =
+        players.length ? "none" : "block";
+
+    document.getElementById("playerCount").textContent = players.length;
+}
+
+
+function removePlayer(index) {
+
+    players.splice(index, 1);
+
+    renderPlayers();
+
+    toast("Player removed.");
+}
+
 
 function addBan() {
 
-    let user = document.getElementById("banUser").value;
+    let player = document.getElementById("banPlayer").value.trim();
+    let reason = document.getElementById("banReason").value.trim();
 
-    let reason = document.getElementById("banReason").value;
-
-    if (!user || !reason) {
-
-        alert("Enter a username and reason.");
-
+    if (!player || !reason) {
+        toast("Enter a player and reason.");
         return;
-
     }
 
     bans.push({
-        user: user,
+        player: player,
         reason: reason
     });
 
-    document.getElementById("banUser").value = "";
-
+    document.getElementById("banPlayer").value = "";
     document.getElementById("banReason").value = "";
 
     renderBans();
 
+    toast("Ban added.");
 }
 
 
 function renderBans() {
 
     let table = document.getElementById("bansTable");
-
     table.innerHTML = "";
 
-    bans.forEach(function(ban) {
+    bans.forEach(function(ban, index) {
 
-        table.innerHTML += `
-        <tr>
-            <td>${ban.user}</td>
-            <td>${ban.reason}</td>
-            <td>Admin</td>
-        </tr>
-        `;
+        let row = document.createElement("tr");
 
+        row.innerHTML =
+            "<td>" + escapeHTML(ban.player) + "</td>" +
+            "<td>" + escapeHTML(ban.reason) + "</td>" +
+            "<td><button class='btn gray' onclick='removeBan(" + index + ")'>Remove</button></td>";
+
+        table.appendChild(row);
     });
 
-    document.getElementById("banCount").textContent = bans.length;
+    document.getElementById("bansEmpty").style.display =
+        bans.length ? "none" : "block";
 
+    document.getElementById("banCount").textContent = bans.length;
 }
 
 
-/* WARNINGS */
+function removeBan(index) {
+
+    bans.splice(index, 1);
+
+    renderBans();
+
+    toast("Ban removed.");
+}
+
 
 function addWarning() {
 
-    let user = document.getElementById("warningUser").value;
+    let player = document.getElementById("warningPlayer").value.trim();
+    let reason = document.getElementById("warningReason").value.trim();
 
-    let reason = document.getElementById("warningReason").value;
-
-    if (!user || !reason) {
-
-        alert("Enter a username and reason.");
-
+    if (!player || !reason) {
+        toast("Enter a player and reason.");
         return;
-
     }
 
     warnings.push({
-        user: user,
+        player: player,
         reason: reason
     });
 
-    document.getElementById("warningUser").value = "";
-
+    document.getElementById("warningPlayer").value = "";
     document.getElementById("warningReason").value = "";
 
     renderWarnings();
 
+    toast("Warning issued.");
 }
 
 
 function renderWarnings() {
 
     let table = document.getElementById("warningsTable");
-
     table.innerHTML = "";
 
-    warnings.forEach(function(warning) {
+    warnings.forEach(function(warning, index) {
 
-        table.innerHTML += `
-        <tr>
-            <td>${warning.user}</td>
-            <td>${warning.reason}</td>
-            <td>Admin</td>
-        </tr>
-        `;
+        let row = document.createElement("tr");
 
+        row.innerHTML =
+            "<td>" + escapeHTML(warning.player) + "</td>" +
+            "<td>" + escapeHTML(warning.reason) + "</td>" +
+            "<td><button class='btn gray' onclick='removeWarning(" + index + ")'>Remove</button></td>";
+
+        table.appendChild(row);
     });
 
-    document.getElementById("warningCount").textContent = warnings.length;
+    document.getElementById("warningsEmpty").style.display =
+        warnings.length ? "none" : "block";
 
+    document.getElementById("warningCount").textContent =
+        warnings.length;
 }
 
 
-/* BOLO */
+function removeWarning(index) {
+
+    warnings.splice(index, 1);
+
+    renderWarnings();
+
+    toast("Warning removed.");
+}
+
 
 function addBolo() {
 
-    let name = document.getElementById("boloName").value;
+    let player = document.getElementById("boloPlayer").value.trim();
+    let reason = document.getElementById("boloReason").value.trim();
 
-    let info = document.getElementById("boloInfo").value;
-
-    if (!name || !info) {
-
-        alert("Enter a name and information.");
-
+    if (!player || !reason) {
+        toast("Enter a player and reason.");
         return;
-
     }
 
     bolos.push({
-        name: name,
-        info: info
+        player: player,
+        reason: reason
     });
 
-    document.getElementById("boloName").value = "";
-
-    document.getElementById("boloInfo").value = "";
+    document.getElementById("boloPlayer").value = "";
+    document.getElementById("boloReason").value = "";
 
     renderBolos();
 
+    toast("BOLO created.");
 }
 
 
 function renderBolos() {
 
     let table = document.getElementById("boloTable");
-
     table.innerHTML = "";
 
-    bolos.forEach(function(bolo) {
+    bolos.forEach(function(bolo, index) {
 
-        table.innerHTML += `
-        <tr>
-            <td>${bolo.name}</td>
-            <td>${bolo.info}</td>
-            <td>Admin</td>
-        </tr>
-        `;
+        let row = document.createElement("tr");
 
+        row.innerHTML =
+            "<td>" + escapeHTML(bolo.player) + "</td>" +
+            "<td>" + escapeHTML(bolo.reason) + "</td>" +
+            "<td><button class='btn gray' onclick='removeBolo(" + index + ")'>Remove</button></td>";
+
+        table.appendChild(row);
     });
 
+    document.getElementById("boloEmpty").style.display =
+        bolos.length ? "none" : "block";
 }
 
 
-/* NOTES */
+function removeBolo(index) {
+
+    bolos.splice(index, 1);
+
+    renderBolos();
+
+    toast("BOLO removed.");
+}
+
 
 function addNote() {
 
-    let player = document.getElementById("notePlayer").value;
+    let player = document.getElementById("notePlayer").value.trim();
+    let note = document.getElementById("noteText").value.trim();
 
-    let content = document.getElementById("noteContent").value;
-
-    if (!player || !content) {
-
-        alert("Enter a player and note.");
-
+    if (!player || !note) {
+        toast("Enter a player and note.");
         return;
-
     }
 
     notes.push({
         player: player,
-        content: content
+        note: note
     });
 
     document.getElementById("notePlayer").value = "";
-
-    document.getElementById("noteContent").value = "";
+    document.getElementById("noteText").value = "";
 
     renderNotes();
 
+    toast("Note added.");
 }
 
 
 function renderNotes() {
 
     let table = document.getElementById("notesTable");
-
     table.innerHTML = "";
 
-    notes.forEach(function(note) {
+    notes.forEach(function(item, index) {
 
-        table.innerHTML += `
-        <tr>
-            <td>${note.player}</td>
-            <td>${note.content}</td>
-            <td>Admin</td>
-        </tr>
-        `;
+        let row = document.createElement("tr");
 
+        row.innerHTML =
+            "<td>" + escapeHTML(item.player) + "</td>" +
+            "<td>" + escapeHTML(item.note) + "</td>" +
+            "<td><button class='btn gray' onclick='removeNote(" + index + ")'>Remove</button></td>";
+
+        table.appendChild(row);
     });
 
+    document.getElementById("notesEmpty").style.display =
+        notes.length ? "none" : "block";
 }
+
+
+function removeNote(index) {
+
+    notes.splice(index, 1);
+
+    renderNotes();
+
+    toast("Note removed.");
+}
+
+
+function escapeHTML(text) {
+
+    let div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+updateSession();
+renderPlayers();
+renderBans();
+renderWarnings();
+renderBolos();
+renderNotes();
 
 </script>
 
