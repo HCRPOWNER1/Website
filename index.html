@@ -3,13 +3,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TSRP Staff Dashboard</title>
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-    margin:0;
     font-family:Arial,Helvetica,sans-serif;
     background:#0b0f17;
     color:#fff;
@@ -17,61 +16,81 @@ body{
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 
-.login{
+#loginScreen{
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#08111f,#111827);
-}
-.login-box{
-    width:390px;
-    max-width:92%;
-    background:#111827;
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 20px 60px #0008;
-}
-.logo{
-    text-align:center;
-    font-size:30px;
-    font-weight:bold;
-    margin-bottom:5px;
-}
-.subtitle{
-    text-align:center;
-    color:#94a3b8;
-    margin-bottom:25px;
-}
-input,select,textarea{
-    width:100%;
-    background:#0b1220;
-    color:white;
-    border:1px solid #263244;
-    border-radius:9px;
-    padding:12px;
-    margin:6px 0 12px;
-    outline:none;
-}
-input:focus,select:focus,textarea:focus{
-    border-color:#3b82f6;
-}
-.login button,.primary{
-    width:100%;
-    border:0;
-    border-radius:9px;
-    padding:12px;
-    background:#2563eb;
-    color:white;
-    font-weight:bold;
-}
-.error{
-    color:#f87171;
-    text-align:center;
-    margin-top:12px;
+    padding:20px;
+    background:linear-gradient(135deg,#0b0f17,#121b2c);
 }
 
-.app{display:none;min-height:100vh}
+.loginBox{
+    width:100%;
+    max-width:420px;
+    background:#151c2b;
+    border:1px solid #29354a;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 20px 60px #0008;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo h1{
+    font-size:30px;
+}
+
+.logo p{
+    color:#8f9bb0;
+    margin-top:6px;
+}
+
+.input{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border-radius:9px;
+    border:1px solid #344158;
+    background:#0e1420;
+    color:#fff;
+    outline:none;
+}
+
+.input:focus{
+    border-color:#4b8cff;
+}
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:11px 16px;
+    background:#286cff;
+    color:white;
+    font-weight:bold;
+}
+
+.btn:hover{filter:brightness(1.12)}
+
+.btn.red{background:#d83a4b}
+.btn.green{background:#1d9b62}
+.btn.gray{background:#303b4e}
+.btn.orange{background:#c47a20}
+
+.error{
+    color:#ff6877;
+    margin-top:12px;
+    text-align:center;
+    min-height:20px;
+}
+
+#app{
+    display:none;
+    min-height:100vh;
+}
 
 .sidebar{
     position:fixed;
@@ -79,60 +98,69 @@ input:focus,select:focus,textarea:focus{
     top:0;
     bottom:0;
     width:240px;
-    background:#0f172a;
-    border-right:1px solid #1e293b;
-    padding:20px;
-    overflow-y:auto;
+    background:#101621;
+    border-right:1px solid #263145;
+    padding:20px 14px;
+    z-index:10;
 }
-.brand{
-    font-size:22px;
-    font-weight:bold;
+
+.sideLogo{
+    padding:10px;
     margin-bottom:20px;
 }
-.staff-box{
-    background:#111c2e;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:20px;
-}
-.staff-name{font-weight:bold}
-.staff-rank{
-    color:#60a5fa;
-    font-size:13px;
-    margin-top:4px;
-}
+
+.sideLogo h2{font-size:21px}
+.sideLogo p{color:#7f8ba0;font-size:12px;margin-top:4px}
+
 .nav button{
     width:100%;
     text-align:left;
-    background:transparent;
-    color:#cbd5e1;
     border:0;
-    padding:11px;
+    color:#cbd4e3;
+    background:transparent;
+    padding:12px;
     margin:3px 0;
     border-radius:8px;
 }
-.nav button:hover,.nav button.active{
-    background:#1e293b;
-    color:white;
+
+.nav button:hover,
+.nav button.active{
+    background:#1d2b43;
+    color:#fff;
 }
 
 .main{
     margin-left:240px;
     padding:25px;
 }
+
 .topbar{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
     margin-bottom:25px;
+    gap:15px;
 }
-.topbar h1{margin:0}
-.logout{
-    background:#dc2626;
-    color:white;
-    border:0;
-    padding:9px 15px;
-    border-radius:8px;
+
+.topbar h1{font-size:28px}
+
+.staffInfo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#151e2d;
+    padding:9px 13px;
+    border-radius:9px;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:5px;
+    background:#293750;
+    color:#bcd0f7;
+    font-size:11px;
+    font-weight:bold;
 }
 
 .page{display:none}
@@ -142,109 +170,201 @@ input:focus,select:focus,textarea:focus{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:15px;
+    margin-bottom:20px;
 }
+
 .card{
-    background:#111827;
-    border:1px solid #1e293b;
-    border-radius:14px;
-    padding:20px;
+    background:#151d2b;
+    border:1px solid #263248;
+    border-radius:13px;
+    padding:18px;
 }
-.card-title{
-    color:#94a3b8;
-    font-size:14px;
+
+.card .label{
+    color:#8996aa;
+    font-size:13px;
 }
-.card-value{
+
+.card .value{
     font-size:28px;
     font-weight:bold;
     margin-top:8px;
 }
 
 .panel{
-    background:#111827;
-    border:1px solid #1e293b;
-    border-radius:14px;
+    background:#151d2b;
+    border:1px solid #263248;
+    border-radius:13px;
     padding:20px;
-    margin-top:20px;
-}
-.panel h2{
-    margin-top:0;
+    margin-bottom:20px;
 }
 
-.grid2{
+.panel h2{
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.sessionBox{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:15px;
 }
-.grid3{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
+
+.infoBox{
+    background:#0e1420;
+    border:1px solid #273249;
+    border-radius:10px;
+    padding:15px;
 }
 
-.status{
-    display:inline-block;
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:bold;
+.infoBox small{
+    display:block;
+    color:#7e8ba0;
+    margin-bottom:6px;
 }
-.online{background:#14532d;color:#86efac}
-.offline{background:#450a0a;color:#fca5a5}
+
+.tableWrap{overflow-x:auto}
 
 table{
     width:100%;
     border-collapse:collapse;
 }
+
 th,td{
-    padding:12px;
+    padding:12px 9px;
+    border-bottom:1px solid #273249;
     text-align:left;
-    border-bottom:1px solid #1e293b;
+    white-space:nowrap;
 }
-th{color:#94a3b8}
 
-.small-btn{
-    border:0;
-    border-radius:7px;
-    padding:7px 10px;
-    color:white;
-    background:#334155;
-    margin:2px;
+th{
+    color:#8794a9;
+    font-size:12px;
 }
-.danger{background:#dc2626}
-.green{background:#16a34a}
-.blue{background:#2563eb}
-.orange{background:#d97706}
 
-textarea{min-height:90px;resize:vertical}
+td{
+    color:#dce3ee;
+    font-size:14px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status.online{
+    background:#123d2b;
+    color:#5ee7a5;
+}
+
+.status.offline{
+    background:#3b1820;
+    color:#ff7180;
+}
+
+.formGrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.formGroup label{
+    display:block;
+    color:#9aa7ba;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+textarea.input{
+    min-height:100px;
+    resize:vertical;
+}
+
+.full{grid-column:1/-1}
+
+.search{
+    max-width:350px;
+    margin-bottom:15px;
+}
+
+.logItem{
+    border-bottom:1px solid #273249;
+    padding:12px 0;
+}
+
+.logItem:last-child{border-bottom:0}
+
+.logTime{
+    color:#738097;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.empty{
+    color:#748095;
+    text-align:center;
+    padding:25px;
+}
 
 .toast{
     position:fixed;
     right:20px;
     bottom:20px;
-    background:#111827;
-    border:1px solid #334155;
-    padding:14px 18px;
-    border-radius:10px;
+    background:#1b2638;
+    border:1px solid #34435d;
+    padding:13px 17px;
+    border-radius:9px;
     display:none;
     z-index:100;
+    box-shadow:0 10px 30px #0008;
+}
+
+.mobileMenu{
+    display:none;
 }
 
 @media(max-width:900px){
     .sidebar{
-        width:200px;
+        transform:translateX(-100%);
+        transition:.2s;
     }
-    .main{margin-left:200px}
-    .cards{grid-template-columns:1fr 1fr}
-    .grid3{grid-template-columns:1fr}
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobileMenu{
+        display:block;
+        border:0;
+        background:#202d43;
+        color:#fff;
+        padding:10px 13px;
+        border-radius:8px;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
-@media(max-width:650px){
-    .sidebar{
-        position:relative;
-        width:100%;
-        height:auto;
-    }
-    .main{margin-left:0}
-    .cards,.grid2{grid-template-columns:1fr}
+
+@media(max-width:600px){
+    .main{padding:15px}
+    .cards{grid-template-columns:1fr}
+    .sessionBox,.formGrid{grid-template-columns:1fr}
+    .topbar{align-items:flex-start}
 }
 </style>
 </head>
@@ -252,382 +372,515 @@ textarea{min-height:90px;resize:vertical}
 <body>
 
 <!-- LOGIN -->
-<div class="login" id="loginScreen">
-    <div class="login-box">
-        <div class="logo">TSRP</div>
-        <div class="subtitle">Texas State Roleplay Staff Panel</div>
+<div id="loginScreen">
+    <div class="loginBox">
+        <div class="logo">
+            <h1>Texas State Roleplay</h1>
+            <p>Staff Management Dashboard</p>
+        </div>
 
-        <input id="username" placeholder="Staff Username">
-        <input id="password" type="password" placeholder="Password">
+        <input id="loginUsername" class="input" placeholder="Username">
+        <input id="loginPassword" class="input" type="password" placeholder="Password">
 
-        <button onclick="login()">Login</button>
+        <button class="btn" style="width:100%;margin-top:15px" onclick="login()">
+            Staff Login
+        </button>
 
-        <div class="error" id="loginError"></div>
+        <div id="loginError" class="error"></div>
     </div>
 </div>
 
 <!-- APP -->
-<div class="app" id="app">
+<div id="app">
 
-<aside class="sidebar">
-
-    <div class="brand">TSRP STAFF</div>
-
-    <div class="staff-box">
-        <div class="staff-name" id="staffDisplay">Staff</div>
-        <div class="staff-rank" id="rankDisplay">Staff</div>
+<aside class="sidebar" id="sidebar">
+    <div class="sideLogo">
+        <h2>TSRP</h2>
+        <p>Staff Dashboard</p>
     </div>
 
     <div class="nav">
-
-        <button onclick="showPage('dashboard')" class="active">🏠 Dashboard</button>
-        <button onclick="showPage('session')">🟢 Session</button>
-        <button onclick="showPage('players')">👤 Players</button>
-        <button onclick="showPage('bans')">🚫 Bans</button>
-        <button onclick="showPage('warnings')">⚠️ Warnings</button>
-        <button onclick="showPage('bolos')">🔎 BOLOs</button>
-        <button onclick="showPage('notes')">📝 Notes</button>
-        <button onclick="showPage('staff')">👮 Staff</button>
-        <button onclick="showPage('applications')">📋 Applications</button>
-        <button onclick="showPage('activity')">📊 Activity Logs</button>
-        <button onclick="showPage('settings')">⚙️ Settings</button>
-
+        <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+        <button onclick="showPage('session',this)">Session</button>
+        <button onclick="showPage('players',this)">Players</button>
+        <button onclick="showPage('bans',this)">Bans</button>
+        <button onclick="showPage('warnings',this)">Warnings</button>
+        <button onclick="showPage('bolos',this)">BOLOs</button>
+        <button onclick="showPage('notes',this)">Notes</button>
+        <button onclick="showPage('staff',this)">Staff</button>
+        <button onclick="showPage('applications',this)">Applications</button>
+        <button onclick="showPage('logs',this)">Activity Logs</button>
+        <button onclick="showPage('settings',this)">Settings</button>
+        <button onclick="logout()">Logout</button>
     </div>
 </aside>
 
 <main class="main">
 
 <div class="topbar">
-    <h1 id="pageTitle">Dashboard</h1>
-    <button class="logout" onclick="logout()">Logout</button>
+    <div class="row">
+        <button class="mobileMenu" onclick="toggleSidebar()">☰</button>
+        <h1 id="pageTitle">Dashboard</h1>
+    </div>
+
+    <div class="staffInfo">
+        <span id="staffName">Staff</span>
+        <span id="staffRank" class="badge">Staff</span>
+    </div>
 </div>
 
 <!-- DASHBOARD -->
-<section class="page active" id="dashboard">
+<section id="dashboard" class="page active">
 
 <div class="cards">
+    <div class="card">
+        <div class="label">Session</div>
+        <div class="value" id="dashSession">OFF</div>
+    </div>
 
-<div class="card">
-<div class="card-title">Session</div>
-<div class="card-value" id="dashSession">OFF</div>
-</div>
+    <div class="card">
+        <div class="label">Players</div>
+        <div class="value" id="dashPlayers">0</div>
+    </div>
 
-<div class="card">
-<div class="card-title">Players</div>
-<div class="card-value" id="dashPlayers">0</div>
-</div>
+    <div class="card">
+        <div class="label">Bans</div>
+        <div class="value" id="dashBans">0</div>
+    </div>
 
-<div class="card">
-<div class="card-title">Bans</div>
-<div class="card-value" id="dashBans">0</div>
-</div>
-
-<div class="card">
-<div class="card-title">Warnings</div>
-<div class="card-value" id="dashWarnings">0</div>
-</div>
-
-</div>
-
-<div class="panel">
-<h2>Current Session</h2>
-<div id="dashboardSession">No active session.</div>
+    <div class="card">
+        <div class="label">Warnings</div>
+        <div class="value" id="dashWarnings">0</div>
+    </div>
 </div>
 
 <div class="panel">
-<h2>Quick Actions</h2>
-<button class="small-btn green" onclick="showPage('session')">Start Session</button>
-<button class="small-btn blue" onclick="showPage('players')">Manage Players</button>
-<button class="small-btn danger" onclick="showPage('bans')">Manage Bans</button>
-<button class="small-btn orange" onclick="showPage('applications')">Applications</button>
+    <h2>Current Session</h2>
+
+    <div class="sessionBox">
+        <div class="infoBox">
+            <small>Status</small>
+            <span id="sessionStatus" class="status offline">OFFLINE</span>
+        </div>
+
+        <div class="infoBox">
+            <small>Host</small>
+            <strong id="sessionHost">None</strong>
+        </div>
+
+        <div class="infoBox">
+            <small>Server Code</small>
+            <strong id="sessionCode">None</strong>
+        </div>
+
+        <div class="infoBox">
+            <small>Started</small>
+            <strong id="sessionStarted">None</strong>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:15px">
+        <button class="btn green" onclick="startSession()">Start SSU</button>
+        <button class="btn red" onclick="shutdownSession()">Shutdown SSD</button>
+        <button class="btn orange" onclick="sessionVote()">Session Vote</button>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Quick Actions</h2>
+    <div class="row">
+        <button class="btn" onclick="showPageByName('players')">Manage Players</button>
+        <button class="btn" onclick="showPageByName('bans')">Manage Bans</button>
+        <button class="btn" onclick="showPageByName('warnings')">Manage Warnings</button>
+        <button class="btn" onclick="showPageByName('bolos')">Manage BOLOs</button>
+    </div>
 </div>
 
 </section>
 
 <!-- SESSION -->
-<section class="page" id="session">
+<section id="session" class="page">
 
 <div class="panel">
+    <h2>Session Management</h2>
 
-<h2>Session Control</h2>
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Server Code</label>
+            <input id="serverCodeInput" class="input" placeholder="Example: ABC123">
+        </div>
 
-<div id="sessionStatus"></div>
+        <div class="formGroup">
+            <label>Host</label>
+            <input id="hostInput" class="input" placeholder="Host name">
+        </div>
+    </div>
 
-<div class="grid2">
-
-<div>
-<label>Server Code</label>
-<input id="serverCode" placeholder="Example: ABC123">
-</div>
-
-<div>
-<label>Session Host</label>
-<input id="sessionHost" disabled>
-</div>
-
-</div>
-
-<button class="small-btn green" onclick="startSession()">🟢 SSU — Start Session</button>
-<button class="small-btn danger" onclick="shutdownSession()">🔴 SSD — Shutdown Session</button>
-<button class="small-btn blue" onclick="sessionVote()">🗳️ Session Vote</button>
-
+    <div class="row" style="margin-top:15px">
+        <button class="btn green" onclick="startSession()">Start SSU</button>
+        <button class="btn red" onclick="shutdownSession()">Shutdown SSD</button>
+        <button class="btn orange" onclick="sessionVote()">Session Vote</button>
+    </div>
 </div>
 
 <div class="panel">
-<h2>Session Information</h2>
-<div id="sessionInfo">No session active.</div>
+    <h2>Session Information</h2>
+    <div id="sessionDetails"></div>
 </div>
 
 </section>
 
 <!-- PLAYERS -->
-<section class="page" id="players">
+<section id="players" class="page">
 
 <div class="panel">
-<h2>Player Management</h2>
+    <h2>Player Management</h2>
 
-<input id="playerSearch" placeholder="Search players..." oninput="renderPlayers()">
+    <input id="playerSearch" class="input search"
+           placeholder="Search players..."
+           oninput="renderPlayers()">
 
-<div class="grid2">
-<input id="newPlayer" placeholder="Roblox username">
-<button class="primary" onclick="addPlayer()">Add Player</button>
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Player Username</label>
+            <input id="newPlayer" class="input">
+        </div>
+    </div>
+
+    <button class="btn" style="margin-top:12px" onclick="addPlayer()">
+        Add Player
+    </button>
 </div>
 
-<table>
-<thead>
-<tr>
-<th>Username</th>
-<th>Added By</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="playerTable"></tbody>
-</table>
-
+<div class="panel">
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Added By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="playersTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
 <!-- BANS -->
-<section class="page" id="bans">
+<section id="bans" class="page">
 
 <div class="panel">
-<h2>Ban Management</h2>
+    <h2>Create Ban</h2>
 
-<div class="grid3">
-<input id="banPlayer" placeholder="Player">
-<input id="banReason" placeholder="Reason">
-<input id="banDuration" placeholder="Duration">
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Player</label>
+            <input id="banPlayer" class="input">
+        </div>
+
+        <div class="formGroup">
+            <label>Duration</label>
+            <select id="banDuration" class="input">
+                <option>Permanent</option>
+                <option>1 Hour</option>
+                <option>6 Hours</option>
+                <option>1 Day</option>
+                <option>3 Days</option>
+                <option>7 Days</option>
+            </select>
+        </div>
+
+        <div class="formGroup full">
+            <label>Reason</label>
+            <textarea id="banReason" class="input"></textarea>
+        </div>
+    </div>
+
+    <button class="btn red" style="margin-top:12px" onclick="addBan()">
+        Ban Player
+    </button>
 </div>
 
-<button class="small-btn danger" onclick="addBan()">Add Ban</button>
-
-<table>
-<thead>
-<tr>
-<th>Player</th>
-<th>Reason</th>
-<th>Duration</th>
-<th>Staff</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="banTable"></tbody>
-</table>
-
+<div class="panel">
+    <h2>Active Bans</h2>
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Reason</th>
+                    <th>Duration</th>
+                    <th>Staff</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="bansTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
 <!-- WARNINGS -->
-<section class="page" id="warnings">
+<section id="warnings" class="page">
 
 <div class="panel">
-<h2>Warning Management</h2>
+    <h2>Issue Warning</h2>
 
-<div class="grid2">
-<input id="warnPlayer" placeholder="Player">
-<input id="warnReason" placeholder="Reason">
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Player</label>
+            <input id="warningPlayer" class="input">
+        </div>
+
+        <div class="formGroup full">
+            <label>Reason</label>
+            <textarea id="warningReason" class="input"></textarea>
+        </div>
+    </div>
+
+    <button class="btn orange" style="margin-top:12px" onclick="addWarning()">
+        Issue Warning
+    </button>
 </div>
 
-<button class="small-btn orange" onclick="addWarning()">Issue Warning</button>
-
-<table>
-<thead>
-<tr>
-<th>Player</th>
-<th>Reason</th>
-<th>Staff</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="warningTable"></tbody>
-</table>
-
+<div class="panel">
+    <h2>Warnings</h2>
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Reason</th>
+                    <th>Staff</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="warningsTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
 <!-- BOLOS -->
-<section class="page" id="bolos">
+<section id="bolos" class="page">
 
 <div class="panel">
-<h2>BOLO Management</h2>
+    <h2>Create BOLO</h2>
 
-<div class="grid2">
-<input id="boloPlayer" placeholder="Player">
-<input id="boloReason" placeholder="Reason">
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Player</label>
+            <input id="boloPlayer" class="input">
+        </div>
+
+        <div class="formGroup full">
+            <label>Reason</label>
+            <textarea id="boloReason" class="input"></textarea>
+        </div>
+    </div>
+
+    <button class="btn orange" style="margin-top:12px" onclick="addBolo()">
+        Create BOLO
+    </button>
 </div>
 
-<button class="small-btn blue" onclick="addBolo()">Create BOLO</button>
-
-<table>
-<thead>
-<tr>
-<th>Player</th>
-<th>Reason</th>
-<th>Staff</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="boloTable"></tbody>
-</table>
-
+<div class="panel">
+    <h2>Active BOLOs</h2>
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Reason</th>
+                    <th>Staff</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="bolosTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
 <!-- NOTES -->
-<section class="page" id="notes">
+<section id="notes" class="page">
 
 <div class="panel">
-<h2>Player Notes</h2>
+    <h2>Add Player Note</h2>
 
-<input id="notePlayer" placeholder="Player">
-<textarea id="noteText" placeholder="Staff note"></textarea>
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Player</label>
+            <input id="notePlayer" class="input">
+        </div>
 
-<button class="small-btn blue" onclick="addNote()">Add Note</button>
+        <div class="formGroup full">
+            <label>Note</label>
+            <textarea id="noteText" class="input"></textarea>
+        </div>
+    </div>
 
-<table>
-<thead>
-<tr>
-<th>Player</th>
-<th>Note</th>
-<th>Staff</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="noteTable"></tbody>
-</table>
+    <button class="btn" style="margin-top:12px" onclick="addNote()">
+        Add Note
+    </button>
+</div>
 
+<div class="panel">
+    <h2>Notes</h2>
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Note</th>
+                    <th>Staff</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="notesTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
 <!-- STAFF -->
-<section class="page" id="staff">
+<section id="staff" class="page">
 
 <div class="panel">
-<h2>Staff Management</h2>
+    <h2>Staff Accounts</h2>
 
-<div class="grid3">
-<input id="newStaffUser" placeholder="Username">
-<input id="newStaffPass" placeholder="Password">
-<select id="newStaffRank">
-<option>Moderator</option>
-<option>Administrator</option>
-<option>Management</option>
-</select>
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Username</label>
+            <input id="staffUsername" class="input">
+        </div>
+
+        <div class="formGroup">
+            <label>Password</label>
+            <input id="staffPassword" class="input">
+        </div>
+
+        <div class="formGroup">
+            <label>Rank</label>
+            <select id="staffRole" class="input">
+                <option>Moderator</option>
+                <option>Administrator</option>
+            </select>
+        </div>
+    </div>
+
+    <button class="btn" style="margin-top:12px" onclick="addStaff()">
+        Add Staff
+    </button>
 </div>
 
-<button class="small-btn green" onclick="addStaff()">Add Staff</button>
-
-<table>
-<thead>
-<tr>
-<th>Username</th>
-<th>Rank</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="staffTable"></tbody>
-</table>
-
+<div class="panel">
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Rank</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="staffTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
 <!-- APPLICATIONS -->
-<section class="page" id="applications">
+<section id="applications" class="page">
 
 <div class="panel">
-<h2>Staff Applications</h2>
+    <h2>Staff Applications</h2>
 
-<div class="grid2">
-<input id="appName" placeholder="Applicant username">
-<input id="appAge" placeholder="Age">
+    <div class="formGrid">
+        <div class="formGroup">
+            <label>Applicant</label>
+            <input id="applicationName" class="input">
+        </div>
+
+        <div class="formGroup">
+            <label>Age</label>
+            <input id="applicationAge" class="input">
+        </div>
+
+        <div class="formGroup full">
+            <label>Why should we accept you?</label>
+            <textarea id="applicationReason" class="input"></textarea>
+        </div>
+    </div>
+
+    <button class="btn" style="margin-top:12px" onclick="addApplication()">
+        Submit Application
+    </button>
 </div>
 
-<textarea id="appExperience" placeholder="Previous staff experience"></textarea>
-
-<button class="small-btn green" onclick="submitApplication()">Submit Application</button>
-
-<table>
-<thead>
-<tr>
-<th>Applicant</th>
-<th>Age</th>
-<th>Status</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="applicationTable"></tbody>
-</table>
-
+<div class="panel">
+    <div class="tableWrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Applicant</th>
+                    <th>Age</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="applicationsTable"></tbody>
+        </table>
+    </div>
 </div>
 
 </section>
 
-<!-- ACTIVITY -->
-<section class="page" id="activity">
+<!-- LOGS -->
+<section id="logs" class="page">
 
 <div class="panel">
-<h2>Staff Activity Logs</h2>
-
-<table>
-<thead>
-<tr>
-<th>Time</th>
-<th>Staff</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="activityTable"></tbody>
-</table>
-
+    <h2>Staff Activity Logs</h2>
+    <div id="logsList"></div>
 </div>
 
 </section>
 
 <!-- SETTINGS -->
-<section class="page" id="settings">
+<section id="settings" class="page">
 
 <div class="panel">
-<h2>Dashboard Settings</h2>
+    <h2>TSRP Settings</h2>
 
-<label>Community Name</label>
-<input id="communityName" value="Texas State Roleplay">
+    <div class="formGroup">
+        <label>Cloudflare Worker</label>
+        <input class="input"
+               value="https://tsrp-discord1.j-magdaleno5.workers.dev"
+               readonly>
+    </div>
 
-<label>Worker URL</label>
-<input id="workerURL" placeholder="https://your-worker.workers.dev">
+    <p style="color:#8490a3;margin-top:10px;font-size:13px">
+        Your dashboard is connected to your TSRP Cloudflare Worker.
+    </p>
 
-<button class="small-btn blue" onclick="saveSettings()">Save Settings</button>
+    <div class="row" style="margin-top:15px">
+        <button class="btn" onclick="testWorker()">
+            Test Worker
+        </button>
 
-</div>
-
-<div class="panel">
-<h2>Data</h2>
-<button class="small-btn danger" onclick="clearData()">Clear Local Dashboard Data</button>
+        <button class="btn gray" onclick="clearLocalData()">
+            Clear Dashboard Data
+        </button>
+    </div>
 </div>
 
 </section>
@@ -635,44 +888,115 @@ textarea{min-height:90px;resize:vertical}
 </main>
 </div>
 
-<div class="toast" id="toast"></div>
+<div id="toast" class="toast"></div>
 
 <script>
-
 /* =========================
-   STORAGE
+   TSRP CONFIGURATION
 ========================= */
 
-var players = JSON.parse(localStorage.getItem("tsrp_players") || "[]");
-var bans = JSON.parse(localStorage.getItem("tsrp_bans") || "[]");
-var warnings = JSON.parse(localStorage.getItem("tsrp_warnings") || "[]");
-var bolos = JSON.parse(localStorage.getItem("tsrp_bolos") || "[]");
-var notes = JSON.parse(localStorage.getItem("tsrp_notes") || "[]");
-var staff = JSON.parse(localStorage.getItem("tsrp_staff") || "[]");
-var applications = JSON.parse(localStorage.getItem("tsrp_apps") || "[]");
-var activity = JSON.parse(localStorage.getItem("tsrp_activity") || "[]");
+var WORKER_URL = "https://tsrp-discord1.j-magdaleno5.workers.dev";
 
-var session = JSON.parse(localStorage.getItem("tsrp_session") || "null");
+/* =========================
+   DATA
+========================= */
 
-var currentStaff = JSON.parse(sessionStorage.getItem("tsrp_staff") || "null");
+var staffAccounts = JSON.parse(localStorage.getItem("tsrp_staff")) || [
+    {
+        username:"admin",
+        password:"tsrp123",
+        role:"Administrator"
+    },
+    {
+        username:"moderator",
+        password:"mod123",
+        role:"Moderator"
+    }
+];
 
-/* Default accounts */
-if(staff.length === 0){
+var players = JSON.parse(localStorage.getItem("tsrp_players")) || [];
+var bans = JSON.parse(localStorage.getItem("tsrp_bans")) || [];
+var warnings = JSON.parse(localStorage.getItem("tsrp_warnings")) || [];
+var bolos = JSON.parse(localStorage.getItem("tsrp_bolos")) || [];
+var notes = JSON.parse(localStorage.getItem("tsrp_notes")) || [];
+var applications = JSON.parse(localStorage.getItem("tsrp_applications")) || [];
+var logs = JSON.parse(localStorage.getItem("tsrp_logs")) || [];
 
-    staff = [
-        {
-            username:"admin",
-            password:"tsrp123",
-            rank:"Administrator"
-        },
-        {
-            username:"moderator",
-            password:"mod123",
-            rank:"Moderator"
-        }
-    ];
+var session = JSON.parse(localStorage.getItem("tsrp_session")) || {
+    active:false,
+    host:"",
+    serverCode:"",
+    started:""
+};
 
-    save();
+var currentStaff = JSON.parse(sessionStorage.getItem("tsrp_current_staff")) || null;
+
+/* =========================
+   HELPERS
+========================= */
+
+function saveAll(){
+    localStorage.setItem("tsrp_staff",JSON.stringify(staffAccounts));
+    localStorage.setItem("tsrp_players",JSON.stringify(players));
+    localStorage.setItem("tsrp_bans",JSON.stringify(bans));
+    localStorage.setItem("tsrp_warnings",JSON.stringify(warnings));
+    localStorage.setItem("tsrp_bolos",JSON.stringify(bolos));
+    localStorage.setItem("tsrp_notes",JSON.stringify(notes));
+    localStorage.setItem("tsrp_applications",JSON.stringify(applications));
+    localStorage.setItem("tsrp_logs",JSON.stringify(logs));
+    localStorage.setItem("tsrp_session",JSON.stringify(session));
+}
+
+function escapeHTML(value){
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function toast(message){
+    var el = document.getElementById("toast");
+    el.textContent = message;
+    el.style.display = "block";
+
+    setTimeout(function(){
+        el.style.display = "none";
+    },3000);
+}
+
+function addLog(action){
+    logs.unshift({
+        action:action,
+        staff:currentStaff ? currentStaff.username : "System",
+        time:new Date().toLocaleString()
+    });
+
+    if(logs.length > 200){
+        logs.length = 200;
+    }
+
+    saveAll();
+    renderLogs();
+}
+
+function hasPermission(){
+    if(!currentStaff){
+        toast("You must be logged in.");
+        return false;
+    }
+
+    return true;
+}
+
+function adminOnly(){
+    if(!currentStaff || currentStaff.role !== "Administrator"){
+        toast("Administrator permission required.");
+        return false;
+    }
+
+    return true;
 }
 
 /* =========================
@@ -681,190 +1005,267 @@ if(staff.length === 0){
 
 function login(){
 
-    var username = document.getElementById("username").value.trim();
-    var password = document.getElementById("password").value;
+    var username = document.getElementById("loginUsername").value.trim();
+    var password = document.getElementById("loginPassword").value;
 
-    var found = staff.find(function(x){
-        return x.username === username && x.password === password;
-    });
+    var found = null;
+
+    for(var i=0;i<staffAccounts.length;i++){
+        if(
+            staffAccounts[i].username === username &&
+            staffAccounts[i].password === password
+        ){
+            found = staffAccounts[i];
+            break;
+        }
+    }
 
     if(!found){
         document.getElementById("loginError").textContent =
-        "Invalid username or password.";
+            "Invalid username or password.";
         return;
     }
 
     currentStaff = {
         username:found.username,
-        rank:found.rank
+        role:found.role
     };
 
     sessionStorage.setItem(
-        "tsrp_staff",
+        "tsrp_current_staff",
         JSON.stringify(currentStaff)
     );
 
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("app").style.display="block";
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").style.display = "block";
 
-    updateStaffDisplay();
+    document.getElementById("staffName").textContent = currentStaff.username;
+    document.getElementById("staffRank").textContent = currentStaff.role;
+
+    document.getElementById("loginError").textContent = "";
+
+    addLog("Staff logged in");
+
     refreshAll();
-
-    logActivity("Logged into dashboard");
 }
 
 function logout(){
 
-    sessionStorage.removeItem("tsrp_staff");
+    if(currentStaff){
+        addLog("Staff logged out");
+    }
 
-    currentStaff=null;
+    sessionStorage.removeItem("tsrp_current_staff");
+    currentStaff = null;
 
-    document.getElementById("app").style.display="none";
-    document.getElementById("loginScreen").style.display="flex";
+    document.getElementById("app").style.display = "none";
+    document.getElementById("loginScreen").style.display = "flex";
+
+    document.getElementById("loginUsername").value = "";
+    document.getElementById("loginPassword").value = "";
 }
 
 /* =========================
    NAVIGATION
 ========================= */
 
-function showPage(page){
+function showPage(id,button){
 
-    document.querySelectorAll(".page").forEach(function(x){
-        x.classList.remove("active");
-    });
+    var pages = document.querySelectorAll(".page");
 
-    document.getElementById(page).classList.add("active");
+    for(var i=0;i<pages.length;i++){
+        pages[i].classList.remove("active");
+    }
 
-    document.querySelectorAll(".nav button").forEach(function(x){
-        x.classList.remove("active");
-    });
+    document.getElementById(id).classList.add("active");
 
-    var title={
+    var buttons = document.querySelectorAll(".nav button");
+
+    for(var j=0;j<buttons.length;j++){
+        buttons[j].classList.remove("active");
+    }
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    var titles = {
         dashboard:"Dashboard",
-        session:"Session Control",
+        session:"Session",
         players:"Players",
         bans:"Bans",
         warnings:"Warnings",
         bolos:"BOLOs",
         notes:"Notes",
-        staff:"Staff Management",
-        applications:"Staff Applications",
-        activity:"Activity Logs",
+        staff:"Staff",
+        applications:"Applications",
+        logs:"Activity Logs",
         settings:"Settings"
     };
 
-    document.getElementById("pageTitle").textContent=title[page];
+    document.getElementById("pageTitle").textContent = titles[id] || "TSRP";
+    document.getElementById("sidebar").classList.remove("open");
+}
 
-    var buttons=document.querySelectorAll(".nav button");
+function showPageByName(id){
+    var buttons = document.querySelectorAll(".nav button");
 
-    buttons.forEach(function(button){
-        if(button.textContent.toLowerCase().includes(title[page].toLowerCase().split(" ")[0])){
-            button.classList.add("active");
+    for(var i=0;i<buttons.length;i++){
+        if(buttons[i].textContent.toLowerCase().includes(id.toLowerCase())){
+            showPage(id,buttons[i]);
+            return;
         }
-    });
+    }
+
+    showPage(id,null);
+}
+
+function toggleSidebar(){
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+/* =========================
+   WORKER
+========================= */
+
+async function sendToWorker(type,data){
+
+    try{
+
+        var body = data || {};
+        body.type = type;
+
+        var response = await fetch(WORKER_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(body)
+        });
+
+        var result = await response.json();
+
+        if(!response.ok || !result.success){
+            throw new Error(result.error || "Worker request failed");
+        }
+
+        return true;
+
+    }catch(error){
+
+        console.error(error);
+        toast("Worker/Discord request failed.");
+        return false;
+    }
+}
+
+async function testWorker(){
+
+    try{
+
+        var response = await fetch(WORKER_URL);
+        var result = await response.json();
+
+        if(result.success){
+            toast("TSRP Worker is online!");
+        }else{
+            toast("Worker responded with an error.");
+        }
+
+    }catch(error){
+        toast("Could not reach Worker.");
+    }
 }
 
 /* =========================
    SESSION
 ========================= */
 
-function startSession(){
+async function startSession(){
 
-    if(session){
-        toast("A session is already active.");
+    if(!hasPermission()) return;
+
+    var serverCode =
+        document.getElementById("serverCodeInput").value.trim();
+
+    var host =
+        document.getElementById("hostInput").value.trim();
+
+    if(!host){
+        host = currentStaff.username;
+    }
+
+    if(!serverCode){
+        toast("Enter a server code.");
         return;
     }
 
-    var code=document.getElementById("serverCode").value.trim();
+    session.active = true;
+    session.host = host;
+    session.serverCode = serverCode;
+    session.started = new Date().toLocaleString();
 
-    if(!code){
-        toast("Enter a server code first.");
-        return;
-    }
+    saveAll();
 
-    session={
-        active:true,
-        host:currentStaff.username,
-        serverCode:code,
-        started:new Date().toLocaleString()
-    };
+    var sent = await sendToWorker("ssu",{
+        host:host,
+        serverCode:serverCode
+    });
 
-    localStorage.setItem("tsrp_session",JSON.stringify(session));
-
-    logActivity("Started an SSU session");
-
-    toast("Session started!");
+    addLog("Started SSU");
 
     refreshAll();
-}
 
-function shutdownSession(){
-
-    if(!session){
-        toast("No active session.");
-        return;
-    }
-
-    session=null;
-
-    localStorage.removeItem("tsrp_session");
-
-    logActivity("Shutdown the session");
-
-    toast("Session shut down.");
-
-    refreshAll();
-}
-
-function sessionVote(){
-
-    if(!session){
-        toast("Start a session before creating a vote.");
-        return;
-    }
-
-    logActivity("Created a session vote");
-
-    alert(
-        "TSRP SESSION VOTE\n\n" +
-        "Should Texas State Roleplay start a session?\n\n" +
-        "This is currently a dashboard-only vote."
-    );
-}
-
-function renderSession(){
-
-    var status=document.getElementById("sessionStatus");
-
-    if(session){
-
-        status.innerHTML=
-        '<span class="status online">SESSION ONLINE</span>';
-
-        document.getElementById("sessionHost").value=session.host;
-
-        document.getElementById("sessionInfo").innerHTML=
-        "<b>Host:</b> "+escapeHTML(session.host)+"<br>"+
-        "<b>Server Code:</b> "+escapeHTML(session.serverCode)+"<br>"+
-        "<b>Started:</b> "+escapeHTML(session.started);
-
-        document.getElementById("dashboardSession").innerHTML=
-        '<span class="status online">ONLINE</span><br><br>'+
-        "Host: "+escapeHTML(session.host)+"<br>"+
-        "Server Code: "+escapeHTML(session.serverCode);
-
+    if(sent){
+        toast("SSU started and Discord was notified.");
     }else{
+        toast("SSU started locally, but Discord notification failed.");
+    }
+}
 
-        status.innerHTML=
-        '<span class="status offline">SESSION OFFLINE</span>';
+async function shutdownSession(){
 
-        document.getElementById("sessionHost").value="";
+    if(!hasPermission()) return;
 
-        document.getElementById("sessionInfo").textContent=
-        "No session active.";
+    if(!session.active){
+        toast("There is no active session.");
+        return;
+    }
 
-        document.getElementById("dashboardSession").innerHTML=
-        '<span class="status offline">OFFLINE</span>';
+    var sent = await sendToWorker("ssd",{
+        host:session.host
+    });
+
+    session.active = false;
+    session.host = "";
+    session.serverCode = "";
+    session.started = "";
+
+    saveAll();
+
+    addLog("Shutdown SSD");
+
+    refreshAll();
+
+    if(sent){
+        toast("SSD sent to Discord.");
+    }else{
+        toast("Session shut down locally.");
+    }
+}
+
+async function sessionVote(){
+
+    if(!hasPermission()) return;
+
+    var sent = await sendToWorker("vote",{
+        host:currentStaff.username
+    });
+
+    addLog("Started session vote");
+
+    if(sent){
+        toast("Session vote sent to Discord.");
     }
 }
 
@@ -874,7 +1275,9 @@ function renderSession(){
 
 function addPlayer(){
 
-    var name=document.getElementById("newPlayer").value.trim();
+    if(!hasPermission()) return;
+
+    var name = document.getElementById("newPlayer").value.trim();
 
     if(!name){
         toast("Enter a player username.");
@@ -883,52 +1286,60 @@ function addPlayer(){
 
     players.push({
         name:name,
-        staff:currentStaff.username
+        staff:currentStaff.username,
+        time:new Date().toLocaleString()
     });
 
-    document.getElementById("newPlayer").value="";
+    document.getElementById("newPlayer").value = "";
 
-    save();
-
-    logActivity("Added player: "+name);
+    saveAll();
+    addLog("Added player " + name);
+    renderPlayers();
+    updateDashboard();
 
     toast("Player added.");
-
-    refreshAll();
 }
 
 function removePlayer(index){
 
-    var name=players[index].name;
+    if(!hasPermission()) return;
+
+    var player = players[index];
 
     players.splice(index,1);
 
-    save();
-
-    logActivity("Removed player: "+name);
-
-    refreshAll();
+    saveAll();
+    addLog("Removed player " + player.name);
+    renderPlayers();
+    updateDashboard();
 }
 
 function renderPlayers(){
 
-    var search=document.getElementById("playerSearch").value.toLowerCase();
+    var search =
+        document.getElementById("playerSearch").value.toLowerCase();
 
-    var rows="";
+    var html = "";
 
-    players.forEach(function(p,index){
+    for(var i=0;i<players.length;i++){
 
-        if(!p.name.toLowerCase().includes(search)) return;
+        if(!players[i].name.toLowerCase().includes(search)){
+            continue;
+        }
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(p.name)+"</td>"+
-        "<td>"+escapeHTML(p.staff)+"</td>"+
-        "<td><button class='small-btn danger' onclick='removePlayer("+index+")'>Remove</button></td>"+
-        "</tr>";
-    });
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(players[i].name)+"</td>" +
+            "<td>"+escapeHTML(players[i].staff)+"</td>" +
+            "<td><button class='btn red' onclick='removePlayer("+i+")'>Remove</button></td>" +
+            "</tr>";
+    }
 
-    document.getElementById("playerTable").innerHTML=rows;
+    if(!html){
+        html = "<tr><td colspan='3' class='empty'>No players found.</td></tr>";
+    }
+
+    document.getElementById("playersTable").innerHTML = html;
 }
 
 /* =========================
@@ -937,63 +1348,76 @@ function renderPlayers(){
 
 function addBan(){
 
-    var player=document.getElementById("banPlayer").value.trim();
-    var reason=document.getElementById("banReason").value.trim();
-    var duration=document.getElementById("banDuration").value.trim();
+    if(!hasPermission()) return;
+
+    var player =
+        document.getElementById("banPlayer").value.trim();
+
+    var reason =
+        document.getElementById("banReason").value.trim();
+
+    var duration =
+        document.getElementById("banDuration").value;
 
     if(!player || !reason){
-        toast("Enter player and reason.");
+        toast("Enter a player and reason.");
         return;
     }
 
     bans.push({
         player:player,
         reason:reason,
-        duration:duration || "Permanent",
-        staff:currentStaff.username
+        duration:duration,
+        staff:currentStaff.username,
+        time:new Date().toLocaleString()
     });
 
-    document.getElementById("banPlayer").value="";
-    document.getElementById("banReason").value="";
-    document.getElementById("banDuration").value="";
+    document.getElementById("banPlayer").value = "";
+    document.getElementById("banReason").value = "";
 
-    save();
-
-    logActivity("Banned "+player);
+    saveAll();
+    addLog("Banned " + player);
+    renderBans();
+    updateDashboard();
 
     toast("Ban added.");
-
-    refreshAll();
 }
 
 function removeBan(index){
 
+    if(!hasPermission()) return;
+
     bans.splice(index,1);
 
-    save();
+    saveAll();
+    addLog("Removed a ban");
+    renderBans();
+    updateDashboard();
 
-    logActivity("Removed a ban");
-
-    refreshAll();
+    toast("Ban removed.");
 }
 
 function renderBans(){
 
-    var rows="";
+    var html = "";
 
-    bans.forEach(function(b,index){
+    for(var i=0;i<bans.length;i++){
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(b.player)+"</td>"+
-        "<td>"+escapeHTML(b.reason)+"</td>"+
-        "<td>"+escapeHTML(b.duration)+"</td>"+
-        "<td>"+escapeHTML(b.staff)+"</td>"+
-        "<td><button class='small-btn green' onclick='removeBan("+index+")'>Remove</button></td>"+
-        "</tr>";
-    });
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(bans[i].player)+"</td>" +
+            "<td>"+escapeHTML(bans[i].reason)+"</td>" +
+            "<td>"+escapeHTML(bans[i].duration)+"</td>" +
+            "<td>"+escapeHTML(bans[i].staff)+"</td>" +
+            "<td><button class='btn gray' onclick='removeBan("+i+")'>Remove</button></td>" +
+            "</tr>";
+    }
 
-    document.getElementById("banTable").innerHTML=rows;
+    if(!html){
+        html = "<tr><td colspan='5' class='empty'>No bans.</td></tr>";
+    }
+
+    document.getElementById("bansTable").innerHTML = html;
 }
 
 /* =========================
@@ -1002,59 +1426,71 @@ function renderBans(){
 
 function addWarning(){
 
-    var player=document.getElementById("warnPlayer").value.trim();
-    var reason=document.getElementById("warnReason").value.trim();
+    if(!hasPermission()) return;
+
+    var player =
+        document.getElementById("warningPlayer").value.trim();
+
+    var reason =
+        document.getElementById("warningReason").value.trim();
 
     if(!player || !reason){
-        toast("Enter player and reason.");
+        toast("Enter a player and reason.");
         return;
     }
 
     warnings.push({
         player:player,
         reason:reason,
-        staff:currentStaff.username
+        staff:currentStaff.username,
+        time:new Date().toLocaleString()
     });
 
-    document.getElementById("warnPlayer").value="";
-    document.getElementById("warnReason").value="";
+    document.getElementById("warningPlayer").value = "";
+    document.getElementById("warningReason").value = "";
 
-    save();
-
-    logActivity("Warned "+player);
+    saveAll();
+    addLog("Warned " + player);
+    renderWarnings();
+    updateDashboard();
 
     toast("Warning issued.");
-
-    refreshAll();
 }
 
 function removeWarning(index){
 
+    if(!hasPermission()) return;
+
     warnings.splice(index,1);
 
-    save();
+    saveAll();
+    addLog("Removed a warning");
+    renderWarnings();
+    updateDashboard();
 
-    logActivity("Removed a warning");
-
-    refreshAll();
+    toast("Warning removed.");
 }
 
 function renderWarnings(){
 
-    var rows="";
+    var html = "";
 
-    warnings.forEach(function(w,index){
+    for(var i=0;i<warnings.length;i++){
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(w.player)+"</td>"+
-        "<td>"+escapeHTML(w.reason)+"</td>"+
-        "<td>"+escapeHTML(w.staff)+"</td>"+
-        "<td><button class='small-btn green' onclick='removeWarning("+index+")'>Remove</button></td>"+
-        "</tr>";
-    });
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(warnings[i].player)+"</td>" +
+            "<td>"+escapeHTML(warnings[i].reason)+"</td>" +
+            "<td>"+escapeHTML(warnings[i].staff)+"</td>" +
+            "<td><button class='btn gray' onclick='removeWarning("+i+")'>Remove</button></td>" +
+            "</tr>";
+    }
 
-    document.getElementById("warningTable").innerHTML=rows;
+    if(!html){
+        html = "<tr><td colspan='4' class='empty'>No warnings.</td></tr>";
+    }
+
+    document.getElementById("warningsTable").innerHTML = html;
 }
 
 /* =========================
@@ -1063,59 +1499,69 @@ function renderWarnings(){
 
 function addBolo(){
 
-    var player=document.getElementById("boloPlayer").value.trim();
-    var reason=document.getElementById("boloReason").value.trim();
+    if(!hasPermission()) return;
+
+    var player =
+        document.getElementById("boloPlayer").value.trim();
+
+    var reason =
+        document.getElementById("boloReason").value.trim();
 
     if(!player || !reason){
-        toast("Enter player and reason.");
+        toast("Enter a player and reason.");
         return;
     }
 
     bolos.push({
         player:player,
         reason:reason,
-        staff:currentStaff.username
+        staff:currentStaff.username,
+        time:new Date().toLocaleString()
     });
 
-    document.getElementById("boloPlayer").value="";
-    document.getElementById("boloReason").value="";
+    document.getElementById("boloPlayer").value = "";
+    document.getElementById("boloReason").value = "";
 
-    save();
-
-    logActivity("Created BOLO for "+player);
+    saveAll();
+    addLog("Created BOLO for " + player);
+    renderBolos();
 
     toast("BOLO created.");
-
-    refreshAll();
 }
 
 function removeBolo(index){
 
+    if(!hasPermission()) return;
+
     bolos.splice(index,1);
 
-    save();
+    saveAll();
+    addLog("Removed a BOLO");
+    renderBolos();
 
-    logActivity("Removed a BOLO");
-
-    refreshAll();
+    toast("BOLO removed.");
 }
 
 function renderBolos(){
 
-    var rows="";
+    var html = "";
 
-    bolos.forEach(function(b,index){
+    for(var i=0;i<bolos.length;i++){
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(b.player)+"</td>"+
-        "<td>"+escapeHTML(b.reason)+"</td>"+
-        "<td>"+escapeHTML(b.staff)+"</td>"+
-        "<td><button class='small-btn green' onclick='removeBolo("+index+")'>Remove</button></td>"+
-        "</tr>";
-    });
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(bolos[i].player)+"</td>" +
+            "<td>"+escapeHTML(bolos[i].reason)+"</td>" +
+            "<td>"+escapeHTML(bolos[i].staff)+"</td>" +
+            "<td><button class='btn gray' onclick='removeBolo("+i+")'>Remove</button></td>" +
+            "</tr>";
+    }
 
-    document.getElementById("boloTable").innerHTML=rows;
+    if(!html){
+        html = "<tr><td colspan='4' class='empty'>No BOLOs.</td></tr>";
+    }
+
+    document.getElementById("bolosTable").innerHTML = html;
 }
 
 /* =========================
@@ -1124,59 +1570,69 @@ function renderBolos(){
 
 function addNote(){
 
-    var player=document.getElementById("notePlayer").value.trim();
-    var note=document.getElementById("noteText").value.trim();
+    if(!hasPermission()) return;
+
+    var player =
+        document.getElementById("notePlayer").value.trim();
+
+    var note =
+        document.getElementById("noteText").value.trim();
 
     if(!player || !note){
-        toast("Enter player and note.");
+        toast("Enter a player and note.");
         return;
     }
 
     notes.push({
         player:player,
         note:note,
-        staff:currentStaff.username
+        staff:currentStaff.username,
+        time:new Date().toLocaleString()
     });
 
-    document.getElementById("notePlayer").value="";
-    document.getElementById("noteText").value="";
+    document.getElementById("notePlayer").value = "";
+    document.getElementById("noteText").value = "";
 
-    save();
-
-    logActivity("Added note for "+player);
+    saveAll();
+    addLog("Added note for " + player);
+    renderNotes();
 
     toast("Note added.");
-
-    refreshAll();
 }
 
 function removeNote(index){
 
+    if(!hasPermission()) return;
+
     notes.splice(index,1);
 
-    save();
+    saveAll();
+    addLog("Removed a note");
+    renderNotes();
 
-    logActivity("Removed a note");
-
-    refreshAll();
+    toast("Note removed.");
 }
 
 function renderNotes(){
 
-    var rows="";
+    var html = "";
 
-    notes.forEach(function(n,index){
+    for(var i=0;i<notes.length;i++){
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(n.player)+"</td>"+
-        "<td>"+escapeHTML(n.note)+"</td>"+
-        "<td>"+escapeHTML(n.staff)+"</td>"+
-        "<td><button class='small-btn danger' onclick='removeNote("+index+")'>Remove</button></td>"+
-        "</tr>";
-    });
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(notes[i].player)+"</td>" +
+            "<td>"+escapeHTML(notes[i].note)+"</td>" +
+            "<td>"+escapeHTML(notes[i].staff)+"</td>" +
+            "<td><button class='btn gray' onclick='removeNote("+i+")'>Remove</button></td>" +
+            "</tr>";
+    }
 
-    document.getElementById("noteTable").innerHTML=rows;
+    if(!html){
+        html = "<tr><td colspan='4' class='empty'>No notes.</td></tr>";
+    }
+
+    document.getElementById("notesTable").innerHTML = html;
 }
 
 /* =========================
@@ -1185,214 +1641,195 @@ function renderNotes(){
 
 function addStaff(){
 
-    if(currentStaff.rank!=="Administrator" &&
-       currentStaff.rank!=="Management"){
+    if(!adminOnly()) return;
 
-        toast("Only management can add staff.");
-        return;
-    }
+    var username =
+        document.getElementById("staffUsername").value.trim();
 
-    var username=document.getElementById("newStaffUser").value.trim();
-    var password=document.getElementById("newStaffPass").value;
-    var rank=document.getElementById("newStaffRank").value;
+    var password =
+        document.getElementById("staffPassword").value;
+
+    var role =
+        document.getElementById("staffRole").value;
 
     if(!username || !password){
         toast("Enter username and password.");
         return;
     }
 
-    if(staff.some(function(x){return x.username===username;})){
-        toast("That username already exists.");
-        return;
+    for(var i=0;i<staffAccounts.length;i++){
+        if(staffAccounts[i].username === username){
+            toast("Username already exists.");
+            return;
+        }
     }
 
-    staff.push({
+    staffAccounts.push({
         username:username,
         password:password,
-        rank:rank
+        role:role
     });
 
-    document.getElementById("newStaffUser").value="";
-    document.getElementById("newStaffPass").value="";
+    document.getElementById("staffUsername").value = "";
+    document.getElementById("staffPassword").value = "";
 
-    save();
-
-    logActivity("Added staff account "+username);
+    saveAll();
+    addLog("Created staff account " + username);
+    renderStaff();
 
     toast("Staff account created.");
-
-    refreshAll();
 }
 
 function removeStaff(index){
 
-    if(currentStaff.rank!=="Administrator" &&
-       currentStaff.rank!=="Management"){
+    if(!adminOnly()) return;
 
-        toast("Only management can remove staff.");
+    if(staffAccounts[index].username === "admin"){
+        toast("The main admin account cannot be removed.");
         return;
     }
 
-    if(staff[index].username==="admin"){
-        toast("The main admin cannot be removed.");
-        return;
-    }
+    var username = staffAccounts[index].username;
 
-    var name=staff[index].username;
+    staffAccounts.splice(index,1);
 
-    staff.splice(index,1);
+    saveAll();
+    addLog("Removed staff account " + username);
+    renderStaff();
 
-    save();
-
-    logActivity("Removed staff account "+name);
-
-    refreshAll();
+    toast("Staff account removed.");
 }
 
 function renderStaff(){
 
-    var rows="";
+    var html = "";
 
-    staff.forEach(function(s,index){
+    for(var i=0;i<staffAccounts.length;i++){
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(s.username)+"</td>"+
-        "<td>"+escapeHTML(s.rank)+"</td>"+
-        "<td>";
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(staffAccounts[i].username)+"</td>" +
+            "<td>"+escapeHTML(staffAccounts[i].role)+"</td>" +
+            "<td><button class='btn red' onclick='removeStaff("+i+")'>Remove</button></td>" +
+            "</tr>";
+    }
 
-        if(s.username!=="admin"){
-            rows+="<button class='small-btn danger' onclick='removeStaff("+index+")'>Remove</button>";
-        }else{
-            rows+="Protected";
-        }
-
-        rows+="</td></tr>";
-    });
-
-    document.getElementById("staffTable").innerHTML=rows;
+    document.getElementById("staffTable").innerHTML = html;
 }
 
 /* =========================
    APPLICATIONS
 ========================= */
 
-function submitApplication(){
+function addApplication(){
 
-    var name=document.getElementById("appName").value.trim();
-    var age=document.getElementById("appAge").value.trim();
-    var experience=document.getElementById("appExperience").value.trim();
+    var name =
+        document.getElementById("applicationName").value.trim();
 
-    if(!name || !age){
-        toast("Enter applicant information.");
+    var age =
+        document.getElementById("applicationAge").value.trim();
+
+    var reason =
+        document.getElementById("applicationReason").value.trim();
+
+    if(!name || !age || !reason){
+        toast("Complete the application.");
         return;
     }
 
     applications.push({
         name:name,
         age:age,
-        experience:experience,
-        status:"Pending"
+        reason:reason,
+        status:"Pending",
+        time:new Date().toLocaleString()
     });
 
-    document.getElementById("appName").value="";
-    document.getElementById("appAge").value="";
-    document.getElementById("appExperience").value="";
+    document.getElementById("applicationName").value = "";
+    document.getElementById("applicationAge").value = "";
+    document.getElementById("applicationReason").value = "";
 
-    save();
+    saveAll();
+    renderApplications();
 
-    logActivity("Submitted staff application for "+name);
-
-    toast("Application submitted.");
-
-    refreshAll();
+    toast("Application added.");
 }
 
-function updateApplication(index,status){
+function changeApplication(index,status){
 
-    applications[index].status=status;
+    if(!adminOnly()) return;
 
-    save();
+    applications[index].status = status;
 
-    logActivity("Changed application to "+status);
+    saveAll();
+    addLog("Changed application status to " + status);
+    renderApplications();
 
-    refreshAll();
+    toast("Application updated.");
 }
 
-function deleteApplication(index){
+function removeApplication(index){
+
+    if(!adminOnly()) return;
 
     applications.splice(index,1);
 
-    save();
+    saveAll();
+    renderApplications();
 
-    logActivity("Deleted application");
-
-    refreshAll();
+    toast("Application removed.");
 }
 
 function renderApplications(){
 
-    var rows="";
+    var html = "";
 
-    applications.forEach(function(a,index){
+    for(var i=0;i<applications.length;i++){
 
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(a.name)+"</td>"+
-        "<td>"+escapeHTML(a.age)+"</td>"+
-        "<td>"+escapeHTML(a.status)+"</td>"+
-        "<td>"+
-        "<button class='small-btn green' onclick=\"updateApplication("+index+",'Accepted')\">Accept</button>"+
-        "<button class='small-btn orange' onclick=\"updateApplication("+index+",'Denied')\">Deny</button>"+
-        "<button class='small-btn danger' onclick='deleteApplication("+index+")'>Delete</button>"+
-        "</td>"+
-        "</tr>";
-    });
+        html +=
+            "<tr>" +
+            "<td>"+escapeHTML(applications[i].name)+"</td>" +
+            "<td>"+escapeHTML(applications[i].age)+"</td>" +
+            "<td>"+escapeHTML(applications[i].reason)+"</td>" +
+            "<td>"+escapeHTML(applications[i].status)+"</td>" +
+            "<td>" +
+            "<button class='btn green' onclick=\"changeApplication("+i+",'Accepted')\">Accept</button> " +
+            "<button class='btn red' onclick=\"changeApplication("+i+",'Denied')\">Deny</button> " +
+            "<button class='btn gray' onclick='removeApplication("+i+")'>Remove</button>" +
+            "</td>" +
+            "</tr>";
+    }
 
-    document.getElementById("applicationTable").innerHTML=rows;
+    if(!html){
+        html = "<tr><td colspan='5' class='empty'>No applications.</td></tr>";
+    }
+
+    document.getElementById("applicationsTable").innerHTML = html;
 }
 
 /* =========================
-   ACTIVITY
+   LOGS
 ========================= */
 
-function logActivity(action){
+function renderLogs(){
 
-    if(!currentStaff) return;
+    var html = "";
 
-    activity.unshift({
-        time:new Date().toLocaleString(),
-        staff:currentStaff.username,
-        action:action
-    });
+    for(var i=0;i<logs.length;i++){
 
-    if(activity.length>200){
-        activity=activity.slice(0,200);
+        html +=
+            "<div class='logItem'>" +
+            "<strong>"+escapeHTML(logs[i].action)+"</strong>" +
+            "<div>Staff: "+escapeHTML(logs[i].staff)+"</div>" +
+            "<div class='logTime'>"+escapeHTML(logs[i].time)+"</div>" +
+            "</div>";
     }
 
-    localStorage.setItem(
-        "tsrp_activity",
-        JSON.stringify(activity)
-    );
+    if(!html){
+        html = "<div class='empty'>No activity yet.</div>";
+    }
 
-    renderActivity();
-}
-
-function renderActivity(){
-
-    var rows="";
-
-    activity.forEach(function(a){
-
-        rows+=
-        "<tr>"+
-        "<td>"+escapeHTML(a.time)+"</td>"+
-        "<td>"+escapeHTML(a.staff)+"</td>"+
-        "<td>"+escapeHTML(a.action)+"</td>"+
-        "</tr>";
-    });
-
-    document.getElementById("activityTable").innerHTML=rows;
+    document.getElementById("logsList").innerHTML = html;
 }
 
 /* =========================
@@ -1401,53 +1838,87 @@ function renderActivity(){
 
 function updateDashboard(){
 
-    document.getElementById("dashSession").textContent=
-    session ? "ONLINE" : "OFF";
+    document.getElementById("dashSession").textContent =
+        session.active ? "ON" : "OFF";
 
-    document.getElementById("dashPlayers").textContent=
-    players.length;
+    document.getElementById("dashPlayers").textContent =
+        players.length;
 
-    document.getElementById("dashBans").textContent=
-    bans.length;
+    document.getElementById("dashBans").textContent =
+        bans.length;
 
-    document.getElementById("dashWarnings").textContent=
-    warnings.length;
-}
+    document.getElementById("dashWarnings").textContent =
+        warnings.length;
 
-/* =========================
-   STAFF DISPLAY
-========================= */
+    document.getElementById("sessionHost").textContent =
+        session.host || "None";
 
-function updateStaffDisplay(){
+    document.getElementById("sessionCode").textContent =
+        session.serverCode || "None";
 
-    document.getElementById("staffDisplay").textContent=
-    currentStaff.username;
+    document.getElementById("sessionStarted").textContent =
+        session.started || "None";
 
-    document.getElementById("rankDisplay").textContent=
-    currentStaff.rank;
-}
+    var status = document.getElementById("sessionStatus");
 
-/* =========================
-   SAVE
-========================= */
-
-function save(){
-
-    localStorage.setItem("tsrp_players",JSON.stringify(players));
-    localStorage.setItem("tsrp_bans",JSON.stringify(bans));
-    localStorage.setItem("tsrp_warnings",JSON.stringify(warnings));
-    localStorage.setItem("tsrp_bolos",JSON.stringify(bolos));
-    localStorage.setItem("tsrp_notes",JSON.stringify(notes));
-    localStorage.setItem("tsrp_staff",JSON.stringify(staff));
-    localStorage.setItem("tsrp_apps",JSON.stringify(applications));
-    localStorage.setItem("tsrp_activity",JSON.stringify(activity));
-
-    if(session){
-        localStorage.setItem(
-            "tsrp_session",
-            JSON.stringify(session)
-        );
+    if(session.active){
+        status.textContent = "ONLINE";
+        status.className = "status online";
+    }else{
+        status.textContent = "OFFLINE";
+        status.className = "status offline";
     }
+
+    document.getElementById("sessionDetails").innerHTML =
+        "<div class='sessionBox'>" +
+        "<div class='infoBox'><small>Status</small><strong>"+
+        (session.active ? "ONLINE" : "OFFLINE")+
+        "</strong></div>" +
+        "<div class='infoBox'><small>Host</small><strong>"+
+        escapeHTML(session.host || "None")+
+        "</strong></div>" +
+        "<div class='infoBox'><small>Server Code</small><strong>"+
+        escapeHTML(session.serverCode || "None")+
+        "</strong></div>" +
+        "<div class='infoBox'><small>Started</small><strong>"+
+        escapeHTML(session.started || "None")+
+        "</strong></div>" +
+        "</div>";
+}
+
+/* =========================
+   CLEAR DATA
+========================= */
+
+function clearLocalData(){
+
+    if(!adminOnly()) return;
+
+    var confirmed = confirm(
+        "This will clear dashboard records. Continue?"
+    );
+
+    if(!confirmed) return;
+
+    players = [];
+    bans = [];
+    warnings = [];
+    bolos = [];
+    notes = [];
+    applications = [];
+    logs = [];
+
+    session = {
+        active:false,
+        host:"",
+        serverCode:"",
+        started:""
+    };
+
+    saveAll();
+    refreshAll();
+
+    toast("Dashboard data cleared.");
 }
 
 /* =========================
@@ -1457,7 +1928,6 @@ function save(){
 function refreshAll(){
 
     updateDashboard();
-    renderSession();
     renderPlayers();
     renderBans();
     renderWarnings();
@@ -1465,139 +1935,54 @@ function refreshAll(){
     renderNotes();
     renderStaff();
     renderApplications();
-    renderActivity();
+    renderLogs();
+
+    document.getElementById("serverCodeInput").value =
+        session.serverCode || "";
+
+    document.getElementById("hostInput").value =
+        session.host || "";
 }
-
-/* =========================
-   SETTINGS
-========================= */
-
-function saveSettings(){
-
-    var name=document.getElementById("communityName").value;
-    var worker=document.getElementById("workerURL").value;
-
-    localStorage.setItem("tsrp_community",name);
-    localStorage.setItem("tsrp_worker",worker);
-
-    toast("Settings saved.");
-}
-
-function loadSettings(){
-
-    var name=localStorage.getItem("tsrp_community");
-    var worker=localStorage.getItem("tsrp_worker");
-
-    if(name){
-        document.getElementById("communityName").value=name;
-    }
-
-    if(worker){
-        document.getElementById("workerURL").value=worker;
-    }
-}
-
-/* =========================
-   CLEAR DATA
-========================= */
-
-function clearData(){
-
-    if(currentStaff.rank!=="Administrator"){
-        toast("Only the Administrator can clear data.");
-        return;
-    }
-
-    if(!confirm("Delete all dashboard data?")){
-        return;
-    }
-
-    localStorage.removeItem("tsrp_players");
-    localStorage.removeItem("tsrp_bans");
-    localStorage.removeItem("tsrp_warnings");
-    localStorage.removeItem("tsrp_bolos");
-    localStorage.removeItem("tsrp_notes");
-    localStorage.removeItem("tsrp_apps");
-    localStorage.removeItem("tsrp_activity");
-    localStorage.removeItem("tsrp_session");
-
-    players=[];
-    bans=[];
-    warnings=[];
-    bolos=[];
-    notes=[];
-    applications=[];
-    activity=[];
-    session=null;
-
-    toast("Dashboard data cleared.");
-
-    refreshAll();
-}
-
-/* =========================
-   TOAST
-========================= */
-
-function toast(message){
-
-    var box=document.getElementById("toast");
-
-    box.textContent=message;
-    box.style.display="block";
-
-    setTimeout(function(){
-        box.style.display="none";
-    },2500);
-}
-
-/* =========================
-   SECURITY HELPER
-========================= */
-
-function escapeHTML(value){
-
-    return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-/* =========================
-   ENTER TO LOGIN
-========================= */
-
-document.addEventListener("keydown",function(e){
-
-    if(e.key==="Enter" &&
-       document.getElementById("loginScreen").style.display!=="none"){
-
-        login();
-    }
-});
 
 /* =========================
    STARTUP
 ========================= */
 
-loadSettings();
+document.getElementById("loginPassword").addEventListener(
+    "keydown",
+    function(event){
+        if(event.key === "Enter"){
+            login();
+        }
+    }
+);
+
+document.getElementById("loginUsername").addEventListener(
+    "keydown",
+    function(event){
+        if(event.key === "Enter"){
+            login();
+        }
+    }
+);
 
 if(currentStaff){
 
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("app").style.display="block";
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").style.display = "block";
 
-    updateStaffDisplay();
+    document.getElementById("staffName").textContent =
+        currentStaff.username;
+
+    document.getElementById("staffRank").textContent =
+        currentStaff.role;
+
     refreshAll();
 
 }else{
-
-    document.getElementById("loginScreen").style.display="flex";
-    document.getElementById("app").style.display="none";
+    document.getElementById("loginScreen").style.display = "flex";
+    document.getElementById("app").style.display = "none";
 }
-
 </script>
 
 </body>
