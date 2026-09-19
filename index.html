@@ -1,433 +1,471 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Texas State Roleplay</title>
+<title>TSRP | ER:LC Dashboard</title>
 
 <style>
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #070b12;
+    background: #0b0f17;
     color: #ffffff;
+    min-height: 100vh;
 }
 
-nav {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: rgba(7, 11, 18, 0.97);
-    border-bottom: 1px solid #1d2a3a;
-    padding: 16px 7%;
+/* LOGIN */
+
+.login-screen {
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    background:
+        radial-gradient(circle at top, #17243a 0%, #0b0f17 50%);
+}
+
+.login-box {
+    width: 380px;
+    max-width: 92%;
+    background: #111722;
+    border: 1px solid #263244;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 900;
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    background: #2563eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0 auto 18px;
 }
 
-.logo span {
-    color: #2684ff;
+.login-box h1 {
+    text-align: center;
+    font-size: 25px;
 }
 
-nav a {
-    color: #aeb9c8;
-    text-decoration: none;
-    margin-left: 18px;
+.login-box p {
+    text-align: center;
+    color: #8995a8;
+    margin: 8px 0 25px;
+}
+
+.input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 12px;
+    background: #0b1019;
+    border: 1px solid #293548;
+    border-radius: 9px;
+    color: white;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #3b82f6;
+}
+
+.btn {
+    border: none;
+    padding: 12px 16px;
+    border-radius: 9px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    background: #2563eb;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* APP */
+
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #0e141f;
+    border-right: 1px solid #202b3b;
+    padding: 22px 15px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 8px 25px;
+}
+
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    background: #2563eb;
+    border-radius: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.brand-name {
+    font-weight: bold;
+}
+
+.brand-sub {
+    font-size: 11px;
+    color: #77849a;
+    margin-top: 3px;
+}
+
+.nav-title {
+    color: #657289;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 18px 10px 8px;
+}
+
+.nav button {
+    width: 100%;
+    background: transparent;
+    color: #98a5b8;
+    border: none;
+    text-align: left;
+    padding: 12px;
+    border-radius: 9px;
+    margin-bottom: 3px;
+    cursor: pointer;
     font-size: 14px;
 }
 
-nav a:hover {
-    color: #ffffff;
+.nav button:hover,
+.nav button.active {
+    background: #182235;
+    color: white;
 }
 
-.hero {
-    min-height: 600px;
-    padding: 110px 7%;
+.logout {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    right: 15px;
+}
+
+.logout button {
+    width: 100%;
+    background: #171d28;
+    color: #aeb8c7;
+    border: 1px solid #293344;
+    padding: 11px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+/* CONTENT */
+
+.content {
+    margin-left: 240px;
+    padding: 30px;
+}
+
+.topbar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    background:
-        radial-gradient(circle at 80% 30%, #163c6a 0%, transparent 35%),
-        linear-gradient(135deg, #070b12, #0b1524);
+    margin-bottom: 28px;
 }
 
-.hero-content {
-    max-width: 800px;
+.topbar h1 {
+    font-size: 27px;
+}
+
+.topbar p {
+    color: #78869a;
+    margin-top: 5px;
+}
+
+.account {
+    background: #131b28;
+    border: 1px solid #263244;
+    padding: 9px 14px;
+    border-radius: 10px;
+}
+
+/* PAGES */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #111823;
+    border: 1px solid #222e40;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.card-label {
+    color: #77869b;
+    font-size: 13px;
+}
+
+.card-number {
+    font-size: 27px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.green {
+    color: #22c55e;
+}
+
+.red {
+    color: #ef4444;
+}
+
+.blue {
+    color: #60a5fa;
+}
+
+.yellow {
+    color: #facc15;
+}
+
+/* PANELS */
+
+.panel {
+    background: #111823;
+    border: 1px solid #222e40;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.panel-header h2 {
+    font-size: 17px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    color: #738197;
+    font-size: 12px;
+    padding: 12px;
+    border-bottom: 1px solid #263143;
+}
+
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #1e2938;
+    font-size: 14px;
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 .badge {
     display: inline-block;
-    padding: 8px 14px;
+    padding: 5px 9px;
     border-radius: 20px;
-    background: #102944;
-    border: 1px solid #285786;
-    color: #6db5ff;
-    font-size: 13px;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-size: clamp(45px, 7vw, 82px);
-    line-height: .95;
-    margin-bottom: 22px;
-}
-
-.hero p {
-    color: #aeb9c8;
-    font-size: 18px;
-    line-height: 1.7;
-    max-width: 680px;
-}
-
-.buttons {
-    margin-top: 30px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 13px 21px;
-    border-radius: 9px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    text-decoration: none;
-    margin-right: 8px;
-    margin-bottom: 8px;
-}
-
-.primary {
-    background: #1677ff;
-    color: white;
-}
-
-.primary:hover {
-    background: #3990ff;
-}
-
-.secondary {
-    background: #151f2d;
-    color: white;
-    border: 1px solid #2a3a4e;
-}
-
-.secondary:hover {
-    background: #1b2a3d;
-}
-
-section {
-    padding: 80px 7%;
-}
-
-.section-title {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.section-description {
-    color: #8d9bad;
-    margin-bottom: 35px;
-}
-
-.server-card {
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px;
-    background: #0d1520;
-    border: 1px solid #202e40;
-    border-radius: 18px;
-}
-
-.server-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.status {
-    padding: 8px 14px;
-    border-radius: 20px;
-    background: #33200f;
-    color: #ffb45e;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: bold;
 }
 
-.status.online {
-    background: #0e3020;
-    color: #55e38b;
+.badge-green {
+    background: rgba(34,197,94,.12);
+    color: #4ade80;
 }
 
-.server-info {
+.badge-red {
+    background: rgba(239,68,68,.12);
+    color: #f87171;
+}
+
+.badge-yellow {
+    background: rgba(250,204,21,.12);
+    color: #fde047;
+}
+
+.badge-blue {
+    background: rgba(59,130,246,.12);
+    color: #60a5fa;
+}
+
+/* SESSION */
+
+.session-box {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
-.info-box {
+.session-status {
     padding: 20px;
-    background: #111c2a;
-    border: 1px solid #1d2b3c;
     border-radius: 12px;
+    background: #0d151f;
+    border: 1px solid #243044;
 }
 
-.info-box small {
-    display: block;
-    color: #7f8da0;
+.session-status h3 {
     margin-bottom: 8px;
 }
 
-.info-box strong {
-    font-size: 18px;
+.session-value {
+    color: #8795aa;
 }
 
-.grid {
+/* FORMS */
+
+.form-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
 }
 
-.card {
-    background: #0d1520;
-    border: 1px solid #202e40;
-    border-radius: 15px;
-    padding: 25px;
+.form-group {
+    margin-bottom: 14px;
 }
 
-.card h3 {
-    margin-bottom: 10px;
-}
-
-.card p {
-    color: #8f9dad;
-    line-height: 1.6;
-}
-
-.icon {
-    font-size: 32px;
-    margin-bottom: 15px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-top: 40px;
-}
-
-.stat {
-    background: #0d1520;
-    border: 1px solid #202e40;
-    padding: 25px;
-    border-radius: 14px;
-    text-align: center;
-}
-
-.stat h2 {
-    color: #4da3ff;
-    font-size: 30px;
-}
-
-.stat p {
-    color: #8997a8;
-    margin-top: 5px;
-}
-
-.dashboard {
-    max-width: 1000px;
-    margin: auto;
-}
-
-.input-group {
-    margin-bottom: 18px;
-}
-
-.input-group label {
+.form-group label {
     display: block;
-    color: #aeb9c8;
-    margin-bottom: 8px;
-    font-size: 14px;
+    color: #8896a9;
+    font-size: 13px;
+    margin-bottom: 7px;
 }
 
-input {
-    width: 100%;
-    padding: 13px;
-    background: #08101a;
-    border: 1px solid #263548;
+textarea.input {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+/* SEARCH */
+
+.search {
+    width: 280px;
+    max-width: 100%;
+    padding: 11px 13px;
+    background: #0b1019;
     color: white;
-    border-radius: 8px;
+    border: 1px solid #293548;
+    border-radius: 9px;
     outline: none;
 }
 
-input:focus {
-    border-color: #1677ff;
+/* MOBILE */
+
+.mobile-menu {
+    display: none;
 }
 
-.session-controls {
-    margin-top: 20px;
-}
-
-.session-info {
-    margin-top: 20px;
-    padding: 20px;
-    background: #08101a;
-    border-radius: 10px;
-    border: 1px solid #1c2a3b;
-}
-
-.session-info p {
-    margin: 8px 0;
-    color: #b9c4d2;
-}
-
-.vote-box {
-    margin-top: 25px;
-    padding: 25px;
-    background: #111c2a;
-    border: 1px solid #243448;
-    border-radius: 12px;
-}
-
-.vote-box p {
-    color: #8997a8;
-    margin-top: 8px;
-}
-
-.vote-counts {
-    display: flex;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.vote-count {
-    flex: 1;
-    text-align: center;
-    padding: 18px;
-    background: #08101a;
-    border-radius: 10px;
-}
-
-.vote-count strong {
-    display: block;
-    font-size: 28px;
-    margin-top: 6px;
-}
-
-.yes {
-    color: #55e38b;
-}
-
-.no {
-    color: #ff6d6d;
-}
-
-.rules {
-    max-width: 900px;
-    margin: auto;
-}
-
-.rule {
-    background: #0d1520;
-    border: 1px solid #202e40;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-}
-
-.rule strong {
-    color: #5caaff;
-}
-
-.staff {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.staff-card {
-    background: #0d1520;
-    border: 1px solid #202e40;
-    border-radius: 14px;
-    padding: 25px;
-}
-
-.rank {
-    color: #4da3ff;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.cta {
-    text-align: center;
-    background:
-        radial-gradient(circle at center, #12335a 0%, transparent 55%),
-        #09111c;
-}
-
-footer {
-    padding: 30px 7%;
-    border-top: 1px solid #1b2736;
-    color: #687789;
-    text-align: center;
-}
-
-.message {
-    margin-top: 15px;
-    min-height: 20px;
-    color: #55e38b;
-}
-
-@media (max-width: 850px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
+@media(max-width: 850px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: .2s;
+        z-index: 10;
     }
 
-    .server-info,
-    .stats,
-    .staff {
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .mobile-menu {
+        display: block;
+        background: #172235;
+        border: 1px solid #29374c;
+        color: white;
+        padding: 10px 13px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .session-box,
+    .form-grid {
         grid-template-columns: 1fr;
     }
 
-    nav {
+    .topbar {
+        align-items: flex-start;
+    }
+}
+
+@media(max-width: 500px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
         flex-direction: column;
         gap: 12px;
-    }
-
-    nav a {
-        margin: 0 6px;
-    }
-}
-
-@media (max-width: 550px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    section {
-        padding: 60px 5%;
-    }
-
-    .hero {
-        padding: 80px 5%;
-    }
-
-    h1 {
-        font-size: 48px;
-    }
-
-    .vote-counts {
-        flex-direction: column;
     }
 }
 </style>
@@ -435,520 +473,684 @@ footer {
 
 <body>
 
-<nav>
-    <div class="logo">TS<span>RP</span></div>
+<!-- LOGIN -->
 
-    <div>
-        <a href="#home">Home</a>
-        <a href="#departments">Departments</a>
-        <a href="#session">Session</a>
-        <a href="#rules">Rules</a>
-        <a href="#staff">Staff</a>
-        <a href="#discord">Discord</a>
-    </div>
-</nav>
+<div class="login-screen" id="loginScreen">
 
+    <div class="login-box">
 
-<section class="hero" id="home">
-
-    <div class="hero-content">
-
-        <div class="badge">ER:LC • TEXAS</div>
+        <div class="logo">TS</div>
 
         <h1>Texas State Roleplay</h1>
 
-        <p>
-            Welcome to Texas State Roleplay — a professional
-            ER:LC community focused on realistic roleplay,
-            professionalism, and a great experience for everyone.
+        <p>ER:LC Management Dashboard</p>
+
+        <input
+            id="username"
+            class="input"
+            type="text"
+            placeholder="Username"
+        >
+
+        <input
+            id="password"
+            class="input"
+            type="password"
+            placeholder="Password"
+        >
+
+        <button class="btn login-btn" onclick="login()">
+            Sign In
+        </button>
+
+        <p id="loginError" style="color:#ef4444;display:none;margin-top:12px;">
+            Invalid username or password.
         </p>
-
-        <div class="buttons">
-            <a class="btn primary" href="#session">View Session</a>
-            <a class="btn secondary" href="#discord">Join Discord</a>
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <h2>24/7</h2>
-                <p>Community</p>
-            </div>
-
-            <div class="stat">
-                <h2>ER:LC</h2>
-                <p>Roleplay</p>
-            </div>
-
-            <div class="stat">
-                <h2>TSRP</h2>
-                <p>Professional Staff</p>
-            </div>
-
-        </div>
 
     </div>
 
-</section>
+</div>
 
 
-<section id="departments">
+<!-- APP -->
 
-    <h2 class="section-title">Departments</h2>
+<div class="app" id="app">
 
-    <p class="section-description">
-        Choose your department and help make every session better.
-    </p>
+    <!-- SIDEBAR -->
 
-    <div class="grid">
+    <aside class="sidebar" id="sidebar">
 
-        <div class="card">
-            <div class="icon">🚓</div>
-            <h3>Houston City Police</h3>
-            <p>
-                Serve and protect the citizens of Texas through
-                professional law enforcement roleplay.
-            </p>
+        <div class="brand">
+
+            <div class="brand-logo">TS</div>
+
+            <div>
+                <div class="brand-name">TSRP</div>
+                <div class="brand-sub">ER:LC Dashboard</div>
+            </div>
+
         </div>
 
-        <div class="card">
-            <div class="icon">🚒</div>
-            <h3>Fire & Rescue</h3>
-            <p>
-                Respond to emergencies, fires, crashes and other
-                incidents throughout the state.
-            </p>
+        <div class="nav">
+
+            <div class="nav-title">Main</div>
+
+            <button class="active" onclick="showPage('dashboard', this)">
+                🏠 Dashboard
+            </button>
+
+            <button onclick="showPage('session', this)">
+                🟢 Session
+            </button>
+
+            <button onclick="showPage('players', this)">
+                👥 Players
+            </button>
+
+
+            <div class="nav-title">Management</div>
+
+            <button onclick="showPage('bans', this)">
+                🚫 Bans
+            </button>
+
+            <button onclick="showPage('warnings', this)">
+                ⚠️ Warnings
+            </button>
+
+            <button onclick="showPage('bolos', this)">
+                🔎 BOLO
+            </button>
+
+            <button onclick="showPage('notes', this)">
+                📝 Notes
+            </button>
+
         </div>
 
-        <div class="card">
-            <div class="icon">🚑</div>
-            <h3>EMS</h3>
-            <p>
-                Provide emergency medical services and realistic
-                medical roleplay.
-            </p>
+        <div class="logout">
+            <button onclick="logout()">Log Out</button>
         </div>
 
-        <div class="card">
-            <div class="icon">🚗</div>
-            <h3>Civilian Operations</h3>
-            <p>
-                Create realistic civilian scenes and help keep
-                sessions active and entertaining.
-            </p>
-        </div>
-
-    </div>
-
-</section>
+    </aside>
 
 
-<section id="session">
+    <!-- CONTENT -->
 
-    <div class="dashboard">
+    <main class="content">
 
-        <h2 class="section-title">Session Dashboard</h2>
-
-        <p class="section-description">
-            Manage your current Texas State Roleplay session.
-        </p>
+        <button class="mobile-menu" onclick="toggleSidebar()">
+            ☰ Menu
+        </button>
 
 
-        <div class="server-card">
+        <!-- DASHBOARD -->
 
-            <div class="server-header">
+        <section class="page active" id="dashboard">
 
-                <h2>Current Server</h2>
+            <div class="topbar">
 
-                <div id="serverStatus" class="status">
-                    OFFLINE
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Welcome back to Texas State Roleplay.</p>
+                </div>
+
+                <div class="account">
+                    👤 <span id="accountName">Admin</span>
                 </div>
 
             </div>
 
 
-            <div class="server-info">
+            <div class="cards">
 
-                <div class="info-box">
-                    <small>Host</small>
-                    <strong id="displayHost">No Host</strong>
+                <div class="card">
+                    <div class="card-label">Session</div>
+                    <div class="card-number green" id="dashSession">
+                        Offline
+                    </div>
                 </div>
 
-                <div class="info-box">
-                    <small>Server Code</small>
-                    <strong id="displayCode">------</strong>
+                <div class="card">
+                    <div class="card-label">Players</div>
+                    <div class="card-number blue" id="dashPlayers">
+                        0
+                    </div>
                 </div>
 
-                <div class="info-box">
-                    <small>Session</small>
-                    <strong id="displaySession">Inactive</strong>
+                <div class="card">
+                    <div class="card-label">Bans</div>
+                    <div class="card-number red" id="dashBans">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">Warnings</div>
+                    <div class="card-number yellow" id="dashWarnings">
+                        0
+                    </div>
                 </div>
 
             </div>
 
-        </div>
 
+            <div class="panel">
 
-        <div class="card" style="margin-top:20px;">
+                <div class="panel-header">
 
-            <h3>Session Controls</h3>
+                    <h2>Current Session</h2>
 
-            <br>
+                    <span class="badge badge-red" id="sessionBadge">
+                        OFFLINE
+                    </span>
 
-            <div class="input-group">
+                </div>
 
-                <label>Host Name</label>
+                <div class="session-box">
 
-                <input
-                    id="hostInput"
-                    type="text"
-                    placeholder="Enter host name"
-                >
+                    <div class="session-status">
+                        <h3>Host</h3>
+                        <div class="session-value" id="hostValue">
+                            No host
+                        </div>
+                    </div>
+
+                    <div class="session-status">
+                        <h3>Server Code</h3>
+                        <div class="session-value" id="codeValue">
+                            No server code
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <div class="input-group">
+            <div class="panel">
 
-                <label>ER:LC Server Code</label>
+                <div class="panel-header">
+                    <h2>Quick Actions</h2>
+                </div>
 
-                <input
-                    id="codeInput"
-                    type="text"
-                    placeholder="Enter server code"
-                >
-
-            </div>
-
-
-            <div class="session-controls">
-
-                <button
-                    class="btn primary"
-                    onclick="startSession()">
+                <button class="btn" onclick="startSession()">
                     Start Session
                 </button>
 
-                <button
-                    class="btn secondary"
-                    onclick="endSession()">
+                <button class="btn" onclick="endSession()" style="background:#b91c1c;margin-left:8px;">
                     End Session
                 </button>
 
-                <button
-                    class="btn secondary"
-                    onclick="copyServerCode()">
-                    Copy Server Code
+            </div>
+
+        </section>
+
+
+        <!-- SESSION -->
+
+        <section class="page" id="session">
+
+            <div class="topbar">
+
+                <div>
+                    <h1>Session Management</h1>
+                    <p>Manage the current ER:LC session.</p>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>Session Information</h2>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Host</label>
+                        <input id="sessionHost" class="input" placeholder="Host username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Server Code</label>
+                        <input id="serverCode" class="input" placeholder="ER:LC server code">
+                    </div>
+
+                </div>
+
+                <button class="btn" onclick="startSessionFromPage()">
+                    Start Session
+                </button>
+
+                <button class="btn" onclick="endSession()" style="background:#b91c1c;margin-left:8px;">
+                    Shut Down Session
                 </button>
 
             </div>
 
+            <div class="panel">
 
-            <div
-                id="sessionMessage"
-                class="message">
-            </div>
-
-        </div>
-
-
-        <div class="vote-box">
-
-            <h3>Session Vote</h3>
-
-            <p>
-                Should TSRP start a session?
-            </p>
-
-
-            <div class="vote-counts">
-
-                <div class="vote-count">
-                    👍 YES
-                    <strong id="yesCount" class="yes">0</strong>
+                <div class="panel-header">
+                    <h2>Session Vote</h2>
                 </div>
 
-                <div class="vote-count">
-                    👎 NO
-                    <strong id="noCount" class="no">0</strong>
-                </div>
+                <p style="color:#8592a5;margin-bottom:15px;">
+                    Create a session vote for your Discord community.
+                </p>
+
+                <button class="btn" onclick="sessionVote()">
+                    Start Session Vote
+                </button>
 
             </div>
 
-
-            <button
-                class="btn primary"
-                onclick="voteYes()">
-                👍 Yes
-            </button>
-
-            <button
-                class="btn secondary"
-                onclick="voteNo()">
-                👎 No
-            </button>
-
-            <button
-                class="btn secondary"
-                onclick="resetVotes()">
-                Reset Votes
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+        </section>
 
 
-<section id="rules">
+        <!-- PLAYERS -->
 
-    <div class="rules">
+        <section class="page" id="players">
 
-        <h2 class="section-title">Server Rules</h2>
+            <div class="topbar">
 
-        <p class="section-description">
-            Follow these rules to keep TSRP professional and enjoyable.
-        </p>
+                <div>
+                    <h1>Players</h1>
+                    <p>Search and manage players.</p>
+                </div>
 
+                <input
+                    class="search"
+                    id="playerSearch"
+                    onkeyup="searchPlayers()"
+                    placeholder="Search players..."
+                >
 
-        <div class="rule">
-            <strong>01 — Respect Everyone</strong>
-            <p>
-                Treat all members, staff and players respectfully.
-            </p>
-        </div>
+            </div>
 
+            <div class="panel">
 
-        <div class="rule">
-            <strong>02 — No RDM</strong>
-            <p>
-                Randomly attacking or killing other players is prohibited.
-            </p>
-        </div>
+                <div class="table-wrap">
 
+                    <table>
 
-        <div class="rule">
-            <strong>03 — No VDM</strong>
-            <p>
-                Do not intentionally use vehicles to attack players.
-            </p>
-        </div>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>User ID</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
 
+                        <tbody id="playersTable">
 
-        <div class="rule">
-            <strong>04 — Follow Staff Instructions</strong>
-            <p>
-                Staff directions must be followed during sessions.
-            </p>
-        </div>
+                            <tr>
+                                <td>ExamplePlayer</td>
+                                <td>123456789</td>
+                                <td>
+                                    <span class="badge badge-green">
+                                        Online
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn" onclick="warnPlayer('ExamplePlayer')">
+                                        Warn
+                                    </button>
+                                </td>
+                            </tr>
 
+                            <tr>
+                                <td>TexasRP</td>
+                                <td>987654321</td>
+                                <td>
+                                    <span class="badge badge-green">
+                                        Online
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn" onclick="warnPlayer('TexasRP')">
+                                        Warn
+                                    </button>
+                                </td>
+                            </tr>
 
-        <div class="rule">
-            <strong>05 — Stay In Character</strong>
-            <p>
-                Keep roleplay realistic and appropriate during sessions.
-            </p>
-        </div>
+                        </tbody>
 
+                    </table>
 
-        <div class="rule">
-            <strong>06 — No Exploiting</strong>
-            <p>
-                Exploiting, abusing glitches or cheating is prohibited.
-            </p>
-        </div>
+                </div>
 
-    </div>
+            </div>
 
-</section>
-
-
-<section id="staff">
-
-    <h2 class="section-title">Staff Team</h2>
-
-    <p class="section-description">
-        Meet the team helping operate Texas State Roleplay.
-    </p>
-
-
-    <div class="staff">
-
-        <div class="staff-card">
-            <h3>Ownership</h3>
-            <div class="rank">OWNER</div>
-            <p style="margin-top:12px;color:#8f9dad;">
-                Oversees the entire community.
-            </p>
-        </div>
+        </section>
 
 
-        <div class="staff-card">
-            <h3>Management</h3>
-            <div class="rank">MANAGEMENT</div>
-            <p style="margin-top:12px;color:#8f9dad;">
-                Manages staff and community operations.
-            </p>
-        </div>
+        <!-- BANS -->
+
+        <section class="page" id="bans">
+
+            <div class="topbar">
+
+                <div>
+                    <h1>Bans</h1>
+                    <p>Manage banned players.</p>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input id="banUsername" class="input" placeholder="Roblox username">
+                </div>
+
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="banReason" class="input" placeholder="Ban reason"></textarea>
+                </div>
+
+                <button class="btn" onclick="addBan()">
+                    Ban Player
+                </button>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Reason</th>
+                                <th>Staff</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="bansTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-        <div class="staff-card">
-            <h3>Moderation</h3>
-            <div class="rank">STAFF</div>
-            <p style="margin-top:12px;color:#8f9dad;">
-                Keeps sessions safe and professional.
-            </p>
-        </div>
+        <!-- WARNINGS -->
 
-    </div>
+        <section class="page" id="warnings">
 
-</section>
+            <div class="topbar">
+
+                <div>
+                    <h1>Warnings</h1>
+                    <p>Manage player warnings.</p>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input id="warningUsername" class="input" placeholder="Roblox username">
+                </div>
+
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="warningReason" class="input" placeholder="Warning reason"></textarea>
+                </div>
+
+                <button class="btn" onclick="addWarning()">
+                    Issue Warning
+                </button>
+
+            </div>
+
+            <div class="panel">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Reason</th>
+                            <th>Staff</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="warningsTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
 
 
-<section class="cta" id="discord">
+        <!-- BOLOS -->
 
-    <h2 class="section-title">
-        Join Texas State Roleplay
-    </h2>
+        <section class="page" id="bolos">
 
-    <p class="section-description">
-        Join our Discord and become part of the community.
-    </p>
+            <div class="topbar">
 
-    <a
-        class="btn primary"
-        href="#"
-        onclick="alert('https://discord.gg/76uPjvUxk!'); return false;">
-        Join Discord
-    </a>
+                <div>
+                    <h1>BOLO</h1>
+                    <p>Be On the Lookout notices.</p>
+                </div>
 
-</section>
+            </div>
+
+            <div class="panel">
+
+                <div class="form-group">
+                    <label>Player / Vehicle</label>
+                    <input id="boloName" class="input" placeholder="Name or vehicle">
+                </div>
+
+                <div class="form-group">
+                    <label>Information</label>
+                    <textarea id="boloReason" class="input" placeholder="BOLO information"></textarea>
+                </div>
+
+                <button class="btn" onclick="addBolo()">
+                    Create BOLO
+                </button>
+
+            </div>
+
+            <div class="panel">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Information</th>
+                            <th>Created By</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="boloTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
 
 
-<footer>
+        <!-- NOTES -->
 
-    © 2026 Texas State Roleplay • TSRP
+        <section class="page" id="notes">
 
-</footer>
+            <div class="topbar">
+
+                <div>
+                    <h1>Notes</h1>
+                    <p>Internal player notes.</p>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="form-group">
+                    <label>Player</label>
+                    <input id="noteName" class="input" placeholder="Player username">
+                </div>
+
+                <div class="form-group">
+                    <label>Note</label>
+                    <textarea id="noteText" class="input" placeholder="Enter note"></textarea>
+                </div>
+
+                <button class="btn" onclick="addNote()">
+                    Add Note
+                </button>
+
+            </div>
+
+            <div class="panel">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Note</th>
+                            <th>Staff</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="notesTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
 
 
 <script>
 
-/*
-==================================================
-TSRP CLOUDFLARE WORKER
-==================================================
-*/
+/* =========================
+   DATA
+========================= */
 
-var WORKER_URL =
- "https://tsrp-discord1.j-magdaleno5.workers.dev";
+let sessionActive = false;
 
+let currentHost = "";
 
-/*
-==================================================
-SESSION DATA
-==================================================
-*/
+let currentCode = "";
 
-var yesVotes = 0;
-var noVotes = 0;
-var sessionActive = false;
-var currentHost = "";
-var currentCode = "";
+let bans = [];
+
+let warnings = [];
+
+let bolos = [];
+
+let notes = [];
 
 
-/*
-==================================================
-SEND TO DISCORD THROUGH WORKER
-==================================================
-*/
+/* =========================
+   LOGIN
+========================= */
 
-function sendDiscord(type, host, code) {
+function login() {
 
-    fetch(WORKER_URL, {
+    let username = document.getElementById("username").value;
 
-        method: "POST",
+    let password = document.getElementById("password").value;
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+    if (username === "admin" && password === "tsrp123") {
 
-        body: JSON.stringify({
+        document.getElementById("loginScreen").style.display = "none";
 
-            type: type,
+        document.getElementById("app").style.display = "block";
 
-            host: host,
+        document.getElementById("accountName").textContent = username;
 
-            code: code,
+    } else {
 
-            yesVotes: yesVotes,
+        document.getElementById("loginError").style.display = "block";
 
-            noVotes: noVotes
+    }
+}
 
-        })
 
-    })
+function logout() {
 
-    .then(function(response) {
+    document.getElementById("app").style.display = "none";
 
-        if (!response.ok) {
-
-            throw new Error("Worker request failed");
-
-        }
-
-        return response.text();
-
-    })
-
-    .then(function() {
-
-        console.log("TSRP Discord notification sent.");
-
-    })
-
-    .catch(function(error) {
-
-        console.log("Worker error:", error);
-
-    });
+    document.getElementById("loginScreen").style.display = "flex";
 
 }
 
 
-/*
-==================================================
-START SESSION
-==================================================
-*/
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page, button) {
+
+    let pages = document.querySelectorAll(".page");
+
+    pages.forEach(function(item) {
+        item.classList.remove("active");
+    });
+
+    document.getElementById(page).classList.add("active");
+
+    let buttons = document.querySelectorAll(".nav button");
+
+    buttons.forEach(function(item) {
+        item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    document.getElementById("sidebar").classList.remove("open");
+
+}
+
+
+function toggleSidebar() {
+
+    document.getElementById("sidebar").classList.toggle("open");
+
+}
+
+
+/* =========================
+   SESSION
+========================= */
 
 function startSession() {
 
-    var host =
-        document.getElementById("hostInput").value.trim();
+    let host = prompt("Enter the session host:");
 
-    var code =
-        document.getElementById("codeInput").value.trim();
-
-
-    if (host === "") {
-
-        alert("Please enter the host name.");
-
+    if (!host) {
         return;
-
     }
 
+    let code = prompt("Enter the ER:LC server code:");
 
-    if (code === "") {
-
-        alert("Please enter the ER:LC server code.");
-
+    if (!code) {
         return;
-
     }
-
 
     sessionActive = true;
 
@@ -956,44 +1158,39 @@ function startSession() {
 
     currentCode = code;
 
+    updateSession();
 
-    document.getElementById("displayHost").textContent =
-        host;
-
-    document.getElementById("displayCode").textContent =
-        code;
-
-    document.getElementById("displaySession").textContent =
-        "Active";
-
-
-    var status =
-        document.getElementById("serverStatus");
-
-    status.textContent =
-        "ONLINE";
-
-    status.classList.add("online");
-
-
-    document.getElementById("sessionMessage").textContent =
-        "Session started successfully!";
-
-
-    sendDiscord(
-        "start",
-        host,
-        code
-    );
+    alert("Session started!");
 
 }
 
 
-/*
-==================================================
-END SESSION
-==================================================
-*/
+function startSessionFromPage() {
+
+    let host = document.getElementById("sessionHost").value;
+
+    let code = document.getElementById("serverCode").value;
+
+    if (!host || !code) {
+
+        alert("Please enter the host and server code.");
+
+        return;
+
+    }
+
+    sessionActive = true;
+
+    currentHost = host;
+
+    currentCode = code;
+
+    updateSession();
+
+    alert("Session started!");
+
+}
+
 
 function endSession() {
 
@@ -1005,170 +1202,340 @@ function endSession() {
 
     }
 
-
-    sendDiscord(
-        "end",
-        currentHost,
-        currentCode
-    );
-
-
     sessionActive = false;
-
-
-    document.getElementById("displayHost").textContent =
-        "No Host";
-
-    document.getElementById("displayCode").textContent =
-        "------";
-
-    document.getElementById("displaySession").textContent =
-        "Inactive";
-
-
-    var status =
-        document.getElementById("serverStatus");
-
-    status.textContent =
-        "OFFLINE";
-
-    status.classList.remove("online");
-
-
-    document.getElementById("sessionMessage").textContent =
-        "Session ended successfully!";
-
 
     currentHost = "";
 
     currentCode = "";
 
+    updateSession();
+
+    alert("Session ended.");
+
 }
 
 
-/*
-==================================================
-COPY SERVER CODE
-==================================================
-*/
+function updateSession() {
 
-function copyServerCode() {
+    let dashSession = document.getElementById("dashSession");
 
-    if (currentCode === "") {
+    let badge = document.getElementById("sessionBadge");
 
-        alert("There is no server code.");
+    let host = document.getElementById("hostValue");
+
+    let code = document.getElementById("codeValue");
+
+    if (sessionActive) {
+
+        dashSession.textContent = "Online";
+
+        dashSession.className = "card-number green";
+
+        badge.textContent = "ONLINE";
+
+        badge.className = "badge badge-green";
+
+        host.textContent = currentHost;
+
+        code.textContent = currentCode;
+
+    } else {
+
+        dashSession.textContent = "Offline";
+
+        dashSession.className = "card-number red";
+
+        badge.textContent = "OFFLINE";
+
+        badge.className = "badge badge-red";
+
+        host.textContent = "No host";
+
+        code.textContent = "No server code";
+
+    }
+
+}
+
+
+function sessionVote() {
+
+    alert("Session vote created. Connect your Discord/Worker backend here to send the vote to Discord.");
+
+}
+
+
+/* =========================
+   BANS
+========================= */
+
+function addBan() {
+
+    let username = document.getElementById("banUsername").value;
+
+    let reason = document.getElementById("banReason").value;
+
+    if (!username || !reason) {
+
+        alert("Enter a username and reason.");
 
         return;
 
     }
 
+    bans.push({
+        username: username,
+        reason: reason,
+        staff: document.getElementById("accountName").textContent
+    });
 
-    navigator.clipboard.writeText(currentCode)
+    document.getElementById("banUsername").value = "";
 
-    .then(function() {
+    document.getElementById("banReason").value = "";
 
-        document.getElementById("sessionMessage").textContent =
-            "Server code copied!";
+    renderBans();
 
-    })
+}
 
-    .catch(function() {
 
-        alert("Unable to copy the server code.");
+function renderBans() {
+
+    let table = document.getElementById("bansTable");
+
+    table.innerHTML = "";
+
+    bans.forEach(function(ban, index) {
+
+        table.innerHTML += `
+        <tr>
+            <td>${ban.username}</td>
+            <td>${ban.reason}</td>
+            <td>${ban.staff}</td>
+            <td>
+                <button class="btn" onclick="removeBan(${index})">
+                    Unban
+                </button>
+            </td>
+        </tr>
+        `;
+
+    });
+
+    document.getElementById("dashBans").textContent = bans.length;
+
+}
+
+
+function removeBan(index) {
+
+    bans.splice(index, 1);
+
+    renderBans();
+
+}
+
+
+/* =========================
+   WARNINGS
+========================= */
+
+function addWarning() {
+
+    let username = document.getElementById("warningUsername").value;
+
+    let reason = document.getElementById("warningReason").value;
+
+    if (!username || !reason) {
+
+        alert("Enter a username and reason.");
+
+        return;
+
+    }
+
+    warnings.push({
+        username: username,
+        reason: reason,
+        staff: document.getElementById("accountName").textContent
+    });
+
+    document.getElementById("warningUsername").value = "";
+
+    document.getElementById("warningReason").value = "";
+
+    renderWarnings();
+
+}
+
+
+function renderWarnings() {
+
+    let table = document.getElementById("warningsTable");
+
+    table.innerHTML = "";
+
+    warnings.forEach(function(warning) {
+
+        table.innerHTML += `
+        <tr>
+            <td>${warning.username}</td>
+            <td>${warning.reason}</td>
+            <td>${warning.staff}</td>
+        </tr>
+        `;
+
+    });
+
+    document.getElementById("dashWarnings").textContent = warnings.length;
+
+}
+
+
+function warnPlayer(username) {
+
+    document.getElementById("warningUsername").value = username;
+
+    alert("Player selected. Enter a warning reason.");
+
+}
+
+
+/* =========================
+   BOLOS
+========================= */
+
+function addBolo() {
+
+    let name = document.getElementById("boloName").value;
+
+    let reason = document.getElementById("boloReason").value;
+
+    if (!name || !reason) {
+
+        alert("Enter a name and information.");
+
+        return;
+
+    }
+
+    bolos.push({
+        name: name,
+        reason: reason,
+        staff: document.getElementById("accountName").textContent
+    });
+
+    document.getElementById("boloName").value = "";
+
+    document.getElementById("boloReason").value = "";
+
+    renderBolos();
+
+}
+
+
+function renderBolos() {
+
+    let table = document.getElementById("boloTable");
+
+    table.innerHTML = "";
+
+    bolos.forEach(function(bolo) {
+
+        table.innerHTML += `
+        <tr>
+            <td>${bolo.name}</td>
+            <td>${bolo.reason}</td>
+            <td>${bolo.staff}</td>
+        </tr>
+        `;
 
     });
 
 }
 
 
-/*
-==================================================
-YES VOTE
-==================================================
-*/
+/* =========================
+   NOTES
+========================= */
 
-function voteYes() {
+function addNote() {
 
-    yesVotes++;
+    let name = document.getElementById("noteName").value;
 
-    updateVotes();
+    let note = document.getElementById("noteText").value;
 
-    sendDiscord(
-        "vote",
-        "",
-        ""
-    );
+    if (!name || !note) {
 
-}
+        alert("Enter a player and note.");
 
+        return;
 
-/*
-==================================================
-NO VOTE
-==================================================
-*/
+    }
 
-function voteNo() {
+    notes.push({
+        name: name,
+        note: note,
+        staff: document.getElementById("accountName").textContent
+    });
 
-    noVotes++;
+    document.getElementById("noteName").value = "";
 
-    updateVotes();
+    document.getElementById("noteText").value = "";
 
-    sendDiscord(
-        "vote",
-        "",
-        ""
-    );
+    renderNotes();
 
 }
 
 
-/*
-==================================================
-UPDATE VOTES
-==================================================
-*/
+function renderNotes() {
 
-function updateVotes() {
+    let table = document.getElementById("notesTable");
 
-    document.getElementById("yesCount").textContent =
-        yesVotes;
+    table.innerHTML = "";
 
-    document.getElementById("noCount").textContent =
-        noVotes;
+    notes.forEach(function(item) {
 
-}
+        table.innerHTML += `
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.note}</td>
+            <td>${item.staff}</td>
+        </tr>
+        `;
 
-
-/*
-==================================================
-RESET VOTES
-==================================================
-*/
-
-function resetVotes() {
-
-    yesVotes = 0;
-
-    noVotes = 0;
-
-    updateVotes();
+    });
 
 }
 
 
-/*
-==================================================
-WORKER TEST
-==================================================
-*/
+/* =========================
+   PLAYER SEARCH
+========================= */
 
-console.log(
-    "TSRP Worker:",
-    WORKER_URL
-);
+function searchPlayers() {
+
+    let search = document
+        .getElementById("playerSearch")
+        .value
+        .toLowerCase();
+
+    let rows = document
+        .getElementById("playersTable")
+        .getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+
+        let text = rows[i].textContent.toLowerCase();
+
+        rows[i].style.display =
+            text.includes(search) ? "" : "none";
+
+    }
+
+}
 
 </script>
 
 </body>
 </html>
+```
