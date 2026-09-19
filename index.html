@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSRP Dashboard</title>
+<title>TSRP Staff Dashboard</title>
 
 <style>
 * {
@@ -16,13 +16,86 @@
 
 body {
     background: #0b0f14;
-    color: #ffffff;
+    color: white;
 }
 
-button,
-input {
-    font: inherit;
+/* LOGIN */
+
+#loginScreen {
+    position: fixed;
+    inset: 0;
+    background: #080c11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
 }
+
+.login-box {
+    width: 380px;
+    max-width: 90%;
+    background: #111821;
+    border: 1px solid #273342;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.login-logo {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.login-logo span {
+    color: #4d8dff;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #7f8b9d;
+    margin-bottom: 28px;
+}
+
+.login-box input {
+    width: 100%;
+    background: #0c1118;
+    color: white;
+    border: 1px solid #273342;
+    border-radius: 7px;
+    padding: 13px;
+    margin-bottom: 12px;
+    outline: none;
+}
+
+.login-box input:focus {
+    border-color: #4d8dff;
+}
+
+.login-button {
+    width: 100%;
+    border: 0;
+    border-radius: 7px;
+    padding: 13px;
+    background: #4d8dff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    opacity: .85;
+}
+
+.login-error {
+    color: #ff6262;
+    text-align: center;
+    margin-top: 12px;
+    min-height: 18px;
+}
+
+/* SIDEBAR */
 
 .sidebar {
     position: fixed;
@@ -72,6 +145,8 @@ input {
     color: white;
 }
 
+/* MAIN */
+
 .main {
     margin-left: 240px;
     min-height: 100vh;
@@ -97,6 +172,16 @@ input {
     color: #c9d2df;
 }
 
+.logout {
+    margin-left: 10px;
+    border: 0;
+    background: #273342;
+    color: white;
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
 .page {
     display: none;
 }
@@ -104,6 +189,8 @@ input {
 .page.active {
     display: block;
 }
+
+/* CARDS */
 
 .cards {
     display: grid;
@@ -138,6 +225,8 @@ input {
 .status.online {
     color: #45d483;
 }
+
+/* PANELS */
 
 .grid {
     display: grid;
@@ -281,6 +370,8 @@ td {
     display: none;
 }
 
+/* MOBILE */
+
 @media(max-width: 900px) {
     .cards {
         grid-template-columns: repeat(2, 1fr);
@@ -292,6 +383,7 @@ td {
 }
 
 @media(max-width: 650px) {
+
     .sidebar {
         transform: translateX(-100%);
         transition: .2s;
@@ -330,6 +422,47 @@ td {
 
 <body>
 
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            <span>TS</span>RP
+        </div>
+
+        <div class="login-subtitle">
+            Staff Dashboard
+        </div>
+
+        <input
+            type="text"
+            id="loginUsername"
+            placeholder="Username"
+            autocomplete="username"
+        >
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
+
+        <button class="login-button" onclick="login()">
+            Login
+        </button>
+
+        <div class="login-error" id="loginError"></div>
+
+    </div>
+
+</div>
+
+
+<!-- SIDEBAR -->
+
 <aside class="sidebar" id="sidebar">
 
     <div class="logo">
@@ -339,33 +472,81 @@ td {
     <div class="nav-title">Management</div>
 
     <div class="nav">
-        <button class="active" onclick="showPage('dashboard', this)">Dashboard</button>
-        <button onclick="showPage('session', this)">Session</button>
-        <button onclick="showPage('players', this)">Players</button>
+
+        <button class="active"
+                onclick="showPage('dashboard', this)">
+            Dashboard
+        </button>
+
+        <button onclick="showPage('session', this)">
+            Session
+        </button>
+
+        <button onclick="showPage('players', this)">
+            Players
+        </button>
+
     </div>
 
     <div class="nav-title">Moderation</div>
 
     <div class="nav">
-        <button onclick="showPage('bans', this)">Bans</button>
-        <button onclick="showPage('warnings', this)">Warnings</button>
-        <button onclick="showPage('bolo', this)">BOLO</button>
-        <button onclick="showPage('notes', this)">Notes</button>
+
+        <button onclick="showPage('bans', this)">
+            Bans
+        </button>
+
+        <button onclick="showPage('warnings', this)">
+            Warnings
+        </button>
+
+        <button onclick="showPage('bolo', this)">
+            BOLO
+        </button>
+
+        <button onclick="showPage('notes', this)">
+            Notes
+        </button>
+
     </div>
 
 </aside>
 
+
+<!-- MAIN -->
+
 <main class="main">
 
     <div class="topbar">
+
         <div style="display:flex;align-items:center;">
-            <button class="mobile-menu" onclick="toggleMenu()">☰</button>
-            <h1 id="pageTitle">Dashboard</h1>
+
+            <button
+                class="mobile-menu"
+                onclick="toggleMenu()">
+                ☰
+            </button>
+
+            <h1 id="pageTitle">
+                Dashboard
+            </h1>
+
         </div>
 
-        <div class="user">
-            Host: <strong>TSRP Staff</strong>
+        <div>
+
+            <span class="user">
+                Staff: <strong id="loggedInUser">Staff</strong>
+            </span>
+
+            <button
+                class="logout"
+                onclick="logout()">
+                Logout
+            </button>
+
         </div>
+
     </div>
 
 
@@ -377,25 +558,42 @@ td {
 
             <div class="card">
                 <div class="card-title">Session</div>
-                <div class="card-number status" id="dashboardStatus">Offline</div>
+                <div
+                    class="card-number status"
+                    id="dashboardStatus">
+                    Offline
+                </div>
             </div>
 
             <div class="card">
                 <div class="card-title">Players</div>
-                <div class="card-number" id="playerCount">0</div>
+                <div
+                    class="card-number"
+                    id="playerCount">
+                    0
+                </div>
             </div>
 
             <div class="card">
                 <div class="card-title">Bans</div>
-                <div class="card-number" id="banCount">0</div>
+                <div
+                    class="card-number"
+                    id="banCount">
+                    0
+                </div>
             </div>
 
             <div class="card">
                 <div class="card-title">Warnings</div>
-                <div class="card-number" id="warningCount">0</div>
+                <div
+                    class="card-number"
+                    id="warningCount">
+                    0
+                </div>
             </div>
 
         </div>
+
 
         <div class="grid">
 
@@ -406,22 +604,50 @@ td {
                 <div class="session-box">
 
                     <div class="session-info">
-                        <p>Status:
-                            <span class="status" id="sessionStatus">Offline</span>
+
+                        <p>
+                            Status:
+                            <span
+                                class="status"
+                                id="sessionStatus">
+                                Offline
+                            </span>
                         </p>
 
-                        <p>Host:
-                            <span class="session-code" id="sessionHost">None</span>
+                        <p>
+                            Host:
+                            <span
+                                class="session-code"
+                                id="sessionHost">
+                                None
+                            </span>
                         </p>
 
-                        <p>Server Code:
-                            <span class="session-code" id="serverCode">None</span>
+                        <p>
+                            Server Code:
+                            <span
+                                class="session-code"
+                                id="serverCode">
+                                None
+                            </span>
                         </p>
+
                     </div>
 
                     <div class="actions">
-                        <button class="btn" onclick="startSession()">Start</button>
-                        <button class="btn danger" onclick="stopSession()">Shutdown</button>
+
+                        <button
+                            class="btn"
+                            onclick="startSession()">
+                            Start
+                        </button>
+
+                        <button
+                            class="btn danger"
+                            onclick="stopSession()">
+                            Shutdown
+                        </button>
+
                     </div>
 
                 </div>
@@ -434,10 +660,31 @@ td {
                 <h2>Quick Actions</h2>
 
                 <div class="actions">
-                    <button class="btn" onclick="showPage('players')">Players</button>
-                    <button class="btn" onclick="showPage('bans')">Manage Bans</button>
-                    <button class="btn" onclick="showPage('warnings')">Warnings</button>
-                    <button class="btn" onclick="showPage('bolo')">BOLO</button>
+
+                    <button
+                        class="btn"
+                        onclick="showPage('players')">
+                        Players
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="showPage('bans')">
+                        Manage Bans
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="showPage('warnings')">
+                        Warnings
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="showPage('bolo')">
+                        BOLO
+                    </button>
+
                 </div>
 
             </div>
@@ -457,13 +704,28 @@ td {
 
             <div class="form">
 
-                <input id="hostInput" placeholder="Host name">
+                <input
+                    id="hostInput"
+                    placeholder="Host name">
 
-                <input id="serverInput" placeholder="ER:LC server code">
+                <input
+                    id="serverInput"
+                    placeholder="ER:LC server code">
 
                 <div class="actions">
-                    <button class="btn" onclick="startSession()">Start Session</button>
-                    <button class="btn danger" onclick="stopSession()">Shutdown Session</button>
+
+                    <button
+                        class="btn"
+                        onclick="startSession()">
+                        Start Session
+                    </button>
+
+                    <button
+                        class="btn danger"
+                        onclick="stopSession()">
+                        Shutdown Session
+                    </button>
+
                 </div>
 
             </div>
@@ -476,17 +738,32 @@ td {
 
             <h2>Session Information</h2>
 
-            <p>Current status:
-                <span class="status" id="sessionStatus2">Offline</span>
+            <p>
+                Current status:
+                <span
+                    class="status"
+                    id="sessionStatus2">
+                    Offline
+                </span>
             </p>
 
             <br>
 
-            <p>Host: <strong id="sessionHost2">None</strong></p>
+            <p>
+                Host:
+                <strong id="sessionHost2">
+                    None
+                </strong>
+            </p>
 
             <br>
 
-            <p>Server Code: <strong id="serverCode2">None</strong></p>
+            <p>
+                Server Code:
+                <strong id="serverCode2">
+                    None
+                </strong>
+            </p>
 
         </div>
 
@@ -501,9 +778,20 @@ td {
 
             <h2>Players</h2>
 
-            <div class="form" style="margin-bottom:20px;">
-                <input id="playerInput" placeholder="Enter player username">
-                <button class="btn" onclick="addPlayer()">Add Player</button>
+            <div
+                class="form"
+                style="margin-bottom:20px;">
+
+                <input
+                    id="playerInput"
+                    placeholder="Enter player username">
+
+                <button
+                    class="btn"
+                    onclick="addPlayer()">
+                    Add Player
+                </button>
+
             </div>
 
             <div class="table-wrap">
@@ -511,11 +799,13 @@ td {
                 <table>
 
                     <thead>
+
                         <tr>
                             <th>Username</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
+
                     </thead>
 
                     <tbody id="playersTable"></tbody>
@@ -524,7 +814,9 @@ td {
 
             </div>
 
-            <div id="playersEmpty" class="empty">
+            <div
+                id="playersEmpty"
+                class="empty">
                 No players added yet.
             </div>
 
@@ -541,12 +833,23 @@ td {
 
             <h2>Ban Management</h2>
 
-            <div class="form" style="margin-bottom:20px;">
+            <div
+                class="form"
+                style="margin-bottom:20px;">
 
-                <input id="banPlayer" placeholder="Player username">
-                <input id="banReason" placeholder="Reason">
+                <input
+                    id="banPlayer"
+                    placeholder="Player username">
 
-                <button class="btn danger" onclick="addBan()">Ban Player</button>
+                <input
+                    id="banReason"
+                    placeholder="Reason">
+
+                <button
+                    class="btn danger"
+                    onclick="addBan()">
+                    Ban Player
+                </button>
 
             </div>
 
@@ -568,7 +871,9 @@ td {
 
             </div>
 
-            <div id="bansEmpty" class="empty">
+            <div
+                id="bansEmpty"
+                class="empty">
                 No bans recorded.
             </div>
 
@@ -585,12 +890,23 @@ td {
 
             <h2>Warnings</h2>
 
-            <div class="form" style="margin-bottom:20px;">
+            <div
+                class="form"
+                style="margin-bottom:20px;">
 
-                <input id="warningPlayer" placeholder="Player username">
-                <input id="warningReason" placeholder="Reason">
+                <input
+                    id="warningPlayer"
+                    placeholder="Player username">
 
-                <button class="btn" onclick="addWarning()">Issue Warning</button>
+                <input
+                    id="warningReason"
+                    placeholder="Reason">
+
+                <button
+                    class="btn"
+                    onclick="addWarning()">
+                    Issue Warning
+                </button>
 
             </div>
 
@@ -612,7 +928,9 @@ td {
 
             </div>
 
-            <div id="warningsEmpty" class="empty">
+            <div
+                id="warningsEmpty"
+                class="empty">
                 No warnings recorded.
             </div>
 
@@ -629,12 +947,23 @@ td {
 
             <h2>BOLO</h2>
 
-            <div class="form" style="margin-bottom:20px;">
+            <div
+                class="form"
+                style="margin-bottom:20px;">
 
-                <input id="boloPlayer" placeholder="Player username">
-                <input id="boloReason" placeholder="Reason">
+                <input
+                    id="boloPlayer"
+                    placeholder="Player username">
 
-                <button class="btn" onclick="addBolo()">Create BOLO</button>
+                <input
+                    id="boloReason"
+                    placeholder="Reason">
+
+                <button
+                    class="btn"
+                    onclick="addBolo()">
+                    Create BOLO
+                </button>
 
             </div>
 
@@ -656,7 +985,9 @@ td {
 
             </div>
 
-            <div id="boloEmpty" class="empty">
+            <div
+                id="boloEmpty"
+                class="empty">
                 No active BOLOs.
             </div>
 
@@ -673,12 +1004,23 @@ td {
 
             <h2>Player Notes</h2>
 
-            <div class="form" style="margin-bottom:20px;">
+            <div
+                class="form"
+                style="margin-bottom:20px;">
 
-                <input id="notePlayer" placeholder="Player username">
-                <input id="noteText" placeholder="Note">
+                <input
+                    id="notePlayer"
+                    placeholder="Player username">
 
-                <button class="btn" onclick="addNote()">Add Note</button>
+                <input
+                    id="noteText"
+                    placeholder="Note">
+
+                <button
+                    class="btn"
+                    onclick="addNote()">
+                    Add Note
+                </button>
 
             </div>
 
@@ -700,7 +1042,9 @@ td {
 
             </div>
 
-            <div id="notesEmpty" class="empty">
+            <div
+                id="notesEmpty"
+                class="empty">
                 No notes recorded.
             </div>
 
@@ -716,6 +1060,96 @@ td {
 
 <script>
 
+/* =========================
+   STAFF LOGIN
+========================= */
+
+let STAFF_USERNAME = "admin";
+let STAFF_PASSWORD = "tsrp123";
+
+
+function login() {
+
+    let username =
+        document.getElementById("loginUsername").value.trim();
+
+    let password =
+        document.getElementById("loginPassword").value;
+
+    let error =
+        document.getElementById("loginError");
+
+    if (
+        username === STAFF_USERNAME &&
+        password === STAFF_PASSWORD
+    ) {
+
+        sessionStorage.setItem(
+            "tsrpLoggedIn",
+            "true"
+        );
+
+        sessionStorage.setItem(
+            "tsrpUser",
+            username
+        );
+
+        document.getElementById(
+            "loginScreen"
+        ).style.display = "none";
+
+        document.getElementById(
+            "loggedInUser"
+        ).textContent = username;
+
+        error.textContent = "";
+
+    } else {
+
+        error.textContent =
+            "Invalid username or password.";
+
+    }
+}
+
+
+function logout() {
+
+    sessionStorage.removeItem("tsrpLoggedIn");
+    sessionStorage.removeItem("tsrpUser");
+
+    location.reload();
+}
+
+
+function checkLogin() {
+
+    let loggedIn =
+        sessionStorage.getItem("tsrpLoggedIn");
+
+    let username =
+        sessionStorage.getItem("tsrpUser");
+
+    if (loggedIn === "true") {
+
+        document.getElementById(
+            "loginScreen"
+        ).style.display = "none";
+
+        document.getElementById(
+            "loggedInUser"
+        ).textContent =
+            username || "Staff";
+
+    }
+
+}
+
+
+/* =========================
+   DATA
+========================= */
+
 let players = [];
 let bans = [];
 let warnings = [];
@@ -729,17 +1163,24 @@ let session = {
 };
 
 
+/* =========================
+   NAVIGATION
+========================= */
+
 function showPage(page, button) {
 
-    document.querySelectorAll(".page").forEach(function(p) {
-        p.classList.remove("active");
-    });
+    document.querySelectorAll(".page")
+        .forEach(function(p) {
+            p.classList.remove("active");
+        });
 
-    document.getElementById(page).classList.add("active");
+    document.getElementById(page)
+        .classList.add("active");
 
-    document.querySelectorAll(".nav button").forEach(function(b) {
-        b.classList.remove("active");
-    });
+    document.querySelectorAll(".nav button")
+        .forEach(function(b) {
+            b.classList.remove("active");
+        });
 
     if (button) {
         button.classList.add("active");
@@ -755,41 +1196,74 @@ function showPage(page, button) {
         notes: "Notes"
     };
 
-    document.getElementById("pageTitle").textContent = titles[page];
+    document.getElementById(
+        "pageTitle"
+    ).textContent = titles[page];
 
-    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById(
+        "sidebar"
+    ).classList.remove("open");
 }
 
 
 function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("open");
+
+    document.getElementById(
+        "sidebar"
+    ).classList.toggle("open");
+
 }
 
+
+/* =========================
+   TOAST
+========================= */
 
 function toast(message) {
 
-    let box = document.getElementById("toast");
+    let box =
+        document.getElementById("toast");
 
     box.textContent = message;
+
     box.classList.add("show");
 
     setTimeout(function() {
+
         box.classList.remove("show");
+
     }, 2500);
+
 }
 
 
+/* =========================
+   SESSION
+========================= */
+
 function startSession() {
 
-    let host = document.getElementById("hostInput").value.trim();
-    let code = document.getElementById("serverInput").value.trim();
+    let host =
+        document.getElementById(
+            "hostInput"
+        ).value.trim();
+
+    let code =
+        document.getElementById(
+            "serverInput"
+        ).value.trim();
 
     if (!host) {
-        host = "TSRP Staff";
+        host =
+            sessionStorage.getItem(
+                "tsrpUser"
+            ) || "TSRP Staff";
     }
 
     if (!code) {
+
         toast("Enter a server code first.");
+
         return;
     }
 
@@ -817,41 +1291,93 @@ function stopSession() {
 
 function updateSession() {
 
-    let status = session.online ? "Online" : "Offline";
+    let status =
+        session.online
+            ? "Online"
+            : "Offline";
 
-    document.getElementById("dashboardStatus").textContent = status;
-    document.getElementById("dashboardStatus").className =
-        session.online ? "card-number status online" : "card-number status";
+    let dashboardStatus =
+        document.getElementById(
+            "dashboardStatus"
+        );
 
-    document.getElementById("sessionStatus").textContent = status;
-    document.getElementById("sessionStatus").className =
-        session.online ? "status online" : "status";
+    dashboardStatus.textContent =
+        status;
 
-    document.getElementById("sessionStatus2").textContent = status;
-    document.getElementById("sessionStatus2").className =
-        session.online ? "status online" : "status";
+    dashboardStatus.className =
+        session.online
+            ? "card-number status online"
+            : "card-number status";
 
-    document.getElementById("sessionHost").textContent =
+
+    let status1 =
+        document.getElementById(
+            "sessionStatus"
+        );
+
+    status1.textContent = status;
+
+    status1.className =
+        session.online
+            ? "status online"
+            : "status";
+
+
+    let status2 =
+        document.getElementById(
+            "sessionStatus2"
+        );
+
+    status2.textContent = status;
+
+    status2.className =
+        session.online
+            ? "status online"
+            : "status";
+
+
+    document.getElementById(
+        "sessionHost"
+    ).textContent =
         session.host || "None";
 
-    document.getElementById("sessionHost2").textContent =
+    document.getElementById(
+        "sessionHost2"
+    ).textContent =
         session.host || "None";
 
-    document.getElementById("serverCode").textContent =
+
+    document.getElementById(
+        "serverCode"
+    ).textContent =
         session.code || "None";
 
-    document.getElementById("serverCode2").textContent =
+    document.getElementById(
+        "serverCode2"
+    ).textContent =
         session.code || "None";
+
 }
 
 
+/* =========================
+   PLAYERS
+========================= */
+
 function addPlayer() {
 
-    let input = document.getElementById("playerInput");
-    let name = input.value.trim();
+    let input =
+        document.getElementById(
+            "playerInput"
+        );
+
+    let name =
+        input.value.trim();
 
     if (!name) {
+
         toast("Enter a username.");
+
         return;
     }
 
@@ -867,25 +1393,51 @@ function addPlayer() {
 
 function renderPlayers() {
 
-    let table = document.getElementById("playersTable");
+    let table =
+        document.getElementById(
+            "playersTable"
+        );
+
     table.innerHTML = "";
 
-    players.forEach(function(player, index) {
+    players.forEach(
+        function(player, index) {
 
-        let row = document.createElement("tr");
+            let row =
+                document.createElement("tr");
 
-        row.innerHTML =
-            "<td>" + escapeHTML(player) + "</td>" +
-            "<td><span class='badge'>Active</span></td>" +
-            "<td><button class='btn danger' onclick='removePlayer(" + index + ")'>Remove</button></td>";
+            row.innerHTML =
+                "<td>" +
+                escapeHTML(player) +
+                "</td>" +
 
-        table.appendChild(row);
-    });
+                "<td>" +
+                "<span class='badge'>Active</span>" +
+                "</td>" +
 
-    document.getElementById("playersEmpty").style.display =
-        players.length ? "none" : "block";
+                "<td>" +
+                "<button class='btn danger' " +
+                "onclick='removePlayer(" +
+                index +
+                ")'>Remove</button>" +
+                "</td>";
 
-    document.getElementById("playerCount").textContent = players.length;
+            table.appendChild(row);
+
+        }
+    );
+
+    document.getElementById(
+        "playersEmpty"
+    ).style.display =
+        players.length
+            ? "none"
+            : "block";
+
+    document.getElementById(
+        "playerCount"
+    ).textContent =
+        players.length;
 }
 
 
@@ -899,13 +1451,28 @@ function removePlayer(index) {
 }
 
 
+/* =========================
+   BANS
+========================= */
+
 function addBan() {
 
-    let player = document.getElementById("banPlayer").value.trim();
-    let reason = document.getElementById("banReason").value.trim();
+    let player =
+        document.getElementById(
+            "banPlayer"
+        ).value.trim();
+
+    let reason =
+        document.getElementById(
+            "banReason"
+        ).value.trim();
 
     if (!player || !reason) {
-        toast("Enter a player and reason.");
+
+        toast(
+            "Enter a player and reason."
+        );
+
         return;
     }
 
@@ -914,8 +1481,13 @@ function addBan() {
         reason: reason
     });
 
-    document.getElementById("banPlayer").value = "";
-    document.getElementById("banReason").value = "";
+    document.getElementById(
+        "banPlayer"
+    ).value = "";
+
+    document.getElementById(
+        "banReason"
+    ).value = "";
 
     renderBans();
 
@@ -925,25 +1497,51 @@ function addBan() {
 
 function renderBans() {
 
-    let table = document.getElementById("bansTable");
+    let table =
+        document.getElementById(
+            "bansTable"
+        );
+
     table.innerHTML = "";
 
-    bans.forEach(function(ban, index) {
+    bans.forEach(
+        function(ban, index) {
 
-        let row = document.createElement("tr");
+            let row =
+                document.createElement("tr");
 
-        row.innerHTML =
-            "<td>" + escapeHTML(ban.player) + "</td>" +
-            "<td>" + escapeHTML(ban.reason) + "</td>" +
-            "<td><button class='btn gray' onclick='removeBan(" + index + ")'>Remove</button></td>";
+            row.innerHTML =
+                "<td>" +
+                escapeHTML(ban.player) +
+                "</td>" +
 
-        table.appendChild(row);
-    });
+                "<td>" +
+                escapeHTML(ban.reason) +
+                "</td>" +
 
-    document.getElementById("bansEmpty").style.display =
-        bans.length ? "none" : "block";
+                "<td>" +
+                "<button class='btn gray' " +
+                "onclick='removeBan(" +
+                index +
+                ")'>Remove</button>" +
+                "</td>";
 
-    document.getElementById("banCount").textContent = bans.length;
+            table.appendChild(row);
+
+        }
+    );
+
+    document.getElementById(
+        "bansEmpty"
+    ).style.display =
+        bans.length
+            ? "none"
+            : "block";
+
+    document.getElementById(
+        "banCount"
+    ).textContent =
+        bans.length;
 }
 
 
@@ -957,13 +1555,28 @@ function removeBan(index) {
 }
 
 
+/* =========================
+   WARNINGS
+========================= */
+
 function addWarning() {
 
-    let player = document.getElementById("warningPlayer").value.trim();
-    let reason = document.getElementById("warningReason").value.trim();
+    let player =
+        document.getElementById(
+            "warningPlayer"
+        ).value.trim();
+
+    let reason =
+        document.getElementById(
+            "warningReason"
+        ).value.trim();
 
     if (!player || !reason) {
-        toast("Enter a player and reason.");
+
+        toast(
+            "Enter a player and reason."
+        );
+
         return;
     }
 
@@ -972,8 +1585,13 @@ function addWarning() {
         reason: reason
     });
 
-    document.getElementById("warningPlayer").value = "";
-    document.getElementById("warningReason").value = "";
+    document.getElementById(
+        "warningPlayer"
+    ).value = "";
+
+    document.getElementById(
+        "warningReason"
+    ).value = "";
 
     renderWarnings();
 
@@ -983,25 +1601,50 @@ function addWarning() {
 
 function renderWarnings() {
 
-    let table = document.getElementById("warningsTable");
+    let table =
+        document.getElementById(
+            "warningsTable"
+        );
+
     table.innerHTML = "";
 
-    warnings.forEach(function(warning, index) {
+    warnings.forEach(
+        function(warning, index) {
 
-        let row = document.createElement("tr");
+            let row =
+                document.createElement("tr");
 
-        row.innerHTML =
-            "<td>" + escapeHTML(warning.player) + "</td>" +
-            "<td>" + escapeHTML(warning.reason) + "</td>" +
-            "<td><button class='btn gray' onclick='removeWarning(" + index + ")'>Remove</button></td>";
+            row.innerHTML =
+                "<td>" +
+                escapeHTML(warning.player) +
+                "</td>" +
 
-        table.appendChild(row);
-    });
+                "<td>" +
+                escapeHTML(warning.reason) +
+                "</td>" +
 
-    document.getElementById("warningsEmpty").style.display =
-        warnings.length ? "none" : "block";
+                "<td>" +
+                "<button class='btn gray' " +
+                "onclick='removeWarning(" +
+                index +
+                ")'>Remove</button>" +
+                "</td>";
 
-    document.getElementById("warningCount").textContent =
+            table.appendChild(row);
+
+        }
+    );
+
+    document.getElementById(
+        "warningsEmpty"
+    ).style.display =
+        warnings.length
+            ? "none"
+            : "block";
+
+    document.getElementById(
+        "warningCount"
+    ).textContent =
         warnings.length;
 }
 
@@ -1016,13 +1659,28 @@ function removeWarning(index) {
 }
 
 
+/* =========================
+   BOLO
+========================= */
+
 function addBolo() {
 
-    let player = document.getElementById("boloPlayer").value.trim();
-    let reason = document.getElementById("boloReason").value.trim();
+    let player =
+        document.getElementById(
+            "boloPlayer"
+        ).value.trim();
+
+    let reason =
+        document.getElementById(
+            "boloReason"
+        ).value.trim();
 
     if (!player || !reason) {
-        toast("Enter a player and reason.");
+
+        toast(
+            "Enter a player and reason."
+        );
+
         return;
     }
 
@@ -1031,8 +1689,13 @@ function addBolo() {
         reason: reason
     });
 
-    document.getElementById("boloPlayer").value = "";
-    document.getElementById("boloReason").value = "";
+    document.getElementById(
+        "boloPlayer"
+    ).value = "";
+
+    document.getElementById(
+        "boloReason"
+    ).value = "";
 
     renderBolos();
 
@@ -1042,23 +1705,46 @@ function addBolo() {
 
 function renderBolos() {
 
-    let table = document.getElementById("boloTable");
+    let table =
+        document.getElementById(
+            "boloTable"
+        );
+
     table.innerHTML = "";
 
-    bolos.forEach(function(bolo, index) {
+    bolos.forEach(
+        function(bolo, index) {
 
-        let row = document.createElement("tr");
+            let row =
+                document.createElement("tr");
 
-        row.innerHTML =
-            "<td>" + escapeHTML(bolo.player) + "</td>" +
-            "<td>" + escapeHTML(bolo.reason) + "</td>" +
-            "<td><button class='btn gray' onclick='removeBolo(" + index + ")'>Remove</button></td>";
+            row.innerHTML =
+                "<td>" +
+                escapeHTML(bolo.player) +
+                "</td>" +
 
-        table.appendChild(row);
-    });
+                "<td>" +
+                escapeHTML(bolo.reason) +
+                "</td>" +
 
-    document.getElementById("boloEmpty").style.display =
-        bolos.length ? "none" : "block";
+                "<td>" +
+                "<button class='btn gray' " +
+                "onclick='removeBolo(" +
+                index +
+                ")'>Remove</button>" +
+                "</td>";
+
+            table.appendChild(row);
+
+        }
+    );
+
+    document.getElementById(
+        "boloEmpty"
+    ).style.display =
+        bolos.length
+            ? "none"
+            : "block";
 }
 
 
@@ -1072,13 +1758,28 @@ function removeBolo(index) {
 }
 
 
+/* =========================
+   NOTES
+========================= */
+
 function addNote() {
 
-    let player = document.getElementById("notePlayer").value.trim();
-    let note = document.getElementById("noteText").value.trim();
+    let player =
+        document.getElementById(
+            "notePlayer"
+        ).value.trim();
+
+    let note =
+        document.getElementById(
+            "noteText"
+        ).value.trim();
 
     if (!player || !note) {
-        toast("Enter a player and note.");
+
+        toast(
+            "Enter a player and note."
+        );
+
         return;
     }
 
@@ -1087,8 +1788,13 @@ function addNote() {
         note: note
     });
 
-    document.getElementById("notePlayer").value = "";
-    document.getElementById("noteText").value = "";
+    document.getElementById(
+        "notePlayer"
+    ).value = "";
+
+    document.getElementById(
+        "noteText"
+    ).value = "";
 
     renderNotes();
 
@@ -1098,23 +1804,46 @@ function addNote() {
 
 function renderNotes() {
 
-    let table = document.getElementById("notesTable");
+    let table =
+        document.getElementById(
+            "notesTable"
+        );
+
     table.innerHTML = "";
 
-    notes.forEach(function(item, index) {
+    notes.forEach(
+        function(item, index) {
 
-        let row = document.createElement("tr");
+            let row =
+                document.createElement("tr");
 
-        row.innerHTML =
-            "<td>" + escapeHTML(item.player) + "</td>" +
-            "<td>" + escapeHTML(item.note) + "</td>" +
-            "<td><button class='btn gray' onclick='removeNote(" + index + ")'>Remove</button></td>";
+            row.innerHTML =
+                "<td>" +
+                escapeHTML(item.player) +
+                "</td>" +
 
-        table.appendChild(row);
-    });
+                "<td>" +
+                escapeHTML(item.note) +
+                "</td>" +
 
-    document.getElementById("notesEmpty").style.display =
-        notes.length ? "none" : "block";
+                "<td>" +
+                "<button class='btn gray' " +
+                "onclick='removeNote(" +
+                index +
+                ")'>Remove</button>" +
+                "</td>";
+
+            table.appendChild(row);
+
+        }
+    );
+
+    document.getElementById(
+        "notesEmpty"
+    ).style.display =
+        notes.length
+            ? "none"
+            : "block";
 }
 
 
@@ -1128,15 +1857,26 @@ function removeNote(index) {
 }
 
 
+/* =========================
+   SECURITY HELPERS
+========================= */
+
 function escapeHTML(text) {
 
-    let div = document.createElement("div");
+    let div =
+        document.createElement("div");
 
     div.textContent = text;
 
     return div.innerHTML;
 }
 
+
+/* =========================
+   START
+========================= */
+
+checkLogin();
 
 updateSession();
 renderPlayers();
