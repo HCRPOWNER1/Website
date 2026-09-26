@@ -1,1990 +1,2514 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSRP Staff Dashboard</title>
+
+<title>TSRP | Melonly Dashboard</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#0b0f17;
-    color:#fff;
-}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
 
-#loginScreen{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:linear-gradient(135deg,#0b0f17,#121b2c);
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.loginBox{
-    width:100%;
-    max-width:420px;
-    background:#151c2b;
-    border:1px solid #29354a;
-    border-radius:18px;
-    padding:30px;
-    box-shadow:0 20px 60px #0008;
-}
-
-.logo{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.logo h1{
-    font-size:30px;
-}
-
-.logo p{
-    color:#8f9bb0;
-    margin-top:6px;
-}
-
-.input{
-    width:100%;
-    padding:13px;
-    margin-top:10px;
-    border-radius:9px;
-    border:1px solid #344158;
-    background:#0e1420;
-    color:#fff;
-    outline:none;
-}
-
-.input:focus{
-    border-color:#4b8cff;
-}
-
-.btn{
-    border:0;
-    border-radius:9px;
-    padding:11px 16px;
-    background:#286cff;
-    color:white;
-    font-weight:bold;
-}
-
-.btn:hover{filter:brightness(1.12)}
-
-.btn.red{background:#d83a4b}
-.btn.green{background:#1d9b62}
-.btn.gray{background:#303b4e}
-.btn.orange{background:#c47a20}
-
-.error{
-    color:#ff6877;
-    margin-top:12px;
-    text-align:center;
-    min-height:20px;
-}
-
-#app{
-    display:none;
-    min-height:100vh;
-}
-
-.sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    width:240px;
-    background:#101621;
-    border-right:1px solid #263145;
-    padding:20px 14px;
-    z-index:10;
-}
-
-.sideLogo{
-    padding:10px;
-    margin-bottom:20px;
-}
-
-.sideLogo h2{font-size:21px}
-.sideLogo p{color:#7f8ba0;font-size:12px;margin-top:4px}
-
-.nav button{
-    width:100%;
-    text-align:left;
-    border:0;
-    color:#cbd4e3;
-    background:transparent;
-    padding:12px;
-    margin:3px 0;
-    border-radius:8px;
-}
-
-.nav button:hover,
-.nav button.active{
-    background:#1d2b43;
-    color:#fff;
-}
-
-.main{
-    margin-left:240px;
-    padding:25px;
-}
-
-.topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:25px;
-    gap:15px;
-}
-
-.topbar h1{font-size:28px}
-
-.staffInfo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:#151e2d;
-    padding:9px 13px;
-    border-radius:9px;
-}
-
-.badge{
-    display:inline-block;
-    padding:4px 8px;
-    border-radius:5px;
-    background:#293750;
-    color:#bcd0f7;
-    font-size:11px;
-    font-weight:bold;
-}
-
-.page{display:none}
-.page.active{display:block}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.card{
-    background:#151d2b;
-    border:1px solid #263248;
-    border-radius:13px;
-    padding:18px;
-}
-
-.card .label{
-    color:#8996aa;
-    font-size:13px;
-}
-
-.card .value{
-    font-size:28px;
-    font-weight:bold;
-    margin-top:8px;
-}
-
-.panel{
-    background:#151d2b;
-    border:1px solid #263248;
-    border-radius:13px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-.panel h2{
-    font-size:18px;
-    margin-bottom:15px;
-}
-
-.row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.sessionBox{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.infoBox{
-    background:#0e1420;
-    border:1px solid #273249;
-    border-radius:10px;
-    padding:15px;
-}
-
-.infoBox small{
-    display:block;
-    color:#7e8ba0;
-    margin-bottom:6px;
-}
-
-.tableWrap{overflow-x:auto}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,td{
-    padding:12px 9px;
-    border-bottom:1px solid #273249;
-    text-align:left;
-    white-space:nowrap;
-}
-
-th{
-    color:#8794a9;
-    font-size:12px;
-}
-
-td{
-    color:#dce3ee;
-    font-size:14px;
-}
-
-.status{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.status.online{
-    background:#123d2b;
-    color:#5ee7a5;
-}
-
-.status.offline{
-    background:#3b1820;
-    color:#ff7180;
-}
-
-.formGrid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.formGroup label{
-    display:block;
-    color:#9aa7ba;
-    font-size:12px;
-    margin-bottom:5px;
-}
-
-textarea.input{
-    min-height:100px;
-    resize:vertical;
-}
-
-.full{grid-column:1/-1}
-
-.search{
-    max-width:350px;
-    margin-bottom:15px;
-}
-
-.logItem{
-    border-bottom:1px solid #273249;
-    padding:12px 0;
-}
-
-.logItem:last-child{border-bottom:0}
-
-.logTime{
-    color:#738097;
-    font-size:11px;
-    margin-top:4px;
-}
-
-.empty{
-    color:#748095;
-    text-align:center;
-    padding:25px;
-}
-
-.toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    background:#1b2638;
-    border:1px solid #34435d;
-    padding:13px 17px;
-    border-radius:9px;
-    display:none;
-    z-index:100;
-    box-shadow:0 10px 30px #0008;
-}
-
-.mobileMenu{
-    display:none;
-}
-
-@media(max-width:900px){
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.2s;
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .main{
-        margin-left:0;
-    }
-
-    .mobileMenu{
-        display:block;
-        border:0;
-        background:#202d43;
-        color:#fff;
-        padding:10px 13px;
-        border-radius:8px;
-    }
-
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:600px){
-    .main{padding:15px}
-    .cards{grid-template-columns:1fr}
-    .sessionBox,.formGrid{grid-template-columns:1fr}
-    .topbar{align-items:flex-start}
-}
-</style>
-</head>
-
-<body>
-
-<!-- LOGIN -->
-<div id="loginScreen">
-    <div class="loginBox">
-        <div class="logo">
-            <h1>Texas State Roleplay</h1>
-            <p>Staff Management Dashboard</p>
-        </div>
-
-        <input id="loginUsername" class="input" placeholder="Username">
-        <input id="loginPassword" class="input" type="password" placeholder="Password">
-
-        <button class="btn" style="width:100%;margin-top:15px" onclick="login()">
-            Staff Login
-        </button>
-
-        <div id="loginError" class="error"></div>
-    </div>
-</div>
-
-<!-- APP -->
-<div id="app">
-
-<aside class="sidebar" id="sidebar">
-    <div class="sideLogo">
-        <h2>TSRP</h2>
-        <p>Staff Dashboard</p>
-    </div>
-
-    <div class="nav">
-        <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
-        <button onclick="showPage('session',this)">Session</button>
-        <button onclick="showPage('players',this)">Players</button>
-        <button onclick="showPage('bans',this)">Bans</button>
-        <button onclick="showPage('warnings',this)">Warnings</button>
-        <button onclick="showPage('bolos',this)">BOLOs</button>
-        <button onclick="showPage('notes',this)">Notes</button>
-        <button onclick="showPage('staff',this)">Staff</button>
-        <button onclick="showPage('applications',this)">Applications</button>
-        <button onclick="showPage('logs',this)">Activity Logs</button>
-        <button onclick="showPage('settings',this)">Settings</button>
-        <button onclick="logout()">Logout</button>
-    </div>
-</aside>
-
-<main class="main">
-
-<div class="topbar">
-    <div class="row">
-        <button class="mobileMenu" onclick="toggleSidebar()">☰</button>
-        <h1 id="pageTitle">Dashboard</h1>
-    </div>
-
-    <div class="staffInfo">
-        <span id="staffName">Staff</span>
-        <span id="staffRank" class="badge">Staff</span>
-    </div>
-</div>
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="page active">
-
-<div class="cards">
-    <div class="card">
-        <div class="label">Session</div>
-        <div class="value" id="dashSession">OFF</div>
-    </div>
-
-    <div class="card">
-        <div class="label">Players</div>
-        <div class="value" id="dashPlayers">0</div>
-    </div>
-
-    <div class="card">
-        <div class="label">Bans</div>
-        <div class="value" id="dashBans">0</div>
-    </div>
-
-    <div class="card">
-        <div class="label">Warnings</div>
-        <div class="value" id="dashWarnings">0</div>
-    </div>
-</div>
-
-<div class="panel">
-    <h2>Current Session</h2>
-
-    <div class="sessionBox">
-        <div class="infoBox">
-            <small>Status</small>
-            <span id="sessionStatus" class="status offline">OFFLINE</span>
-        </div>
-
-        <div class="infoBox">
-            <small>Host</small>
-            <strong id="sessionHost">None</strong>
-        </div>
-
-        <div class="infoBox">
-            <small>Server Code</small>
-            <strong id="sessionCode">None</strong>
-        </div>
-
-        <div class="infoBox">
-            <small>Started</small>
-            <strong id="sessionStarted">None</strong>
-        </div>
-    </div>
-
-    <div class="row" style="margin-top:15px">
-        <button class="btn green" onclick="startSession()">Start SSU</button>
-        <button class="btn red" onclick="shutdownSession()">Shutdown SSD</button>
-        <button class="btn orange" onclick="sessionVote()">Session Vote</button>
-    </div>
-</div>
-
-<div class="panel">
-    <h2>Quick Actions</h2>
-    <div class="row">
-        <button class="btn" onclick="showPageByName('players')">Manage Players</button>
-        <button class="btn" onclick="showPageByName('bans')">Manage Bans</button>
-        <button class="btn" onclick="showPageByName('warnings')">Manage Warnings</button>
-        <button class="btn" onclick="showPageByName('bolos')">Manage BOLOs</button>
-    </div>
-</div>
-
-</section>
-
-<!-- SESSION -->
-<section id="session" class="page">
-
-<div class="panel">
-    <h2>Session Management</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Server Code</label>
-            <input id="serverCodeInput" class="input" placeholder="Example: ABC123">
-        </div>
-
-        <div class="formGroup">
-            <label>Host</label>
-            <input id="hostInput" class="input" placeholder="Host name">
-        </div>
-    </div>
-
-    <div class="row" style="margin-top:15px">
-        <button class="btn green" onclick="startSession()">Start SSU</button>
-        <button class="btn red" onclick="shutdownSession()">Shutdown SSD</button>
-        <button class="btn orange" onclick="sessionVote()">Session Vote</button>
-    </div>
-</div>
-
-<div class="panel">
-    <h2>Session Information</h2>
-    <div id="sessionDetails"></div>
-</div>
-
-</section>
-
-<!-- PLAYERS -->
-<section id="players" class="page">
-
-<div class="panel">
-    <h2>Player Management</h2>
-
-    <input id="playerSearch" class="input search"
-           placeholder="Search players..."
-           oninput="renderPlayers()">
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Player Username</label>
-            <input id="newPlayer" class="input">
-        </div>
-    </div>
-
-    <button class="btn" style="margin-top:12px" onclick="addPlayer()">
-        Add Player
-    </button>
-</div>
-
-<div class="panel">
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Added By</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="playersTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- BANS -->
-<section id="bans" class="page">
-
-<div class="panel">
-    <h2>Create Ban</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Player</label>
-            <input id="banPlayer" class="input">
-        </div>
-
-        <div class="formGroup">
-            <label>Duration</label>
-            <select id="banDuration" class="input">
-                <option>Permanent</option>
-                <option>1 Hour</option>
-                <option>6 Hours</option>
-                <option>1 Day</option>
-                <option>3 Days</option>
-                <option>7 Days</option>
-            </select>
-        </div>
-
-        <div class="formGroup full">
-            <label>Reason</label>
-            <textarea id="banReason" class="input"></textarea>
-        </div>
-    </div>
-
-    <button class="btn red" style="margin-top:12px" onclick="addBan()">
-        Ban Player
-    </button>
-</div>
-
-<div class="panel">
-    <h2>Active Bans</h2>
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Reason</th>
-                    <th>Duration</th>
-                    <th>Staff</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="bansTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- WARNINGS -->
-<section id="warnings" class="page">
-
-<div class="panel">
-    <h2>Issue Warning</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Player</label>
-            <input id="warningPlayer" class="input">
-        </div>
-
-        <div class="formGroup full">
-            <label>Reason</label>
-            <textarea id="warningReason" class="input"></textarea>
-        </div>
-    </div>
-
-    <button class="btn orange" style="margin-top:12px" onclick="addWarning()">
-        Issue Warning
-    </button>
-</div>
-
-<div class="panel">
-    <h2>Warnings</h2>
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Reason</th>
-                    <th>Staff</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="warningsTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- BOLOS -->
-<section id="bolos" class="page">
-
-<div class="panel">
-    <h2>Create BOLO</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Player</label>
-            <input id="boloPlayer" class="input">
-        </div>
-
-        <div class="formGroup full">
-            <label>Reason</label>
-            <textarea id="boloReason" class="input"></textarea>
-        </div>
-    </div>
-
-    <button class="btn orange" style="margin-top:12px" onclick="addBolo()">
-        Create BOLO
-    </button>
-</div>
-
-<div class="panel">
-    <h2>Active BOLOs</h2>
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Reason</th>
-                    <th>Staff</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="bolosTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- NOTES -->
-<section id="notes" class="page">
-
-<div class="panel">
-    <h2>Add Player Note</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Player</label>
-            <input id="notePlayer" class="input">
-        </div>
-
-        <div class="formGroup full">
-            <label>Note</label>
-            <textarea id="noteText" class="input"></textarea>
-        </div>
-    </div>
-
-    <button class="btn" style="margin-top:12px" onclick="addNote()">
-        Add Note
-    </button>
-</div>
-
-<div class="panel">
-    <h2>Notes</h2>
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Note</th>
-                    <th>Staff</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="notesTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- STAFF -->
-<section id="staff" class="page">
-
-<div class="panel">
-    <h2>Staff Accounts</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Username</label>
-            <input id="staffUsername" class="input">
-        </div>
-
-        <div class="formGroup">
-            <label>Password</label>
-            <input id="staffPassword" class="input">
-        </div>
-
-        <div class="formGroup">
-            <label>Rank</label>
-            <select id="staffRole" class="input">
-                <option>Moderator</option>
-                <option>Administrator</option>
-            </select>
-        </div>
-    </div>
-
-    <button class="btn" style="margin-top:12px" onclick="addStaff()">
-        Add Staff
-    </button>
-</div>
-
-<div class="panel">
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Rank</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="staffTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- APPLICATIONS -->
-<section id="applications" class="page">
-
-<div class="panel">
-    <h2>Staff Applications</h2>
-
-    <div class="formGrid">
-        <div class="formGroup">
-            <label>Applicant</label>
-            <input id="applicationName" class="input">
-        </div>
-
-        <div class="formGroup">
-            <label>Age</label>
-            <input id="applicationAge" class="input">
-        </div>
-
-        <div class="formGroup full">
-            <label>Why should we accept you?</label>
-            <textarea id="applicationReason" class="input"></textarea>
-        </div>
-    </div>
-
-    <button class="btn" style="margin-top:12px" onclick="addApplication()">
-        Submit Application
-    </button>
-</div>
-
-<div class="panel">
-    <div class="tableWrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Applicant</th>
-                    <th>Age</th>
-                    <th>Reason</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="applicationsTable"></tbody>
-        </table>
-    </div>
-</div>
-
-</section>
-
-<!-- LOGS -->
-<section id="logs" class="page">
-
-<div class="panel">
-    <h2>Staff Activity Logs</h2>
-    <div id="logsList"></div>
-</div>
-
-</section>
-
-<!-- SETTINGS -->
-<section id="settings" class="page">
-
-<div class="panel">
-    <h2>TSRP Settings</h2>
-
-    <div class="formGroup">
-        <label>Cloudflare Worker</label>
-        <input class="input"
-               value="https://tsrp-discord1.j-magdaleno5.workers.dev"
-               readonly>
-    </div>
-
-    <p style="color:#8490a3;margin-top:10px;font-size:13px">
-        Your dashboard is connected to your TSRP Cloudflare Worker.
-    </p>
-
-    <div class="row" style="margin-top:15px">
-        <button class="btn" onclick="testWorker()">
-            Test Worker
-        </button>
-
-        <button class="btn gray" onclick="clearLocalData()">
-            Clear Dashboard Data
-        </button>
-    </div>
-</div>
-
-</section>
-
-</main>
-</div>
-
-<div id="toast" class="toast"></div>
-
-<script>
-/* =========================
-   TSRP CONFIGURATION
-========================= */
-
-var WORKER_URL = "https://tsrp-discord1.j-magdaleno5.workers.dev";
-
-/* =========================
-   DATA
-========================= */
-
-var staffAccounts = JSON.parse(localStorage.getItem("tsrp_staff")) || [
-    {
-        username:"admin",
-        password:"tsrp123",
-        role:"Administrator"
-    },
-    {
-        username:"moderator",
-        password:"mod123",
-        role:"Moderator"
-    }
-];
-
-var players = JSON.parse(localStorage.getItem("tsrp_players")) || [];
-var bans = JSON.parse(localStorage.getItem("tsrp_bans")) || [];
-var warnings = JSON.parse(localStorage.getItem("tsrp_warnings")) || [];
-var bolos = JSON.parse(localStorage.getItem("tsrp_bolos")) || [];
-var notes = JSON.parse(localStorage.getItem("tsrp_notes")) || [];
-var applications = JSON.parse(localStorage.getItem("tsrp_applications")) || [];
-var logs = JSON.parse(localStorage.getItem("tsrp_logs")) || [];
-
-var session = JSON.parse(localStorage.getItem("tsrp_session")) || {
-    active:false,
-    host:"",
-    serverCode:"",
-    started:""
-};
-
-var currentStaff = JSON.parse(sessionStorage.getItem("tsrp_current_staff")) || null;
-
-/* =========================
-   HELPERS
-========================= */
-
-function saveAll(){
-    localStorage.setItem("tsrp_staff",JSON.stringify(staffAccounts));
-    localStorage.setItem("tsrp_players",JSON.stringify(players));
-    localStorage.setItem("tsrp_bans",JSON.stringify(bans));
-    localStorage.setItem("tsrp_warnings",JSON.stringify(warnings));
-    localStorage.setItem("tsrp_bolos",JSON.stringify(bolos));
-    localStorage.setItem("tsrp_notes",JSON.stringify(notes));
-    localStorage.setItem("tsrp_applications",JSON.stringify(applications));
-    localStorage.setItem("tsrp_logs",JSON.stringify(logs));
-    localStorage.setItem("tsrp_session",JSON.stringify(session));
-}
-
-function escapeHTML(value){
-    return String(value || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-function toast(message){
-    var el = document.getElementById("toast");
-    el.textContent = message;
-    el.style.display = "block";
-
-    setTimeout(function(){
-        el.style.display = "none";
-    },3000);
-}
-
-function addLog(action){
-    logs.unshift({
-        action:action,
-        staff:currentStaff ? currentStaff.username : "System",
-        time:new Date().toLocaleString()
-    });
-
-    if(logs.length > 200){
-        logs.length = 200;
-    }
-
-    saveAll();
-    renderLogs();
-}
-
-function hasPermission(){
-    if(!currentStaff){
-        toast("You must be logged in.");
-        return false;
-    }
-
-    return true;
-}
-
-function adminOnly(){
-    if(!currentStaff || currentStaff.role !== "Administrator"){
-        toast("Administrator permission required.");
-        return false;
-    }
-
-    return true;
+body {
+    background: #080b11;
+    color: #ffffff;
 }
 
 /* =========================
    LOGIN
 ========================= */
 
-function login(){
-
-    var username = document.getElementById("loginUsername").value.trim();
-    var password = document.getElementById("loginPassword").value;
-
-    var found = null;
-
-    for(var i=0;i<staffAccounts.length;i++){
-        if(
-            staffAccounts[i].username === username &&
-            staffAccounts[i].password === password
-        ){
-            found = staffAccounts[i];
-            break;
-        }
-    }
-
-    if(!found){
-        document.getElementById("loginError").textContent =
-            "Invalid username or password.";
-        return;
-    }
-
-    currentStaff = {
-        username:found.username,
-        role:found.role
-    };
-
-    sessionStorage.setItem(
-        "tsrp_current_staff",
-        JSON.stringify(currentStaff)
-    );
-
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("app").style.display = "block";
-
-    document.getElementById("staffName").textContent = currentStaff.username;
-    document.getElementById("staffRank").textContent = currentStaff.role;
-
-    document.getElementById("loginError").textContent = "";
-
-    addLog("Staff logged in");
-
-    refreshAll();
+#loginScreen {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at top, #18213b, #080b11 55%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
 }
 
-function logout(){
+.loginBox {
+    width: 400px;
+    max-width: 92%;
+    background: rgba(16,21,31,.97);
+    border: 1px solid #293246;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.55);
+}
 
-    if(currentStaff){
-        addLog("Staff logged out");
-    }
+.loginLogo {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
 
-    sessionStorage.removeItem("tsrp_current_staff");
-    currentStaff = null;
+.loginLogo span {
+    color: #647cff;
+}
 
-    document.getElementById("app").style.display = "none";
-    document.getElementById("loginScreen").style.display = "flex";
+.loginSubtitle {
+    text-align: center;
+    color: #8993a5;
+    margin-bottom: 28px;
+}
 
-    document.getElementById("loginUsername").value = "";
-    document.getElementById("loginPassword").value = "";
+.loginBox input {
+    width: 100%;
+    background: #0a0e15;
+    border: 1px solid #2a3345;
+    color: white;
+    padding: 14px;
+    border-radius: 9px;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+.loginBox input:focus {
+    border-color: #647cff;
+}
+
+.loginButton {
+    width: 100%;
+    padding: 14px;
+    background: #5865f2;
+    border: 0;
+    border-radius: 9px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.loginButton:hover {
+    background: #4752c4;
+}
+
+.loginError {
+    display: none;
+    color: #ff6565;
+    text-align: center;
+    margin-top: 13px;
 }
 
 /* =========================
+   SIDEBAR
+========================= */
+
+#dashboard {
+    display: none;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 255px;
+    background: #0d1119;
+    border-right: 1px solid #222a38;
+    padding: 20px 14px;
+    overflow-y: auto;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: 800;
+    padding: 10px 12px 25px;
+}
+
+.brand span {
+    color: #647cff;
+}
+
+.category {
+    color: #555f72;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 14px 12px 7px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navButton {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: #8c96a8;
+    padding: 11px 13px;
+    margin-bottom: 3px;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.navButton:hover {
+    background: #171d29;
+    color: white;
+}
+
+.navButton.active {
+    background: #1b2440;
+    color: #ffffff;
+}
+
+.logoutButton {
+    margin-top: 15px;
+    background: #28161a;
+    color: #ff7777;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    margin-left: 255px;
+    min-height: 100vh;
+    padding: 28px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+}
+
+.ownerBadge {
+    background: #20294a;
+    color: #91a0ff;
+    border: 1px solid #34416e;
+    padding: 9px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.card {
+    background: #111722;
+    border: 1px solid #242d3d;
+    border-radius: 13px;
+    padding: 20px;
+}
+
+.cardTitle {
+    color: #7d8799;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.cardValue {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.blue {
+    color: #6e8cff;
+}
+
+.green {
+    color: #55d98b;
+}
+
+.red {
+    color: #ff6262;
+}
+
+.yellow {
+    color: #ffc65a;
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.panel {
+    background: #111722;
+    border: 1px solid #242d3d;
+    border-radius: 13px;
+    padding: 21px;
+    margin-top: 18px;
+}
+
+.panelTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 17px;
+}
+
+.panelDescription {
+    color: #818b9c;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.action {
+    border: 0;
+    padding: 11px 15px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.actionBlue {
+    background: #5865f2;
+}
+
+.actionGreen {
+    background: #29945a;
+}
+
+.actionRed {
+    background: #b53d49;
+}
+
+.actionGray {
+    background: #303949;
+}
+
+.actionOrange {
+    background: #ad7430;
+}
+
+.action:hover {
+    filter: brightness(1.12);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.field {
+    width: 100%;
+    background: #0b0f16;
+    border: 1px solid #2b3547;
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    outline: none;
+    margin-bottom: 11px;
+}
+
+.field:focus {
+    border-color: #617bff;
+}
+
+textarea.field {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.tableContainer {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    color: #717c8f;
+    font-size: 11px;
+    text-align: left;
+    padding: 13px 10px;
+}
+
+td {
+    padding: 13px 10px;
+    border-top: 1px solid #232c3a;
+    font-size: 13px;
+}
+
+.smallButton {
+    border: 0;
+    border-radius: 6px;
+    padding: 7px 9px;
+    color: white;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+}
+
+.statusOnline {
+    background: #123b29;
+    color: #5ce497;
+}
+
+.statusOffline {
+    background: #32191d;
+    color: #ff7474;
+}
+
+.statusPending {
+    background: #3a2d13;
+    color: #ffc75e;
+}
+
+/* =========================
+   OWNER SECTION
+========================= */
+
+.ownerHero {
+    background:
+        linear-gradient(135deg,#17213b,#111722);
+    border: 1px solid #33436d;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.ownerHero h2 {
+    margin-bottom: 8px;
+}
+
+.ownerHero p {
+    color: #8994a7;
+}
+
+.ownerGrid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.ownerTile {
+    background: #111722;
+    border: 1px solid #283246;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.ownerTile h3 {
+    margin-bottom: 8px;
+}
+
+.ownerTile p {
+    color: #7f899b;
+    font-size: 13px;
+}
+
+/* =========================
+   TOGGLE
+========================= */
+
+.toggleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #242d3a;
+}
+
+.toggle {
+    width: 45px;
+    height: 24px;
+    background: #303949;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.toggle.on {
+    background: #5865f2;
+}
+
+.toggle:after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: .2s;
+}
+
+.toggle.on:after {
+    left: 24px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 950px) {
+
+    .sidebar {
+        width: 75px;
+        padding: 12px 8px;
+    }
+
+    .brand {
+        text-align: center;
+        font-size: 0;
+    }
+
+    .brand span {
+        font-size: 21px;
+    }
+
+    .category {
+        display: none;
+    }
+
+    .navButton {
+        font-size: 0;
+        text-align: center;
+        padding: 13px 5px;
+    }
+
+    .main {
+        margin-left: 75px;
+        padding: 18px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .ownerGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 600px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ==================================================
+     LOGIN
+================================================== -->
+
+<div id="loginScreen">
+
+    <div class="loginBox">
+
+        <div class="loginLogo">
+            Melo<span>nly</span>
+        </div>
+
+        <div class="loginSubtitle">
+            Texas State Roleplay
+        </div>
+
+        <input
+            id="loginUsername"
+            placeholder="Username"
+            autocomplete="username"
+        >
+
+        <input
+            id="loginPassword"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
+
+        <button
+            class="loginButton"
+            onclick="login()"
+        >
+            Login
+        </button>
+
+        <div
+            id="loginError"
+            class="loginError"
+        >
+            Invalid username or password.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     DASHBOARD
+================================================== -->
+
+<div id="dashboard">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        Melo<span>nly</span>
+    </div>
+
+
+    <div class="category">
+        Main
+    </div>
+
+    <button class="navButton active"
+        onclick="showPage('overview',this,'Overview')">
+        🏠 Dashboard
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('session',this,'Sessions')">
+        🎮 Sessions
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('players',this,'Players')">
+        👥 Players
+    </button>
+
+
+    <div class="category">
+        Management
+    </div>
+
+    <button class="navButton"
+        onclick="showPage('moderation',this,'Moderation')">
+        🛡️ Moderation
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('staff',this,'Staff Management')">
+        👮 Staff
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('applications',this,'Applications')">
+        📝 Applications
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('announcements',this,'Announcements')">
+        📢 Announcements
+    </button>
+
+
+    <div class="category">
+        System
+    </div>
+
+    <button class="navButton"
+        onclick="showPage('logs',this,'Activity Logs')">
+        📋 Logs
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('statistics',this,'Statistics')">
+        📊 Statistics
+    </button>
+
+
+    <div class="category">
+        Owner
+    </div>
+
+    <button class="navButton"
+        onclick="showPage('owner',this,'Owner Center')">
+        👑 Owner Center
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('permissions',this,'Permissions')">
+        🔐 Permissions
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('settings',this,'Settings')">
+        ⚙️ Settings
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('security',this,'Security')">
+        🔒 Security
+    </button>
+
+    <button class="navButton"
+        onclick="showPage('tools',this,'Owner Tools')">
+        🔧 Owner Tools
+    </button>
+
+
+    <button
+        class="navButton logoutButton"
+        onclick="logout()">
+        🚪 Logout
+    </button>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <h1 id="pageTitle">
+            Overview
+        </h1>
+
+        <div class="ownerBadge">
+            👑 Owner Juice
+        </div>
+
+    </div>
+
+
+<!-- ==================================================
+     OVERVIEW
+================================================== -->
+
+<section id="overview" class="page active">
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="cardTitle">SESSION</div>
+            <div
+                class="cardValue red"
+                id="dashboardSession">
+                Offline
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">PLAYERS</div>
+            <div
+                class="cardValue blue"
+                id="dashboardPlayers">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">STAFF</div>
+            <div class="cardValue green">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">SERVER CODE</div>
+            <div
+                class="cardValue"
+                id="dashboardCode">
+                —
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Quick Actions
+        </div>
+
+        <button class="action actionGreen"
+            onclick="startSession()">
+            ▶ Start Session
+        </button>
+
+        <button class="action actionRed"
+            onclick="stopSession()">
+            ■ Shut Down
+        </button>
+
+        <button class="action actionBlue"
+            onclick="sessionVote()">
+            🗳 Session Vote
+        </button>
+
+        <button class="action actionGray"
+            onclick="showPageById('announcements','Announcements')">
+            📢 Announcement
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Server Information
+        </div>
+
+        <p class="panelDescription">
+            Community: <b>Texas State Roleplay</b><br>
+            Host: <b>Owner Juice</b><br>
+            Status:
+            <span id="overviewStatus"
+                class="status statusOffline">
+                Offline
+            </span>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     SESSIONS
+================================================== -->
+
+<section id="session" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Session Management
+        </div>
+
+        <input
+            id="serverCodeInput"
+            class="field"
+            placeholder="Enter ER:LC Server Code"
+        >
+
+        <button class="action actionGreen"
+            onclick="startSession()">
+            ▶ Start Session
+        </button>
+
+        <button class="action actionRed"
+            onclick="stopSession()">
+            ■ Shut Down Session
+        </button>
+
+        <button class="action actionBlue"
+            onclick="sessionVote()">
+            🗳 Send Session Vote
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Current Session
+        </div>
+
+        <p class="panelDescription">
+            Host: <b>Owner Juice</b><br>
+            Server Code:
+            <b id="sessionCode">—</b><br>
+            Status:
+            <b id="sessionStatusText">Offline</b>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     PLAYERS
+================================================== -->
+
+<section id="players" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Roblox Player Management
+        </div>
+
+        <input
+            id="playerSearch"
+            class="field"
+            placeholder="Search Roblox username..."
+            onkeyup="searchPlayers()"
+        >
+
+        <div class="tableContainer">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>PLAYER</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="playersTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     MODERATION
+================================================== -->
+
+<section id="moderation" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Moderation Center
+        </div>
+
+        <input
+            id="moderationPlayer"
+            class="field"
+            placeholder="Roblox Username"
+        >
+
+        <input
+            id="moderationReason"
+            class="field"
+            placeholder="Reason"
+        >
+
+        <button class="action actionRed"
+            onclick="moderate('Ban')">
+            🔨 Ban
+        </button>
+
+        <button class="action actionOrange"
+            onclick="moderate('Warn')">
+            ⚠ Warn
+        </button>
+
+        <button class="action actionGray"
+            onclick="moderate('BOLO')">
+            🚨 BOLO
+        </button>
+
+        <button class="action actionGray"
+            onclick="moderate('Note')">
+            📝 Note
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     STAFF
+================================================== -->
+
+<section id="staff" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Staff Management
+        </div>
+
+        <input
+            id="staffUsername"
+            class="field"
+            placeholder="Discord/Roblox Username"
+        >
+
+        <input
+            id="staffRank"
+            class="field"
+            placeholder="Rank"
+        >
+
+        <button class="action actionBlue"
+            onclick="addStaff()">
+            + Add Staff
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Staff Members
+        </div>
+
+        <div class="tableContainer">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>USER</th>
+                        <th>RANK</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+
+                <tbody id="staffTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     APPLICATIONS
+================================================== -->
+
+<section id="applications" class="page">
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="cardTitle">PENDING</div>
+            <div class="cardValue yellow">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">APPROVED</div>
+            <div class="cardValue green">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">DENIED</div>
+            <div class="cardValue red">
+                0
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Staff Applications
+        </div>
+
+        <p class="panelDescription">
+            Applications submitted to TSRP can appear here
+            once your backend is connected.
+        </p>
+
+        <button class="action actionBlue"
+            onclick="notify('Application system opened.')">
+            View Applications
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     ANNOUNCEMENTS
+================================================== -->
+
+<section id="announcements" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Discord Announcement
+        </div>
+
+        <input
+            id="announcementTitle"
+            class="field"
+            placeholder="Announcement title"
+        >
+
+        <textarea
+            id="announcementMessage"
+            class="field"
+            placeholder="Announcement message..."
+        ></textarea>
+
+        <button class="action actionBlue"
+            onclick="sendAnnouncement()">
+            📢 Send Announcement
+        </button>
+
+        <button class="action actionGray"
+            onclick="previewAnnouncement()">
+            Preview
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     LOGS
+================================================== -->
+
+<section id="logs" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Activity Logs
+        </div>
+
+        <div class="tableContainer">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>TIME</th>
+                        <th>USER</th>
+                        <th>ACTION</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="logsTable"></tbody>
+
+            </table>
+
+        </div>
+
+        <button class="action actionRed"
+            onclick="clearLogs()">
+            Clear Logs
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     STATISTICS
+================================================== -->
+
+<section id="statistics" class="page">
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="cardTitle">
+                SESSIONS STARTED
+            </div>
+            <div class="cardValue blue"
+                id="statSessions">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">
+                MOD ACTIONS
+            </div>
+            <div class="cardValue red"
+                id="statModeration">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">
+                ANNOUNCEMENTS
+            </div>
+            <div class="cardValue green"
+                id="statAnnouncements">
+                0
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="cardTitle">
+                OWNER ACTIONS
+            </div>
+            <div class="cardValue yellow"
+                id="statOwner">
+                0
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     OWNER CENTER
+================================================== -->
+
+<section id="owner" class="page">
+
+    <div class="ownerHero">
+
+        <h2>
+            👑 Owner Center
+        </h2>
+
+        <p>
+            Welcome back, Owner Juice.
+            You have full dashboard permissions.
+        </p>
+
+    </div>
+
+
+    <div class="ownerGrid">
+
+        <div class="ownerTile">
+            <h3>👑 Owner</h3>
+            <p>
+                Full access to TSRP dashboard controls.
+            </p>
+        </div>
+
+        <div class="ownerTile">
+            <h3>🛡️ Permissions</h3>
+            <p>
+                Manage staff and dashboard permissions.
+            </p>
+        </div>
+
+        <div class="ownerTile">
+            <h3>🔒 Security</h3>
+            <p>
+                Manage login and security settings.
+            </p>
+        </div>
+
+        <div class="ownerTile">
+            <h3>📊 Statistics</h3>
+            <p>
+                Review dashboard activity.
+            </p>
+        </div>
+
+        <div class="ownerTile">
+            <h3>⚙️ Settings</h3>
+            <p>
+                Configure TSRP dashboard settings.
+            </p>
+        </div>
+
+        <div class="ownerTile">
+            <h3>🔧 Tools</h3>
+            <p>
+                Access advanced Owner utilities.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     PERMISSIONS
+================================================== -->
+
+<section id="permissions" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Staff Permissions
+        </div>
+
+        <div class="toggleRow">
+            <span>Start Sessions</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Shut Down Sessions</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Moderation</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Announcements</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>View Logs</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Owner Settings</span>
+            <div class="toggle"></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     SETTINGS
+================================================== -->
+
+<section id="settings" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Dashboard Settings
+        </div>
+
+        <input
+            class="field"
+            value="Texas State Roleplay"
+            placeholder="Community Name"
+        >
+
+        <input
+            class="field"
+            value="TSRP"
+            placeholder="Community Short Name"
+        >
+
+        <input
+            class="field"
+            value="Owner Juice"
+            placeholder="Default Host"
+        >
+
+        <button class="action actionBlue"
+            onclick="saveSettings()">
+            Save Settings
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Dashboard Options
+        </div>
+
+        <div class="toggleRow">
+            <span>Enable Session Voting</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Enable Announcements</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Enable Moderation</span>
+            <div class="toggle on"></div>
+        </div>
+
+        <div class="toggleRow">
+            <span>Enable Logs</span>
+            <div class="toggle on"></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     SECURITY
+================================================== -->
+
+<section id="security" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            🔒 Security Center
+        </div>
+
+        <p class="panelDescription">
+            Owner account security controls.
+        </p>
+
+        <button class="action actionBlue"
+            onclick="changePassword()">
+            🔐 Change Owner Password
+        </button>
+
+        <button class="action actionRed"
+            onclick="logoutEverywhere()">
+            🚪 Logout Sessions
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            Security Status
+        </div>
+
+        <p class="panelDescription">
+            Owner Login:
+            <span class="status statusOnline">
+                Active
+            </span>
+            <br><br>
+
+            Owner:
+            <b>Owner Juice</b>
+            <br><br>
+
+            Permission:
+            <b>FULL OWNER ACCESS</b>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     OWNER TOOLS
+================================================== -->
+
+<section id="tools" class="page">
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            🔧 Advanced Owner Tools
+        </div>
+
+        <button class="action actionBlue"
+            onclick="exportLogs()">
+            📥 Export Logs
+        </button>
+
+        <button class="action actionGray"
+            onclick="backupDashboard()">
+            💾 Create Backup
+        </button>
+
+        <button class="action actionOrange"
+            onclick="maintenanceMode()">
+            🔧 Maintenance Mode
+        </button>
+
+        <button class="action actionRed"
+            onclick="resetDashboard()">
+            ⚠ Reset Dashboard
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panelTitle">
+            System Information
+        </div>
+
+        <p class="panelDescription">
+            Dashboard: Melonly Style<br>
+            Community: Texas State Roleplay<br>
+            Owner: Owner Juice<br>
+            Version: TSRP Owner Dashboard v1.0
+        </p>
+
+    </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   OWNER LOGIN
+================================================== */
+
+let OWNER_USERNAME = "Owner Juice";
+let OWNER_PASSWORD = "Owner Juice TSRP";
+
+let sessionOnline = false;
+
+let statistics = {
+    sessions: 0,
+    moderation: 0,
+    announcements: 0,
+    owner: 0
+};
+
+let players = [
+    {
+        username: "ExamplePlayer",
+        status: "Online"
+    },
+    {
+        username: "TSRP_Player",
+        status: "Online"
+    }
+];
+
+let staff = [];
+
+let logs = [];
+
+
+/* LOGIN */
+
+function login() {
+
+    let username =
+        document.getElementById("loginUsername").value;
+
+    let password =
+        document.getElementById("loginPassword").value;
+
+    if (
+        username === OWNER_USERNAME &&
+        password === OWNER_PASSWORD
+    ) {
+
+        document.getElementById("loginScreen").style.display =
+            "none";
+
+        document.getElementById("dashboard").style.display =
+            "block";
+
+        addLog("Owner Juice", "Logged into dashboard");
+
+        loadPlayers();
+        loadStaff();
+        loadLogs();
+        updateStats();
+
+    } else {
+
+        document.getElementById("loginError").style.display =
+            "block";
+
+    }
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    addLog("Owner Juice", "Logged out");
+
+    document.getElementById("dashboard").style.display =
+        "none";
+
+    document.getElementById("loginScreen").style.display =
+        "flex";
+
+    document.getElementById("loginUsername").value =
+        "";
+
+    document.getElementById("loginPassword").value =
+        "";
+
+}
+
+
+/* ==================================================
    NAVIGATION
-========================= */
+================================================== */
 
-function showPage(id,button){
+function showPage(id, button, title) {
 
-    var pages = document.querySelectorAll(".page");
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page) {
 
-    for(var i=0;i<pages.length;i++){
-        pages[i].classList.remove("active");
-    }
+            page.classList.remove("active");
 
-    document.getElementById(id).classList.add("active");
-
-    var buttons = document.querySelectorAll(".nav button");
-
-    for(var j=0;j<buttons.length;j++){
-        buttons[j].classList.remove("active");
-    }
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    var titles = {
-        dashboard:"Dashboard",
-        session:"Session",
-        players:"Players",
-        bans:"Bans",
-        warnings:"Warnings",
-        bolos:"BOLOs",
-        notes:"Notes",
-        staff:"Staff",
-        applications:"Applications",
-        logs:"Activity Logs",
-        settings:"Settings"
-    };
-
-    document.getElementById("pageTitle").textContent = titles[id] || "TSRP";
-    document.getElementById("sidebar").classList.remove("open");
-}
-
-function showPageByName(id){
-    var buttons = document.querySelectorAll(".nav button");
-
-    for(var i=0;i<buttons.length;i++){
-        if(buttons[i].textContent.toLowerCase().includes(id.toLowerCase())){
-            showPage(id,buttons[i]);
-            return;
-        }
-    }
-
-    showPage(id,null);
-}
-
-function toggleSidebar(){
-    document.getElementById("sidebar").classList.toggle("open");
-}
-
-/* =========================
-   WORKER
-========================= */
-
-async function sendToWorker(type,data){
-
-    try{
-
-        var body = data || {};
-        body.type = type;
-
-        var response = await fetch(WORKER_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(body)
         });
 
-        var result = await response.json();
+    document
+        .getElementById(id)
+        .classList.add("active");
 
-        if(!response.ok || !result.success){
-            throw new Error(result.error || "Worker request failed");
-        }
 
-        return true;
+    document
+        .querySelectorAll(".navButton")
+        .forEach(function(button) {
 
-    }catch(error){
+            button.classList.remove("active");
 
-        console.error(error);
-        toast("Worker/Discord request failed.");
-        return false;
-    }
+        });
+
+    button.classList.add("active");
+
+    document.getElementById("pageTitle").innerText =
+        title;
+
 }
 
-async function testWorker(){
 
-    try{
+function showPageById(id, title) {
 
-        var response = await fetch(WORKER_URL);
-        var result = await response.json();
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page) {
 
-        if(result.success){
-            toast("TSRP Worker is online!");
-        }else{
-            toast("Worker responded with an error.");
-        }
+            page.classList.remove("active");
 
-    }catch(error){
-        toast("Could not reach Worker.");
-    }
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    document.getElementById("pageTitle").innerText =
+        title;
+
 }
 
-/* =========================
+
+/* ==================================================
    SESSION
-========================= */
+================================================== */
 
-async function startSession(){
+function startSession() {
 
-    if(!hasPermission()) return;
+    let code =
+        document.getElementById("serverCodeInput").value;
 
-    var serverCode =
-        document.getElementById("serverCodeInput").value.trim();
+    if (!code) {
 
-    var host =
-        document.getElementById("hostInput").value.trim();
+        code = prompt(
+            "Enter the ER:LC server code:"
+        );
 
-    if(!host){
-        host = currentStaff.username;
     }
 
-    if(!serverCode){
-        toast("Enter a server code.");
-        return;
-    }
+    if (!code) return;
 
-    session.active = true;
-    session.host = host;
-    session.serverCode = serverCode;
-    session.started = new Date().toLocaleString();
+    sessionOnline = true;
 
-    saveAll();
+    statistics.sessions++;
 
-    var sent = await sendToWorker("ssu",{
-        host:host,
-        serverCode:serverCode
-    });
+    document.getElementById("dashboardSession").innerText =
+        "Online";
 
-    addLog("Started SSU");
+    document.getElementById("dashboardSession").className =
+        "cardValue green";
 
-    refreshAll();
+    document.getElementById("dashboardCode").innerText =
+        code;
 
-    if(sent){
-        toast("SSU started and Discord was notified.");
-    }else{
-        toast("SSU started locally, but Discord notification failed.");
-    }
-}
+    document.getElementById("sessionCode").innerText =
+        code;
 
-async function shutdownSession(){
+    document.getElementById("sessionStatusText").innerText =
+        "Online";
 
-    if(!hasPermission()) return;
+    document.getElementById("overviewStatus").innerText =
+        "Online";
 
-    if(!session.active){
-        toast("There is no active session.");
-        return;
-    }
+    document.getElementById("overviewStatus").className =
+        "status statusOnline";
 
-    var sent = await sendToWorker("ssd",{
-        host:session.host
-    });
-
-    session.active = false;
-    session.host = "";
-    session.serverCode = "";
-    session.started = "";
-
-    saveAll();
-
-    addLog("Shutdown SSD");
-
-    refreshAll();
-
-    if(sent){
-        toast("SSD sent to Discord.");
-    }else{
-        toast("Session shut down locally.");
-    }
-}
-
-async function sessionVote(){
-
-    if(!hasPermission()) return;
-
-    var sent = await sendToWorker("vote",{
-        host:currentStaff.username
-    });
-
-    addLog("Started session vote");
-
-    if(sent){
-        toast("Session vote sent to Discord.");
-    }
-}
-
-/* =========================
-   PLAYERS
-========================= */
-
-function addPlayer(){
-
-    if(!hasPermission()) return;
-
-    var name = document.getElementById("newPlayer").value.trim();
-
-    if(!name){
-        toast("Enter a player username.");
-        return;
-    }
-
-    players.push({
-        name:name,
-        staff:currentStaff.username,
-        time:new Date().toLocaleString()
-    });
-
-    document.getElementById("newPlayer").value = "";
-
-    saveAll();
-    addLog("Added player " + name);
-    renderPlayers();
-    updateDashboard();
-
-    toast("Player added.");
-}
-
-function removePlayer(index){
-
-    if(!hasPermission()) return;
-
-    var player = players[index];
-
-    players.splice(index,1);
-
-    saveAll();
-    addLog("Removed player " + player.name);
-    renderPlayers();
-    updateDashboard();
-}
-
-function renderPlayers(){
-
-    var search =
-        document.getElementById("playerSearch").value.toLowerCase();
-
-    var html = "";
-
-    for(var i=0;i<players.length;i++){
-
-        if(!players[i].name.toLowerCase().includes(search)){
-            continue;
-        }
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(players[i].name)+"</td>" +
-            "<td>"+escapeHTML(players[i].staff)+"</td>" +
-            "<td><button class='btn red' onclick='removePlayer("+i+")'>Remove</button></td>" +
-            "</tr>";
-    }
-
-    if(!html){
-        html = "<tr><td colspan='3' class='empty'>No players found.</td></tr>";
-    }
-
-    document.getElementById("playersTable").innerHTML = html;
-}
-
-/* =========================
-   BANS
-========================= */
-
-function addBan(){
-
-    if(!hasPermission()) return;
-
-    var player =
-        document.getElementById("banPlayer").value.trim();
-
-    var reason =
-        document.getElementById("banReason").value.trim();
-
-    var duration =
-        document.getElementById("banDuration").value;
-
-    if(!player || !reason){
-        toast("Enter a player and reason.");
-        return;
-    }
-
-    bans.push({
-        player:player,
-        reason:reason,
-        duration:duration,
-        staff:currentStaff.username,
-        time:new Date().toLocaleString()
-    });
-
-    document.getElementById("banPlayer").value = "";
-    document.getElementById("banReason").value = "";
-
-    saveAll();
-    addLog("Banned " + player);
-    renderBans();
-    updateDashboard();
-
-    toast("Ban added.");
-}
-
-function removeBan(index){
-
-    if(!hasPermission()) return;
-
-    bans.splice(index,1);
-
-    saveAll();
-    addLog("Removed a ban");
-    renderBans();
-    updateDashboard();
-
-    toast("Ban removed.");
-}
-
-function renderBans(){
-
-    var html = "";
-
-    for(var i=0;i<bans.length;i++){
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(bans[i].player)+"</td>" +
-            "<td>"+escapeHTML(bans[i].reason)+"</td>" +
-            "<td>"+escapeHTML(bans[i].duration)+"</td>" +
-            "<td>"+escapeHTML(bans[i].staff)+"</td>" +
-            "<td><button class='btn gray' onclick='removeBan("+i+")'>Remove</button></td>" +
-            "</tr>";
-    }
-
-    if(!html){
-        html = "<tr><td colspan='5' class='empty'>No bans.</td></tr>";
-    }
-
-    document.getElementById("bansTable").innerHTML = html;
-}
-
-/* =========================
-   WARNINGS
-========================= */
-
-function addWarning(){
-
-    if(!hasPermission()) return;
-
-    var player =
-        document.getElementById("warningPlayer").value.trim();
-
-    var reason =
-        document.getElementById("warningReason").value.trim();
-
-    if(!player || !reason){
-        toast("Enter a player and reason.");
-        return;
-    }
-
-    warnings.push({
-        player:player,
-        reason:reason,
-        staff:currentStaff.username,
-        time:new Date().toLocaleString()
-    });
-
-    document.getElementById("warningPlayer").value = "";
-    document.getElementById("warningReason").value = "";
-
-    saveAll();
-    addLog("Warned " + player);
-    renderWarnings();
-    updateDashboard();
-
-    toast("Warning issued.");
-}
-
-function removeWarning(index){
-
-    if(!hasPermission()) return;
-
-    warnings.splice(index,1);
-
-    saveAll();
-    addLog("Removed a warning");
-    renderWarnings();
-    updateDashboard();
-
-    toast("Warning removed.");
-}
-
-function renderWarnings(){
-
-    var html = "";
-
-    for(var i=0;i<warnings.length;i++){
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(warnings[i].player)+"</td>" +
-            "<td>"+escapeHTML(warnings[i].reason)+"</td>" +
-            "<td>"+escapeHTML(warnings[i].staff)+"</td>" +
-            "<td><button class='btn gray' onclick='removeWarning("+i+")'>Remove</button></td>" +
-            "</tr>";
-    }
-
-    if(!html){
-        html = "<tr><td colspan='4' class='empty'>No warnings.</td></tr>";
-    }
-
-    document.getElementById("warningsTable").innerHTML = html;
-}
-
-/* =========================
-   BOLOS
-========================= */
-
-function addBolo(){
-
-    if(!hasPermission()) return;
-
-    var player =
-        document.getElementById("boloPlayer").value.trim();
-
-    var reason =
-        document.getElementById("boloReason").value.trim();
-
-    if(!player || !reason){
-        toast("Enter a player and reason.");
-        return;
-    }
-
-    bolos.push({
-        player:player,
-        reason:reason,
-        staff:currentStaff.username,
-        time:new Date().toLocaleString()
-    });
-
-    document.getElementById("boloPlayer").value = "";
-    document.getElementById("boloReason").value = "";
-
-    saveAll();
-    addLog("Created BOLO for " + player);
-    renderBolos();
-
-    toast("BOLO created.");
-}
-
-function removeBolo(index){
-
-    if(!hasPermission()) return;
-
-    bolos.splice(index,1);
-
-    saveAll();
-    addLog("Removed a BOLO");
-    renderBolos();
-
-    toast("BOLO removed.");
-}
-
-function renderBolos(){
-
-    var html = "";
-
-    for(var i=0;i<bolos.length;i++){
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(bolos[i].player)+"</td>" +
-            "<td>"+escapeHTML(bolos[i].reason)+"</td>" +
-            "<td>"+escapeHTML(bolos[i].staff)+"</td>" +
-            "<td><button class='btn gray' onclick='removeBolo("+i+")'>Remove</button></td>" +
-            "</tr>";
-    }
-
-    if(!html){
-        html = "<tr><td colspan='4' class='empty'>No BOLOs.</td></tr>";
-    }
-
-    document.getElementById("bolosTable").innerHTML = html;
-}
-
-/* =========================
-   NOTES
-========================= */
-
-function addNote(){
-
-    if(!hasPermission()) return;
-
-    var player =
-        document.getElementById("notePlayer").value.trim();
-
-    var note =
-        document.getElementById("noteText").value.trim();
-
-    if(!player || !note){
-        toast("Enter a player and note.");
-        return;
-    }
-
-    notes.push({
-        player:player,
-        note:note,
-        staff:currentStaff.username,
-        time:new Date().toLocaleString()
-    });
-
-    document.getElementById("notePlayer").value = "";
-    document.getElementById("noteText").value = "";
-
-    saveAll();
-    addLog("Added note for " + player);
-    renderNotes();
-
-    toast("Note added.");
-}
-
-function removeNote(index){
-
-    if(!hasPermission()) return;
-
-    notes.splice(index,1);
-
-    saveAll();
-    addLog("Removed a note");
-    renderNotes();
-
-    toast("Note removed.");
-}
-
-function renderNotes(){
-
-    var html = "";
-
-    for(var i=0;i<notes.length;i++){
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(notes[i].player)+"</td>" +
-            "<td>"+escapeHTML(notes[i].note)+"</td>" +
-            "<td>"+escapeHTML(notes[i].staff)+"</td>" +
-            "<td><button class='btn gray' onclick='removeNote("+i+")'>Remove</button></td>" +
-            "</tr>";
-    }
-
-    if(!html){
-        html = "<tr><td colspan='4' class='empty'>No notes.</td></tr>";
-    }
-
-    document.getElementById("notesTable").innerHTML = html;
-}
-
-/* =========================
-   STAFF
-========================= */
-
-function addStaff(){
-
-    if(!adminOnly()) return;
-
-    var username =
-        document.getElementById("staffUsername").value.trim();
-
-    var password =
-        document.getElementById("staffPassword").value;
-
-    var role =
-        document.getElementById("staffRole").value;
-
-    if(!username || !password){
-        toast("Enter username and password.");
-        return;
-    }
-
-    for(var i=0;i<staffAccounts.length;i++){
-        if(staffAccounts[i].username === username){
-            toast("Username already exists.");
-            return;
-        }
-    }
-
-    staffAccounts.push({
-        username:username,
-        password:password,
-        role:role
-    });
-
-    document.getElementById("staffUsername").value = "";
-    document.getElementById("staffPassword").value = "";
-
-    saveAll();
-    addLog("Created staff account " + username);
-    renderStaff();
-
-    toast("Staff account created.");
-}
-
-function removeStaff(index){
-
-    if(!adminOnly()) return;
-
-    if(staffAccounts[index].username === "admin"){
-        toast("The main admin account cannot be removed.");
-        return;
-    }
-
-    var username = staffAccounts[index].username;
-
-    staffAccounts.splice(index,1);
-
-    saveAll();
-    addLog("Removed staff account " + username);
-    renderStaff();
-
-    toast("Staff account removed.");
-}
-
-function renderStaff(){
-
-    var html = "";
-
-    for(var i=0;i<staffAccounts.length;i++){
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(staffAccounts[i].username)+"</td>" +
-            "<td>"+escapeHTML(staffAccounts[i].role)+"</td>" +
-            "<td><button class='btn red' onclick='removeStaff("+i+")'>Remove</button></td>" +
-            "</tr>";
-    }
-
-    document.getElementById("staffTable").innerHTML = html;
-}
-
-/* =========================
-   APPLICATIONS
-========================= */
-
-function addApplication(){
-
-    var name =
-        document.getElementById("applicationName").value.trim();
-
-    var age =
-        document.getElementById("applicationAge").value.trim();
-
-    var reason =
-        document.getElementById("applicationReason").value.trim();
-
-    if(!name || !age || !reason){
-        toast("Complete the application.");
-        return;
-    }
-
-    applications.push({
-        name:name,
-        age:age,
-        reason:reason,
-        status:"Pending",
-        time:new Date().toLocaleString()
-    });
-
-    document.getElementById("applicationName").value = "";
-    document.getElementById("applicationAge").value = "";
-    document.getElementById("applicationReason").value = "";
-
-    saveAll();
-    renderApplications();
-
-    toast("Application added.");
-}
-
-function changeApplication(index,status){
-
-    if(!adminOnly()) return;
-
-    applications[index].status = status;
-
-    saveAll();
-    addLog("Changed application status to " + status);
-    renderApplications();
-
-    toast("Application updated.");
-}
-
-function removeApplication(index){
-
-    if(!adminOnly()) return;
-
-    applications.splice(index,1);
-
-    saveAll();
-    renderApplications();
-
-    toast("Application removed.");
-}
-
-function renderApplications(){
-
-    var html = "";
-
-    for(var i=0;i<applications.length;i++){
-
-        html +=
-            "<tr>" +
-            "<td>"+escapeHTML(applications[i].name)+"</td>" +
-            "<td>"+escapeHTML(applications[i].age)+"</td>" +
-            "<td>"+escapeHTML(applications[i].reason)+"</td>" +
-            "<td>"+escapeHTML(applications[i].status)+"</td>" +
-            "<td>" +
-            "<button class='btn green' onclick=\"changeApplication("+i+",'Accepted')\">Accept</button> " +
-            "<button class='btn red' onclick=\"changeApplication("+i+",'Denied')\">Deny</button> " +
-            "<button class='btn gray' onclick='removeApplication("+i+")'>Remove</button>" +
-            "</td>" +
-            "</tr>";
-    }
-
-    if(!html){
-        html = "<tr><td colspan='5' class='empty'>No applications.</td></tr>";
-    }
-
-    document.getElementById("applicationsTable").innerHTML = html;
-}
-
-/* =========================
-   LOGS
-========================= */
-
-function renderLogs(){
-
-    var html = "";
-
-    for(var i=0;i<logs.length;i++){
-
-        html +=
-            "<div class='logItem'>" +
-            "<strong>"+escapeHTML(logs[i].action)+"</strong>" +
-            "<div>Staff: "+escapeHTML(logs[i].staff)+"</div>" +
-            "<div class='logTime'>"+escapeHTML(logs[i].time)+"</div>" +
-            "</div>";
-    }
-
-    if(!html){
-        html = "<div class='empty'>No activity yet.</div>";
-    }
-
-    document.getElementById("logsList").innerHTML = html;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function updateDashboard(){
-
-    document.getElementById("dashSession").textContent =
-        session.active ? "ON" : "OFF";
-
-    document.getElementById("dashPlayers").textContent =
-        players.length;
-
-    document.getElementById("dashBans").textContent =
-        bans.length;
-
-    document.getElementById("dashWarnings").textContent =
-        warnings.length;
-
-    document.getElementById("sessionHost").textContent =
-        session.host || "None";
-
-    document.getElementById("sessionCode").textContent =
-        session.serverCode || "None";
-
-    document.getElementById("sessionStarted").textContent =
-        session.started || "None";
-
-    var status = document.getElementById("sessionStatus");
-
-    if(session.active){
-        status.textContent = "ONLINE";
-        status.className = "status online";
-    }else{
-        status.textContent = "OFFLINE";
-        status.className = "status offline";
-    }
-
-    document.getElementById("sessionDetails").innerHTML =
-        "<div class='sessionBox'>" +
-        "<div class='infoBox'><small>Status</small><strong>"+
-        (session.active ? "ONLINE" : "OFFLINE")+
-        "</strong></div>" +
-        "<div class='infoBox'><small>Host</small><strong>"+
-        escapeHTML(session.host || "None")+
-        "</strong></div>" +
-        "<div class='infoBox'><small>Server Code</small><strong>"+
-        escapeHTML(session.serverCode || "None")+
-        "</strong></div>" +
-        "<div class='infoBox'><small>Started</small><strong>"+
-        escapeHTML(session.started || "None")+
-        "</strong></div>" +
-        "</div>";
-}
-
-/* =========================
-   CLEAR DATA
-========================= */
-
-function clearLocalData(){
-
-    if(!adminOnly()) return;
-
-    var confirmed = confirm(
-        "This will clear dashboard records. Continue?"
+    addLog(
+        "Owner Juice",
+        "Started session with code " + code
     );
 
-    if(!confirmed) return;
+    updateStats();
 
-    players = [];
-    bans = [];
-    warnings = [];
-    bolos = [];
-    notes = [];
-    applications = [];
+    alert(
+        "TSRP session started!\n\nServer Code: " +
+        code
+    );
+
+}
+
+
+function stopSession() {
+
+    sessionOnline = false;
+
+    document.getElementById("dashboardSession").innerText =
+        "Offline";
+
+    document.getElementById("dashboardSession").className =
+        "cardValue red";
+
+    document.getElementById("dashboardCode").innerText =
+        "—";
+
+    document.getElementById("sessionCode").innerText =
+        "—";
+
+    document.getElementById("sessionStatusText").innerText =
+        "Offline";
+
+    document.getElementById("overviewStatus").innerText =
+        "Offline";
+
+    document.getElementById("overviewStatus").className =
+        "status statusOffline";
+
+    addLog(
+        "Owner Juice",
+        "Shut down session"
+    );
+
+    alert("TSRP session shut down.");
+
+}
+
+
+/* SESSION VOTE */
+
+function sessionVote() {
+
+    addLog(
+        "Owner Juice",
+        "Created session vote"
+    );
+
+    alert(
+        "Session vote created.\n\n" +
+        "Connect this action to your Cloudflare Worker " +
+        "to send the vote to Discord."
+    );
+
+}
+
+
+/* ==================================================
+   PLAYERS
+================================================== */
+
+function loadPlayers() {
+
+    let table =
+        document.getElementById("playersTable");
+
+    table.innerHTML = "";
+
+    players.forEach(function(player) {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    <b>${player.username}</b>
+                </td>
+
+                <td>
+                    <span class="status statusOnline">
+                        ${player.status}
+                    </span>
+                </td>
+
+                <td>
+
+                    <button
+                        class="smallButton actionRed"
+                        onclick="playerAction('Ban','${player.username}')">
+                        Ban
+                    </button>
+
+                    <button
+                        class="smallButton actionOrange"
+                        onclick="playerAction('Warn','${player.username}')">
+                        Warn
+                    </button>
+
+                    <button
+                        class="smallButton actionGray"
+                        onclick="playerAction('BOLO','${player.username}')">
+                        BOLO
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+    document.getElementById("dashboardPlayers").innerText =
+        players.length;
+
+}
+
+
+function searchPlayers() {
+
+    let search =
+        document
+        .getElementById("playerSearch")
+        .value
+        .toLowerCase();
+
+    let table =
+        document.getElementById("playersTable");
+
+    table.innerHTML = "";
+
+    players
+        .filter(function(player) {
+
+            return player.username
+                .toLowerCase()
+                .includes(search);
+
+        })
+        .forEach(function(player) {
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        <b>${player.username}</b>
+                    </td>
+
+                    <td>
+                        <span class="status statusOnline">
+                            ${player.status}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="smallButton actionRed"
+                            onclick="playerAction('Ban','${player.username}')">
+                            Ban
+                        </button>
+
+                        <button
+                            class="smallButton actionOrange"
+                            onclick="playerAction('Warn','${player.username}')">
+                            Warn
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+}
+
+
+function playerAction(action, player) {
+
+    let reason =
+        prompt(
+            action +
+            " " +
+            player +
+            "\n\nEnter reason:"
+        );
+
+    if (!reason) return;
+
+    statistics.moderation++;
+
+    addLog(
+        "Owner Juice",
+        action +
+        " " +
+        player +
+        " | " +
+        reason
+    );
+
+    updateStats();
+
+    alert(
+        action +
+        " recorded for " +
+        player
+    );
+
+}
+
+
+/* ==================================================
+   MODERATION
+================================================== */
+
+function moderate(action) {
+
+    let player =
+        document.getElementById(
+            "moderationPlayer"
+        ).value;
+
+    let reason =
+        document.getElementById(
+            "moderationReason"
+        ).value;
+
+    if (!player) {
+
+        alert("Enter a player.");
+
+        return;
+
+    }
+
+    if (!reason) {
+
+        alert("Enter a reason.");
+
+        return;
+
+    }
+
+    statistics.moderation++;
+
+    addLog(
+        "Owner Juice",
+        action +
+        " " +
+        player +
+        " | " +
+        reason
+    );
+
+    updateStats();
+
+    alert(
+        action +
+        " recorded for " +
+        player +
+        "."
+    );
+
+}
+
+
+/* ==================================================
+   STAFF
+================================================== */
+
+function addStaff() {
+
+    let username =
+        document.getElementById(
+            "staffUsername"
+        ).value;
+
+    let rank =
+        document.getElementById(
+            "staffRank"
+        ).value;
+
+    if (!username || !rank) {
+
+        alert(
+            "Enter a username and rank."
+        );
+
+        return;
+
+    }
+
+    staff.push({
+        username: username,
+        rank: rank
+    });
+
+    statistics.owner++;
+
+    addLog(
+        "Owner Juice",
+        "Added staff member " +
+        username
+    );
+
+    loadStaff();
+    updateStats();
+
+    document.getElementById(
+        "staffUsername"
+    ).value = "";
+
+    document.getElementById(
+        "staffRank"
+    ).value = "";
+
+}
+
+
+function loadStaff() {
+
+    let table =
+        document.getElementById("staffTable");
+
+    table.innerHTML = "";
+
+    staff.forEach(function(member,index) {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${member.username}
+                </td>
+
+                <td>
+                    ${member.rank}
+                </td>
+
+                <td>
+
+                    <button
+                        class="smallButton actionRed"
+                        onclick="removeStaff(${index})">
+                        Remove
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+function removeStaff(index) {
+
+    let member =
+        staff[index].username;
+
+    staff.splice(index,1);
+
+    statistics.owner++;
+
+    addLog(
+        "Owner Juice",
+        "Removed staff member " +
+        member
+    );
+
+    loadStaff();
+    updateStats();
+
+}
+
+
+/* ==================================================
+   ANNOUNCEMENTS
+================================================== */
+
+function sendAnnouncement() {
+
+    let title =
+        document.getElementById(
+            "announcementTitle"
+        ).value;
+
+    let message =
+        document.getElementById(
+            "announcementMessage"
+        ).value;
+
+    if (!title || !message) {
+
+        alert(
+            "Enter a title and message."
+        );
+
+        return;
+
+    }
+
+    statistics.announcements++;
+
+    addLog(
+        "Owner Juice",
+        "Created announcement: " +
+        title
+    );
+
+    updateStats();
+
+    alert(
+        "Announcement prepared.\n\n" +
+        "Connect your Cloudflare Worker to send it to Discord."
+    );
+
+}
+
+
+function previewAnnouncement() {
+
+    let title =
+        document.getElementById(
+            "announcementTitle"
+        ).value;
+
+    let message =
+        document.getElementById(
+            "announcementMessage"
+        ).value;
+
+    alert(
+        "ANNOUNCEMENT PREVIEW\n\n" +
+        title +
+        "\n\n" +
+        message
+    );
+
+}
+
+
+/* ==================================================
+   LOGS
+================================================== */
+
+function addLog(user, action) {
+
+    let now =
+        new Date().toLocaleString();
+
+    logs.unshift({
+        time: now,
+        user: user,
+        action: action
+    });
+
+    if (
+        document.getElementById("logsTable")
+    ) {
+
+        loadLogs();
+
+    }
+
+}
+
+
+function loadLogs() {
+
+    let table =
+        document.getElementById(
+            "logsTable"
+        );
+
+    table.innerHTML = "";
+
+    logs.forEach(function(log) {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${log.time}
+                </td>
+
+                <td>
+                    ${log.user}
+                </td>
+
+                <td>
+                    ${log.action}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+function clearLogs() {
+
+    if (
+        !confirm(
+            "Are you sure you want to clear all logs?"
+        )
+    ) return;
+
     logs = [];
 
-    session = {
-        active:false,
-        host:"",
-        serverCode:"",
-        started:""
+    loadLogs();
+
+    addLog(
+        "Owner Juice",
+        "Cleared activity logs"
+    );
+
+}
+
+
+/* ==================================================
+   STATISTICS
+================================================== */
+
+function updateStats() {
+
+    document.getElementById(
+        "statSessions"
+    ).innerText =
+        statistics.sessions;
+
+    document.getElementById(
+        "statModeration"
+    ).innerText =
+        statistics.moderation;
+
+    document.getElementById(
+        "statAnnouncements"
+    ).innerText =
+        statistics.announcements;
+
+    document.getElementById(
+        "statOwner"
+    ).innerText =
+        statistics.owner;
+
+}
+
+
+/* ==================================================
+   PASSWORD
+================================================== */
+
+function changePassword() {
+
+    let newPassword =
+        prompt(
+            "Enter your new Owner password:"
+        );
+
+    if (!newPassword) return;
+
+    OWNER_PASSWORD = newPassword;
+
+    statistics.owner++;
+
+    addLog(
+        "Owner Juice",
+        "Changed Owner password"
+    );
+
+    updateStats();
+
+    alert(
+        "Owner password changed for this browser session."
+    );
+
+}
+
+
+/* ==================================================
+   SECURITY
+================================================== */
+
+function logoutEverywhere() {
+
+    if (
+        !confirm(
+            "Log out the current Owner session?"
+        )
+    ) return;
+
+    logout();
+
+}
+
+
+/* ==================================================
+   SETTINGS
+================================================== */
+
+function saveSettings() {
+
+    statistics.owner++;
+
+    addLog(
+        "Owner Juice",
+        "Saved dashboard settings"
+    );
+
+    updateStats();
+
+    alert(
+        "Dashboard settings saved."
+    );
+
+}
+
+
+/* ==================================================
+   OWNER TOOLS
+================================================== */
+
+function exportLogs() {
+
+    let output =
+        logs
+        .map(function(log) {
+
+            return (
+                log.time +
+                " | " +
+                log.user +
+                " | " +
+                log.action
+            );
+
+        })
+        .join("\n");
+
+    if (!output) {
+
+        output =
+            "No logs available.";
+
+    }
+
+    let blob =
+        new Blob(
+            [output],
+            {type:"text/plain"}
+        );
+
+    let url =
+        URL.createObjectURL(blob);
+
+    let link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "TSRP-Owner-Logs.txt";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+function backupDashboard() {
+
+    statistics.owner++;
+
+    addLog(
+        "Owner Juice",
+        "Created dashboard backup"
+    );
+
+    updateStats();
+
+    alert(
+        "Dashboard backup prepared."
+    );
+
+}
+
+
+function maintenanceMode() {
+
+    let enabled =
+        confirm(
+            "Enable maintenance mode?"
+        );
+
+    if (enabled) {
+
+        statistics.owner++;
+
+        addLog(
+            "Owner Juice",
+            "Enabled maintenance mode"
+        );
+
+        alert(
+            "Maintenance mode enabled in the dashboard UI."
+        );
+
+    }
+
+}
+
+
+function resetDashboard() {
+
+    if (
+        !confirm(
+            "WARNING: Reset dashboard statistics and local data?"
+        )
+    ) return;
+
+    statistics = {
+        sessions: 0,
+        moderation: 0,
+        announcements: 0,
+        owner: 0
     };
 
-    saveAll();
-    refreshAll();
+    logs = [];
 
-    toast("Dashboard data cleared.");
+    staff = [];
+
+    loadLogs();
+    loadStaff();
+    updateStats();
+
+    alert(
+        "Dashboard data reset."
+    );
+
 }
 
-/* =========================
-   REFRESH
-========================= */
 
-function refreshAll(){
+/* ==================================================
+   NOTIFICATION
+================================================== */
 
-    updateDashboard();
-    renderPlayers();
-    renderBans();
-    renderWarnings();
-    renderBolos();
-    renderNotes();
-    renderStaff();
-    renderApplications();
-    renderLogs();
+function notify(message) {
 
-    document.getElementById("serverCodeInput").value =
-        session.serverCode || "";
+    alert(message);
 
-    document.getElementById("hostInput").value =
-        session.host || "";
 }
 
-/* =========================
-   STARTUP
-========================= */
 
-document.getElementById("loginPassword").addEventListener(
-    "keydown",
-    function(event){
-        if(event.key === "Enter"){
-            login();
+/* ==================================================
+   ENTER KEY LOGIN
+================================================== */
+
+document
+    .getElementById("loginPassword")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                login();
+
+            }
+
         }
-    }
-);
+    );
 
-document.getElementById("loginUsername").addEventListener(
-    "keydown",
-    function(event){
-        if(event.key === "Enter"){
-            login();
-        }
-    }
-);
 
-if(currentStaff){
-
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("app").style.display = "block";
-
-    document.getElementById("staffName").textContent =
-        currentStaff.username;
-
-    document.getElementById("staffRank").textContent =
-        currentStaff.role;
-
-    refreshAll();
-
-}else{
-    document.getElementById("loginScreen").style.display = "flex";
-    document.getElementById("app").style.display = "none";
-}
 </script>
 
 </body>
 </html>
-```
