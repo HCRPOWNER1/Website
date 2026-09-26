@@ -3,1763 +3,1884 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSRP Administration</title>
+<title>Texas State Roleplay | Dashboard</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
-body{background:#090c12;color:#fff}
-button,input,textarea{font-family:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-/* LOGIN */
-#loginScreen{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:radial-gradient(circle at top,#17233a,#090c12 60%);
-}
-.loginBox{
-    width:390px;
-    max-width:92%;
-    background:#111722;
-    border:1px solid #293343;
-    border-radius:18px;
-    padding:35px;
-    box-shadow:0 25px 70px rgba(0,0,0,.5)
-}
-.logo{text-align:center;font-size:29px;font-weight:800}
-.logo span{color:#4f8cff}
-.loginSubtitle{text-align:center;color:#8792a5;margin:8px 0 28px}
-.loginBox input{
-    width:100%;
-    background:#090d14;
-    border:1px solid #293343;
-    color:#fff;
-    padding:14px;
-    border-radius:10px;
-    margin-bottom:12px;
-    outline:none
-}
-.loginBox input:focus{border-color:#4f8cff}
-.loginButton{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:10px;
-    background:#4f8cff;
-    color:#fff;
-    font-weight:700
-}
-.loginError{text-align:center;color:#ff6868;margin-top:14px}
-
-/* SIDEBAR */
-#app{display:none;min-height:100vh}
-.sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    width:245px;
-    height:100vh;
-    background:#0d1118;
-    border-right:1px solid #222b38;
-    padding:20px 14px;
-    overflow-y:auto
-}
-.sideLogo{font-size:23px;font-weight:800;padding:10px 12px 23px}
-.sideLogo span{color:#4f8cff}
-.userBox{
-    background:#151b25;
-    border:1px solid #27303d;
-    padding:13px;
-    border-radius:11px;
-    margin-bottom:18px
-}
-.userName{font-weight:700}
-.userRole{color:#8290a4;font-size:13px;margin-top:4px}
-.navTitle{
-    color:#596579;
-    font-size:11px;
-    font-weight:800;
-    margin:17px 12px 7px;
-    text-transform:uppercase
-}
-.navButton{
-    width:100%;
-    text-align:left;
-    background:transparent;
-    border:0;
-    color:#9ca7b8;
-    padding:11px 13px;
-    border-radius:9px;
-    margin-bottom:3px
-}
-.navButton:hover{background:#171e29;color:#fff}
-.navButton.active{background:#19345f;color:#fff}
-.logoutButton{color:#ff7070;margin-top:15px}
-
-/* MAIN */
-.main{margin-left:245px;padding:28px}
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px
-}
-.pageTitle{font-size:28px;font-weight:800}
-.pageSubtitle{color:#7d8899;margin-top:5px}
-.status{
-    padding:9px 13px;
-    border-radius:20px;
-    background:#151b24;
-    border:1px solid #29313e;
-    color:#aab4c5;
-    font-size:13px
-}
-.status.online{color:#69e58a}
-
-/* PAGES */
-.page{display:none}
-.page.active{display:block}
-
-/* CARDS */
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:20px
-}
-.card{
-    background:#111720;
-    border:1px solid #242e3c;
-    border-radius:14px;
-    padding:20px
-}
-.cardTitle{color:#7d899b;font-size:13px}
-.cardValue{font-size:28px;font-weight:800;margin-top:9px}
-
-/* PANELS */
-.panel{
-    background:#111720;
-    border:1px solid #242e3c;
-    border-radius:14px;
-    padding:20px;
-    margin-bottom:18px
-}
-.panelTitle{font-size:18px;font-weight:800;margin-bottom:15px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.bigStatus{font-size:25px;font-weight:800;margin-bottom:8px}
-.muted{color:#808b9d}
-
-/* BUTTONS */
-.actionRow{display:flex;flex-wrap:wrap;gap:10px}
-.actionButton{
-    border:0;
-    padding:12px 16px;
-    border-radius:9px;
-    color:#fff;
-    background:#2b3544;
-    font-weight:700
-}
-.primary{background:#4f8cff}
-.success{background:#22964a}
-.danger{background:#b63e48}
-.warning{background:#a7791f}
-.purple{background:#7147b8}
-
-/* INPUT */
-.input,.textarea{
-    width:100%;
-    background:#090d14;
-    border:1px solid #293343;
-    color:#fff;
-    padding:13px;
-    border-radius:9px;
-    outline:none;
-    margin-bottom:12px
-}
-.textarea{min-height:120px;resize:vertical}
-
-/* TABLE */
-.tableWrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:13px;border-bottom:1px solid #252e3a}
-th{color:#768195;font-size:12px;text-transform:uppercase}
-td{color:#d8deea}
-
-/* OWNER */
-.ownerBadge{
-    display:inline-block;
-    background:#573f9b;
-    padding:5px 9px;
-    border-radius:7px;
-    font-size:11px;
-    margin-left:5px
-}
-.ownerWarning{
-    background:#32181b;
-    border:1px solid #682a31;
-    color:#ff9a9a;
-    padding:14px;
-    border-radius:10px;
-    margin-bottom:15px
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* TOAST */
-#toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    background:#171e28;
-    border:1px solid #303a49;
-    padding:14px 18px;
-    border-radius:10px;
-    display:none;
-    z-index:9999
+body {
+    background: #0b0f17;
+    color: #ffffff;
+    min-height: 100vh;
 }
 
-@media(max-width:1000px){
-    .cards{grid-template-columns:repeat(2,1fr)}
-    .grid2{grid-template-columns:1fr}
+button {
+    cursor: pointer;
 }
-@media(max-width:700px){
-    .sidebar{position:relative;width:100%;height:auto}
-    .main{margin-left:0}
-    .cards{grid-template-columns:1fr}
+
+.hidden {
+    display: none !important;
+}
+
+/* ================= LOGIN ================= */
+
+#loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at top, #17243a, #0b0f17 55%);
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 430px;
+    background: #111827;
+    border: 1px solid #263449;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+    border-radius: 18px;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0 auto 20px;
+}
+
+.login-box h1 {
+    text-align: center;
+    font-size: 26px;
+}
+
+.login-box p {
+    text-align: center;
+    color: #94a3b8;
+    margin: 8px 0 25px;
+}
+
+.input {
+    width: 100%;
+    background: #0b1220;
+    border: 1px solid #263449;
+    color: white;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #3b82f6;
+}
+
+.login-btn {
+    width: 100%;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.login-btn:hover {
+    background: #1d4ed8;
+}
+
+.error {
+    color: #f87171;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* ================= DASHBOARD ================= */
+
+#dashboard {
+    display: none;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: #0f1724;
+    border-right: 1px solid #263449;
+    padding: 20px 14px;
+    overflow-y: auto;
+}
+
+.brand {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.brand h2 {
+    font-size: 18px;
+}
+
+.brand span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.nav-title {
+    color: #64748b;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 18px 10px 8px;
+}
+
+.nav-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    padding: 11px;
+    text-align: left;
+    border-radius: 8px;
+    margin-bottom: 3px;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: #1e293b;
+    color: white;
+}
+
+.main {
+    margin-left: 250px;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 70px;
+    border-bottom: 1px solid #263449;
+    background: #0f1724;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.role {
+    color: #60a5fa;
+    font-size: 12px;
+}
+
+.logout {
+    background: #7f1d1d;
+    border: none;
+    color: white;
+    padding: 9px 13px;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+.content {
+    padding: 30px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+}
+
+.page-title p {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+/* ================= CARDS ================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: #111827;
+    border: 1px solid #263449;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.card h3 {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.big {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.green {
+    color: #4ade80;
+}
+
+.red {
+    color: #f87171;
+}
+
+.blue {
+    color: #60a5fa;
+}
+
+.yellow {
+    color: #facc15;
+}
+
+/* ================= BUTTONS ================= */
+
+.btn {
+    border: none;
+    padding: 11px 15px;
+    border-radius: 9px;
+    color: white;
+    background: #2563eb;
+    font-weight: bold;
+}
+
+.btn:hover {
+    opacity: .85;
+}
+
+.btn-danger {
+    background: #dc2626;
+}
+
+.btn-green {
+    background: #16a34a;
+}
+
+.btn-gray {
+    background: #334155;
+}
+
+.btn-purple {
+    background: #7c3aed;
+}
+
+/* ================= FORMS ================= */
+
+textarea,
+select {
+    width: 100%;
+    background: #0b1220;
+    border: 1px solid #263449;
+    color: white;
+    padding: 12px;
+    border-radius: 9px;
+    margin-bottom: 12px;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #263449;
+    text-align: left;
+}
+
+th {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+/* ================= ACCOUNT LIST ================= */
+
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: #0b1220;
+    border: 1px solid #263449;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.account-name {
+    font-weight: bold;
+}
+
+.account-role {
+    color: #60a5fa;
+    font-size: 12px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main {
+        margin-left: 210px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
+
+@media(max-width:600px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .content {
+        padding: 15px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- ======================================================
+     LOGIN SCREEN
+====================================================== -->
+
 <div id="loginScreen">
 
-<div class="loginBox">
+    <div class="login-box">
+
+        <div class="logo">
+            TSRP
+        </div>
 
-<div class="logo">
-<span>TSRP</span> Dashboard
-</div>
-
-<div class="loginSubtitle">
-Texas State Roleplay
-</div>
-
-<input id="username" placeholder="Username">
-
-<input id="password" type="password" placeholder="Password">
-
-<button class="loginButton" onclick="login()">
-Login
-</button>
-
-<div id="loginError" class="loginError"></div>
-
-</div>
-
-</div>
-
-
-<!-- APP -->
-<div id="app">
-
-<aside class="sidebar">
-
-<div class="sideLogo">
-<span>TSRP</span> PANEL
-</div>
-
-<div class="userBox">
-<div id="sideUser" class="userName"></div>
-<div id="sideRole" class="userRole"></div>
-</div>
-
-
-<div class="navTitle">Main</div>
-
-<button class="navButton active"
-onclick="showPage('dashboard',this)">
-Dashboard
-</button>
-
-
-<!-- OWNER-ONLY MAIN CONTROLS -->
-<div id="ownerControls">
-
-<button class="navButton"
-onclick="showPage('sessions',this)">
-Sessions
-</button>
-
-<button class="navButton"
-onclick="showPage('players',this)">
-Players
-</button>
-
-<button class="navButton"
-onclick="showPage('announcements',this)">
-Announcements
-</button>
-
-</div>
-
-
-<!-- STAFF MANAGEMENT -->
-<div class="navTitle">Staff</div>
-
-<button class="navButton"
-onclick="showPage('moderation',this)">
-Moderation
-</button>
-
-<button class="navButton"
-onclick="showPage('staff',this)">
-Staff
-</button>
-
-<button class="navButton"
-onclick="showPage('applications',this)">
-Applications
-</button>
-
-
-<!-- OWNER -->
-<div id="ownerNavigation">
-
-<div class="navTitle">Owner</div>
-
-<button class="navButton"
-onclick="showOwnerPage('owner')">
-Owner Center
-</button>
-
-<button class="navButton"
-onclick="showOwnerPage('permissions')">
-Permissions
-</button>
-
-<button class="navButton"
-onclick="showOwnerPage('security')">
-Security
-</button>
-
-<button class="navButton"
-onclick="showOwnerPage('system')">
-System Controls
-</button>
-
-</div>
-
-
-<div class="navTitle">System</div>
-
-<button class="navButton"
-onclick="showPage('logs',this)">
-Activity Logs
-</button>
-
-<button class="navButton"
-onclick="showPage('settings',this)">
-Settings
-</button>
-
-<button class="navButton logoutButton"
-onclick="logout()">
-Logout
-</button>
-
-</aside>
-
-
-<main class="main">
-
-<div class="topbar">
-
-<div>
-
-<div id="pageTitle" class="pageTitle">
-Dashboard
-</div>
-
-<div class="pageSubtitle">
-Texas State Roleplay administration panel
-</div>
-
-</div>
-
-<div id="discordStatus" class="status">
-Discord Checking...
-</div>
-
-</div>
-
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="page active">
-
-<div class="cards">
-
-<div class="card">
-<div class="cardTitle">Session</div>
-<div id="sessionCard" class="cardValue">Offline</div>
-</div>
+        <h1>Texas State Roleplay</h1>
+        <p>Staff Dashboard</p>
 
-<div class="card">
-<div class="cardTitle">Players</div>
-<div class="cardValue">0</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Staff Online</div>
-<div class="cardValue">0</div>
-</div>
-
-<div class="card">
-<div class="cardTitle">Your Role</div>
-<div id="roleCard" class="cardValue">-</div>
-</div>
-
-</div>
-
-
-<div class="grid2">
-
-<div class="panel">
-
-<div class="panelTitle">
-Current Session
-</div>
-
-<div id="sessionStatus" class="bigStatus">
-Offline
-</div>
-
-<div id="sessionHost" class="muted">
-No active host
-</div>
+        <input
+            id="username"
+            class="input"
+            placeholder="Username"
+            autocomplete="username"
+        >
 
-<div id="sessionCode" class="muted">
-No server code
-</div>
-
-</div>
-
+        <input
+            id="password"
+            class="input"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
 
-<div class="panel">
+        <button class="login-btn" onclick="login()">
+            Login
+        </button>
 
-<div class="panelTitle">
-Your Permissions
-</div>
+        <div id="loginError" class="error"></div>
 
-<div id="permissionText" class="muted">
-Loading permissions...
-</div>
+    </div>
 
 </div>
 
-</div>
 
-</section>
+<!-- ======================================================
+     DASHBOARD
+====================================================== -->
 
+<div id="dashboard">
 
-<!-- SESSIONS OWNER ONLY -->
-<section id="sessions" class="page">
+    <aside class="sidebar">
 
-<div class="panel">
+        <div class="brand">
+            <h2>Texas State Roleplay</h2>
+            <span>TSRP Administration</span>
+        </div>
 
-<div class="panelTitle">
-Session Management
-</div>
+        <div class="nav-title">
+            Main
+        </div>
 
-<input id="serverCode"
-class="input"
-placeholder="Roblox Server Code">
+        <button class="nav-btn active"
+                onclick="showPage('home', this)">
+            🏠 Dashboard
+        </button>
 
-<div class="actionRow">
+        <button
+            class="nav-btn permission-sessions"
+            onclick="showPage('sessions', this)">
+            🎮 Sessions
+        </button>
 
-<button class="actionButton success"
-onclick="startSession()">
-Start Session
-</button>
+        <button
+            class="nav-btn permission-sessions"
+            onclick="showPage('vote', this)">
+            🗳️ Session Vote
+        </button>
 
-<button class="actionButton danger"
-onclick="endSession()">
-End Session
-</button>
+        <button
+            class="nav-btn permission-announcements"
+            onclick="showPage('announcements', this)">
+            📢 Announcements
+        </button>
 
-<button class="actionButton primary"
-onclick="sessionVote()">
-Session Vote
-</button>
+        <button
+            class="nav-btn permission-players"
+            onclick="showPage('players', this)">
+            👥 Players
+        </button>
 
-</div>
 
-</div>
+        <div class="nav-title">
+            Management
+        </div>
 
-</section>
+        <button
+            class="nav-btn permission-moderation"
+            onclick="showPage('moderation', this)">
+            🛡️ Moderation
+        </button>
 
+        <button
+            class="nav-btn permission-moderation"
+            onclick="showPage('staff', this)">
+            👨‍💼 Staff
+        </button>
 
-<!-- PLAYERS OWNER ONLY -->
-<section id="players" class="page">
+        <button
+            class="nav-btn permission-moderation"
+            onclick="showPage('applications', this)">
+            📝 Applications
+        </button>
 
-<div class="panel">
 
-<div class="panelTitle">
-Player Management
-</div>
+        <div class="nav-title">
+            Owner
+        </div>
 
-<input class="input"
-placeholder="Search Roblox player...">
+        <button
+            class="nav-btn permission-owner"
+            onclick="showPage('owner', this)">
+            👑 Owner Center
+        </button>
 
-<div class="tableWrap">
+    </aside>
 
-<table>
 
-<thead>
-<tr>
-<th>Username</th>
-<th>Status</th>
-<th>Actions</th>
-</tr>
-</thead>
+    <main class="main">
 
-<tbody>
+        <header class="topbar">
 
-<tr>
-<td>No players loaded</td>
-<td>—</td>
-<td>—</td>
-</tr>
+            <div>
+                <strong>TSRP Dashboard</strong>
+            </div>
 
-</tbody>
+            <div class="user-info">
 
-</table>
+                <div class="avatar" id="avatar">
+                    U
+                </div>
 
-</div>
+                <div>
+                    <div id="displayUser">
+                        User
+                    </div>
 
-</div>
+                    <div class="role" id="displayRole">
+                        Rank
+                    </div>
+                </div>
 
-</section>
+                <button class="logout" onclick="logout()">
+                    Logout
+                </button>
 
+            </div>
 
-<!-- MODERATION -->
-<section id="moderation" class="page">
+        </header>
 
-<div class="panel">
 
-<div class="panelTitle">
-Moderation
-</div>
+        <section class="content">
 
-<div class="muted" style="margin-bottom:15px">
-You have access to moderation controls.
-</div>
 
-<input id="modPlayer"
-class="input"
-placeholder="Username">
+            <!-- ==================================================
+                 HOME
+            ================================================== -->
 
-<input id="modReason"
-class="input"
-placeholder="Reason">
+            <div id="page-home" class="page active">
 
-<div class="actionRow">
+                <div class="page-title">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back to Texas State Roleplay.</p>
+                </div>
 
-<button class="actionButton warning"
-onclick="moderationAction('warn')">
-Warn
-</button>
+                <div class="grid">
 
-<button class="actionButton danger"
-onclick="moderationAction('kick')">
-Kick
-</button>
+                    <div class="card">
+                        <h3>Session Status</h3>
+                        <div class="big green" id="sessionStatus">
+                            Offline
+                        </div>
+                    </div>
 
-<button class="actionButton danger"
-onclick="moderationAction('ban')">
-Ban
-</button>
+                    <div class="card">
+                        <h3>Current Host</h3>
+                        <div class="big" id="currentHost">
+                            None
+                        </div>
+                    </div>
 
-<button class="actionButton primary"
-onclick="moderationAction('bolo')">
-BOLO
-</button>
+                    <div class="card">
+                        <h3>Server Code</h3>
+                        <div class="big blue" id="currentCode">
+                            None
+                        </div>
+                    </div>
 
-</div>
+                    <div class="card">
+                        <h3>Your Rank</h3>
+                        <div class="big yellow" id="homeRole">
+                            None
+                        </div>
+                    </div>
 
-</div>
+                </div>
 
-</section>
+                <div class="card">
 
+                    <h3>Discord Connection</h3>
 
-<!-- STAFF -->
-<section id="staff" class="page">
+                    <p id="discordStatus">
+                        Checking connection...
+                    </p>
 
-<div class="panel">
+                </div>
 
-<div class="panelTitle">
-Staff
-</div>
+            </div>
 
-<div class="tableWrap">
 
-<table>
+            <!-- ==================================================
+                 SESSIONS
+            ================================================== -->
 
-<thead>
-<tr>
-<th>Username</th>
-<th>Role</th>
-<th>Status</th>
-</tr>
-</thead>
+            <div id="page-sessions" class="page">
 
-<tbody>
+                <div class="page-title">
+                    <h1>Session Management</h1>
+                    <p>Start and end TSRP sessions.</p>
+                </div>
 
-<tr>
-<td>Owner Juice</td>
-<td>Owner</td>
-<td>Online</td>
-</tr>
+                <div class="grid">
 
-<tr>
-<td>Admin</td>
-<td>Administrator</td>
-<td>Offline</td>
-</tr>
+                    <div class="card">
 
-<tr>
-<td>Mod</td>
-<td>Moderator</td>
-<td>Offline</td>
-</tr>
+                        <h3>Start Session</h3>
 
-</tbody>
+                        <input
+                            id="serverCode"
+                            class="input"
+                            placeholder="Roblox Server Code"
+                        >
 
-</table>
+                        <button
+                            class="btn btn-green"
+                            onclick="startSession()">
+                            🟢 Start Session
+                        </button>
 
-</div>
+                    </div>
 
-</div>
 
-</section>
+                    <div class="card">
 
+                        <h3>End Session</h3>
 
-<!-- APPLICATIONS -->
-<section id="applications" class="page">
+                        <p style="color:#94a3b8;margin-bottom:15px;">
+                            End the current TSRP session.
+                        </p>
 
-<div class="panel">
+                        <button
+                            class="btn btn-danger"
+                            onclick="endSession()">
+                            🔴 End Session
+                        </button>
 
-<div class="panelTitle">
-Staff Applications
-</div>
+                    </div>
 
-<div class="muted">
-No applications waiting for review.
-</div>
+                </div>
 
-</div>
+            </div>
 
-</section>
 
+            <!-- ==================================================
+                 SESSION VOTE
+            ================================================== -->
 
-<!-- ANNOUNCEMENTS OWNER ONLY -->
-<section id="announcements" class="page">
+            <div id="page-vote" class="page">
 
-<div class="panel">
+                <div class="page-title">
+                    <h1>Session Vote</h1>
+                    <p>Send a TSRP session vote to Discord.</p>
+                </div>
 
-<div class="panelTitle">
-Discord Announcement
-</div>
+                <div class="card">
 
-<textarea id="announcementText"
-class="textarea"
-placeholder="Write your announcement..."></textarea>
+                    <h3>Session Vote</h3>
 
-<button class="actionButton primary"
-onclick="sendCustomAnnouncement()">
-Send Announcement
-</button>
+                    <p style="color:#94a3b8;margin:12px 0 18px;">
+                        This sends the vote announcement through the
+                        TSRP Discord webhook.
+                    </p>
 
-</div>
+                    <button
+                        class="btn btn-purple"
+                        onclick="sendVote()">
+                        🗳️ Send Session Vote
+                    </button>
 
+                </div>
 
-<div class="panel">
+            </div>
 
-<div class="panelTitle">
-Quick Announcements
-</div>
 
-<div class="actionRow">
+            <!-- ==================================================
+                 ANNOUNCEMENTS
+            ================================================== -->
 
-<button class="actionButton success"
-onclick="quickAnnouncement('TSRP is now open!')">
-Server Open
-</button>
+            <div id="page-announcements" class="page">
 
-<button class="actionButton warning"
-onclick="quickAnnouncement('TSRP session will begin soon!')">
-Session Soon
-</button>
+                <div class="page-title">
+                    <h1>Announcements</h1>
+                    <p>Send announcements to your TSRP Discord.</p>
+                </div>
 
-<button class="actionButton danger"
-onclick="quickAnnouncement('TSRP session has ended.')">
-Session Ended
-</button>
+                <div class="card">
 
-</div>
+                    <h3>Custom Announcement</h3>
 
-</div>
+                    <textarea
+                        id="announcementText"
+                        placeholder="Type your announcement..."
+                    ></textarea>
 
-</section>
+                    <button
+                        class="btn"
+                        onclick="sendAnnouncement()">
+                        📢 Send Announcement
+                    </button>
 
+                </div>
 
-<!-- OWNER CENTER -->
-<section id="owner" class="page">
+            </div>
 
-<div class="panel">
 
-<div class="panelTitle">
-Owner Center
-<span class="ownerBadge">OWNER ONLY</span>
-</div>
+            <!-- ==================================================
+                 PLAYERS
+            ================================================== -->
 
-<div class="ownerWarning">
-Only Owner Juice can access these controls.
-</div>
+            <div id="page-players" class="page">
 
-<div class="actionRow">
+                <div class="page-title">
+                    <h1>Players</h1>
+                    <p>Player management.</p>
+                </div>
 
-<button class="actionButton primary">
-Manage Staff
-</button>
+                <div class="card">
 
-<button class="actionButton purple">
-Account & Password
-</button>
+                    <input
+                        id="playerSearch"
+                        class="input"
+                        placeholder="Search Roblox username..."
+                    >
 
-<button class="actionButton warning">
-Dashboard Settings
-</button>
+                    <button
+                        class="btn"
+                        onclick="searchPlayer()">
+                        🔎 Search
+                    </button>
 
-<button class="actionButton danger">
-Force Logout
-</button>
+                    <div id="playerResult"
+                         style="margin-top:20px;color:#94a3b8;">
+                    </div>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
-</section>
 
+            <!-- ==================================================
+                 MODERATION
+            ================================================== -->
 
-<!-- PERMISSIONS -->
-<section id="permissions" class="page">
+            <div id="page-moderation" class="page">
 
-<div class="panel">
+                <div class="page-title">
+                    <h1>Moderation</h1>
+                    <p>Staff moderation tools.</p>
+                </div>
 
-<div class="panelTitle">
-Permissions
-<span class="ownerBadge">OWNER ONLY</span>
-</div>
+                <div class="grid">
 
-<div class="ownerWarning">
-Admin and Moderator accounts cannot change permissions.
-</div>
+                    <div class="card">
+                        <h3>Warn Player</h3>
+                        <input
+                            id="warnPlayer"
+                            class="input"
+                            placeholder="Username"
+                        >
+                        <button class="btn" onclick="moderationAction('Warn')">
+                            Warn
+                        </button>
+                    </div>
 
-<table>
-
-<thead>
-<tr>
-<th>Account</th>
-<th>Role</th>
-<th>Sessions</th>
-<th>Announcements</th>
-<th>Owner</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Owner Juice</td>
-<td>Owner</td>
-<td>YES</td>
-<td>YES</td>
-<td>YES</td>
-</tr>
-
-<tr>
-<td>Admin</td>
-<td>Administrator</td>
-<td>NO</td>
-<td>NO</td>
-<td>NO</td>
-</tr>
-
-<tr>
-<td>Mod</td>
-<td>Moderator</td>
-<td>NO</td>
-<td>NO</td>
-<td>NO</td>
-</tr>
-
-</tbody>
-
-</table>
+                    <div class="card">
+                        <h3>Kick Player</h3>
+                        <input
+                            id="kickPlayer"
+                            class="input"
+                            placeholder="Username"
+                        >
+                        <button class="btn btn-danger"
+                                onclick="moderationAction('Kick')">
+                            Kick
+                        </button>
+                    </div>
 
-</div>
+                    <div class="card">
+                        <h3>Ban Player</h3>
+                        <input
+                            id="banPlayer"
+                            class="input"
+                            placeholder="Username"
+                        >
+                        <button class="btn btn-danger"
+                                onclick="moderationAction('Ban')">
+                            Ban
+                        </button>
+                    </div>
 
-</section>
+                </div>
 
+            </div>
 
-<!-- SECURITY -->
-<section id="security" class="page">
 
-<div class="panel">
+            <!-- ==================================================
+                 STAFF
+            ================================================== -->
 
-<div class="panelTitle">
-Security
-<span class="ownerBadge">OWNER ONLY</span>
-</div>
+            <div id="page-staff" class="page">
 
-<div class="ownerWarning">
-Security controls are restricted to Owner Juice.
-</div>
+                <div class="page-title">
+                    <h1>Staff</h1>
+                    <p>Texas State Roleplay staff management.</p>
+                </div>
 
-<div class="actionRow">
+                <div class="card">
 
-<button class="actionButton danger">
-Force Logout All
-</button>
+                    <h3>Current Account</h3>
 
-<button class="actionButton warning">
-Lock Dashboard
-</button>
+                    <p style="margin-top:12px;">
+                        Username:
+                        <strong id="staffUsername"></strong>
+                    </p>
 
-</div>
+                    <p style="margin-top:8px;">
+                        Rank:
+                        <strong id="staffRank"></strong>
+                    </p>
 
-</div>
+                </div>
 
-</section>
+            </div>
 
 
-<!-- SYSTEM -->
-<section id="system" class="page">
+            <!-- ==================================================
+                 APPLICATIONS
+            ================================================== -->
 
-<div class="panel">
+            <div id="page-applications" class="page">
 
-<div class="panelTitle">
-System Controls
-<span class="ownerBadge">OWNER ONLY</span>
-</div>
+                <div class="page-title">
+                    <h1>Applications</h1>
+                    <p>Manage staff applications.</p>
+                </div>
 
-<div class="ownerWarning">
-Admin and Moderator accounts cannot use system controls.
-</div>
+                <div class="card">
 
-<div class="actionRow">
+                    <h3>Applications</h3>
 
-<button class="actionButton danger">
-Shutdown System
-</button>
+                    <p style="color:#94a3b8;margin-top:10px;">
+                        No applications loaded yet.
+                    </p>
 
-<button class="actionButton warning">
-Maintenance Mode
-</button>
+                </div>
 
-<button class="actionButton primary">
-Reset Dashboard
-</button>
+            </div>
 
-</div>
 
-</div>
+            <!-- ==================================================
+                 OWNER CENTER
+            ================================================== -->
 
-</section>
+            <div id="page-owner" class="page">
 
+                <div class="page-title">
+                    <h1>Owner Center</h1>
+                    <p>Owner-only system controls.</p>
+                </div>
 
-<!-- LOGS -->
-<section id="logs" class="page">
 
-<div class="panel">
+                <div class="card">
 
-<div class="panelTitle">
-Activity Logs
-</div>
+                    <h3>Registered Accounts</h3>
 
-<div id="logsList" class="muted">
-No activity yet.
-</div>
+                    <div id="accountList"
+                         style="margin-top:15px;">
+                    </div>
 
-</div>
+                </div>
 
-</section>
 
+                <div class="card" style="margin-top:20px;">
 
-<!-- SETTINGS -->
-<section id="settings" class="page">
+                    <h3>System Information</h3>
 
-<div class="panel">
+                    <p style="color:#94a3b8;margin-top:12px;">
+                        Texas State Roleplay Administration System
+                    </p>
 
-<div class="panelTitle">
-Account
-</div>
+                    <p style="color:#64748b;margin-top:5px;">
+                        Owner controls are only available to the Owner rank.
+                    </p>
 
-<p class="muted">
-Logged in as:
-<strong id="settingsUser"></strong>
-</p>
+                </div>
 
-<br>
+            </div>
 
-<p class="muted">
-Role:
-<strong id="settingsRole"></strong>
-</p>
 
-</div>
+        </section>
 
-</section>
+    </main>
 
-</main>
 </div>
-
-
-<div id="toast"></div>
 
 
 <script>
 
-/* =========================
-   WORKER
-========================= */
+/* ============================================================
+   ============================================================
+   🔐 TSRP ACCOUNTS
+   ============================================================
+   
+   YOU HAVE 10 ACCOUNT SLOTS.
 
-const WORKER_URL =
-"https://tsrp-discord1.j-magdaleno5.workers.dev";
+   Change:
+   "USERNAME"
+   "PASSWORD"
+   "RANK"
 
+   Available ranks:
+   Owner
+   Administrator
+   Moderator
 
-/* ==========================================
-   ADD YOUR LOGINS HERE
-   ========================================== */
+   ============================================================
+*/
+
 
 const ACCOUNTS = {
 
-    /* OWNER */
+    /* ===== ACCOUNT 1 ===== */
+
     "Owner Juice": {
         password: "Owner Juice TSRP",
         role: "Owner"
     },
 
-    /* ADMIN */
+
+    /* ===== ACCOUNT 2 ===== */
+
     "Admin": {
         password: "Texas Admin",
         role: "Administrator"
     },
 
-    /* MOD */
+
+    /* ===== ACCOUNT 3 ===== */
+
     "Mod": {
         password: "Texas Mod",
         role: "Moderator"
     },
 
 
-    /* ======================================
-       ADD NEW USERS BELOW
-       ====================================== */
+    /* ===== ACCOUNT 4 ===== */
 
-    "NewUser": {
-        password: "Texas Mangement",
-        role: "Mangement"
+    "USERNAME4": {
+        password: "PASSWORD4",
+        role: "Moderator"
     },
 
-    "AnotherUser": {
-        password: "AnotherPassword",
+
+    /* ===== ACCOUNT 5 ===== */
+
+    "USERNAME5": {
+        password: "PASSWORD5",
+        role: "Moderator"
+    },
+
+
+    /* ===== ACCOUNT 6 ===== */
+
+    "USERNAME6": {
+        password: "PASSWORD6",
+        role: "Administrator"
+    },
+
+
+    /* ===== ACCOUNT 7 ===== */
+
+    "USERNAME7": {
+        password: "PASSWORD7",
+        role: "Administrator"
+    },
+
+
+    /* ===== ACCOUNT 8 ===== */
+
+    "USERNAME8": {
+        password: "PASSWORD8",
+        role: "Moderator"
+    },
+
+
+    /* ===== ACCOUNT 9 ===== */
+
+    "USERNAME9": {
+        password: "PASSWORD9",
+        role: "Moderator"
+    },
+
+
+    /* ===== ACCOUNT 10 ===== */
+
+    "USERNAME10": {
+        password: "PASSWORD10",
         role: "Administrator"
     }
 
 };
 
 
-/* =========================
+/* ============================================================
+   RANK PERMISSIONS
+============================================================ */
+
+const PERMISSIONS = {
+
+    Owner: {
+        sessions: true,
+        announcements: true,
+        players: true,
+        moderation: true,
+        owner: true
+    },
+
+    Administrator: {
+        sessions: false,
+        announcements: false,
+        players: false,
+        moderation: true,
+        owner: false
+    },
+
+    Moderator: {
+        sessions: false,
+        announcements: false,
+        players: false,
+        moderation: true,
+        owner: false
+    }
+
+};
+
+
+/* ============================================================
+   CLOUDFLARE WORKER
+============================================================ */
+
+const WORKER_URL =
+    "https://tsrp-discord1.j-magdaleno5.workers.dev";
+
+
+/* ============================================================
    CURRENT USER
-========================= */
+============================================================ */
 
-let currentUser="";
-let currentRole="";
+let currentUser = null;
+let currentRole = null;
 
-let sessionOnline=false;
-let sessionHost="";
-let currentServerCode="";
+let sessionOnline = false;
+let sessionHost = "";
+let sessionServerCode = "";
 
 
-/* =========================
+/* ============================================================
    LOGIN
-========================= */
+============================================================ */
 
-function login(){
+function login() {
 
-const username=
-document.getElementById("username").value.trim();
+    const username =
+        document.getElementById("username").value.trim();
 
-const password=
-document.getElementById("password").value;
+    const password =
+        document.getElementById("password").value;
 
-const account=ACCOUNTS[username];
-
-if(!account || account.password!==password){
-
-document.getElementById("loginError").textContent=
-"Invalid username or password.";
-
-return;
-}
-
-currentUser=username;
-currentRole=account.role;
-
-document.getElementById("loginScreen").style.display="none";
-document.getElementById("app").style.display="block";
-
-document.getElementById("sideUser").textContent=currentUser;
-document.getElementById("sideRole").textContent=currentRole;
-document.getElementById("roleCard").textContent=currentRole;
-
-document.getElementById("settingsUser").textContent=currentUser;
-document.getElementById("settingsRole").textContent=currentRole;
+    const error =
+        document.getElementById("loginError");
 
 
-/* APPLY PERMISSIONS */
+    if (!ACCOUNTS[username]) {
 
-applyPermissions();
+        error.textContent =
+            "Invalid username or password.";
+
+        return;
+    }
 
 
-addLog(
-currentUser+
-" logged in as "+
-currentRole
-);
+    if (ACCOUNTS[username].password !== password) {
 
-checkDiscord();
+        error.textContent =
+            "Invalid username or password.";
 
-showToast(
-"Welcome, "+currentUser+"!"
-);
+        return;
+    }
+
+
+    currentUser = username;
+    currentRole = ACCOUNTS[username].role;
+
+
+    localStorage.setItem(
+        "tsrpUser",
+        currentUser
+    );
+
+    localStorage.setItem(
+        "tsrpRole",
+        currentRole
+    );
+
+
+    openDashboard();
 
 }
 
 
-/* =========================
-   APPLY PERMISSIONS
-========================= */
+/* ============================================================
+   OPEN DASHBOARD
+============================================================ */
 
-function applyPermissions(){
+function openDashboard() {
 
-const permissions=
-PERMISSIONS[currentRole];
+    document.getElementById("loginScreen")
+        .style.display = "none";
+
+    document.getElementById("dashboard")
+        .style.display = "block";
 
 
-/* OWNER MAIN CONTROLS */
-
-if(permissions.sessions ||
-permissions.players ||
-permissions.announcements){
-
-document.getElementById("ownerControls")
-.classList.remove("hidden");
-
-}else{
-
-document.getElementById("ownerControls")
-.classList.add("hidden");
+    updateUserDisplay();
+    applyPermissions();
+    loadAccounts();
+    checkDiscord();
 
 }
 
 
-/* OWNER NAV */
+/* ============================================================
+   USER DISPLAY
+============================================================ */
 
-if(permissions.owner){
+function updateUserDisplay() {
 
-document.getElementById("ownerNavigation")
-.classList.remove("hidden");
+    document.getElementById("displayUser")
+        .textContent = currentUser;
 
-}else{
+    document.getElementById("displayRole")
+        .textContent = currentRole;
 
-document.getElementById("ownerNavigation")
-.classList.add("hidden");
+    document.getElementById("homeRole")
+        .textContent = currentRole;
 
-}
+    document.getElementById("staffUsername")
+        .textContent = currentUser;
+
+    document.getElementById("staffRank")
+        .textContent = currentRole;
 
 
-/* PERMISSION TEXT */
+    const avatar =
+        document.getElementById("avatar");
 
-let text="";
-
-if(permissions.moderation){
-text+="Moderation: YES<br>";
-}else{
-text+="Moderation: NO<br>";
-}
-
-if(permissions.sessions){
-text+="Sessions: YES<br>";
-}else{
-text+="Sessions: NO<br>";
-}
-
-if(permissions.announcements){
-text+="Announcements: YES<br>";
-}else{
-text+="Announcements: NO<br>";
-}
-
-if(permissions.players){
-text+="Players: YES<br>";
-}else{
-text+="Players: NO<br>";
-}
-
-if(permissions.owner){
-text+="Owner Controls: YES";
-}else{
-text+="Owner Controls: NO";
-}
-
-document.getElementById("permissionText").innerHTML=text;
+    avatar.textContent =
+        currentUser.charAt(0).toUpperCase();
 
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
+/* ============================================================
+   PERMISSIONS
+============================================================ */
 
-function logout(){
+function applyPermissions() {
 
-currentUser="";
-currentRole="";
-
-document.getElementById("app").style.display="none";
-document.getElementById("loginScreen").style.display="flex";
-
-document.getElementById("username").value="";
-document.getElementById("password").value="";
-
-}
+    const permissions =
+        PERMISSIONS[currentRole];
 
 
-/* =========================
-   NORMAL PAGE SECURITY
-========================= */
+    if (!permissions) {
 
-function showPage(page,button){
+        logout();
 
-const permissions=
-PERMISSIONS[currentRole];
+        return;
+    }
 
 
-/* SESSION */
+    document.querySelectorAll(
+        ".permission-sessions"
+    ).forEach(element => {
 
-if(page==="sessions" &&
-!permissions.sessions){
+        element.style.display =
+            permissions.sessions ? "" : "none";
 
-showToast("You do not have Session permissions.");
-return;
-
-}
-
-
-/* PLAYERS */
-
-if(page==="players" &&
-!permissions.players){
-
-showToast("You do not have Player permissions.");
-return;
-
-}
+    });
 
 
-/* ANNOUNCEMENTS */
+    document.querySelectorAll(
+        ".permission-announcements"
+    ).forEach(element => {
 
-if(page==="announcements" &&
-!permissions.announcements){
+        element.style.display =
+            permissions.announcements ? "" : "none";
 
-showToast("You do not have Announcement permissions.");
-return;
-
-}
+    });
 
 
-/* DISPLAY */
+    document.querySelectorAll(
+        ".permission-players"
+    ).forEach(element => {
 
-document.querySelectorAll(".page")
-.forEach(function(item){
-item.classList.remove("active");
-});
+        element.style.display =
+            permissions.players ? "" : "none";
 
-const target=document.getElementById(page);
+    });
 
-if(target){
-target.classList.add("active");
-}
 
-document.querySelectorAll(".navButton")
-.forEach(function(item){
-item.classList.remove("active");
-});
+    document.querySelectorAll(
+        ".permission-moderation"
+    ).forEach(element => {
 
-if(button){
-button.classList.add("active");
-}
+        element.style.display =
+            permissions.moderation ? "" : "none";
 
-const titles={
+    });
 
-dashboard:"Dashboard",
-sessions:"Sessions",
-players:"Players",
-moderation:"Moderation",
-staff:"Staff",
-applications:"Applications",
-announcements:"Announcements",
-owner:"Owner Center",
-permissions:"Permissions",
-security:"Security",
-system:"System Controls",
-logs:"Activity Logs",
-settings:"Settings"
 
-};
+    document.querySelectorAll(
+        ".permission-owner"
+    ).forEach(element => {
 
-document.getElementById("pageTitle").textContent=
-titles[page]||"Dashboard";
+        element.style.display =
+            permissions.owner ? "" : "none";
+
+    });
 
 }
 
 
-/* =========================
-   OWNER PAGE SECURITY
-========================= */
+/* ============================================================
+   PAGE SYSTEM
+============================================================ */
 
-function showOwnerPage(page){
+function showPage(page, button) {
 
-if(currentRole!=="Owner"){
-
-showToast(
-"Access denied. Owner permissions required."
-);
-
-addLog(
-currentUser+
-" attempted to access Owner controls."
-);
-
-return;
-}
-
-document.querySelectorAll(".page")
-.forEach(function(item){
-item.classList.remove("active");
-});
-
-const target=document.getElementById(page);
-
-if(target){
-target.classList.add("active");
-}
-
-const titles={
-
-owner:"Owner Center",
-permissions:"Permissions",
-security:"Security",
-system:"System Controls"
-
-};
-
-document.getElementById("pageTitle").textContent=
-titles[page]||"Owner Center";
-
-}
+    const permissions =
+        PERMISSIONS[currentRole];
 
 
-/* =========================
-   DISCORD STATUS
-========================= */
+    if (page === "sessions" &&
+        !permissions.sessions) {
 
-async function checkDiscord(){
-
-try{
-
-const response=
-await fetch(
-WORKER_URL+"/discord/status"
-);
-
-const data=
-await response.json();
-
-const status=
-document.getElementById("discordStatus");
-
-if(data.connected){
-
-status.textContent="Discord Connected";
-status.classList.add("online");
-
-}else{
-
-status.textContent="Discord Not Connected";
-status.classList.remove("online");
-
-}
-
-}catch(error){
-
-document.getElementById("discordStatus")
-.textContent="Worker Offline";
-
-}
-
-}
+        alert("You do not have Session permissions.");
+        return;
+    }
 
 
-/* =========================
-   SEND DISCORD
-========================= */
+    if (page === "vote" &&
+        !permissions.sessions) {
 
-async function sendDiscord(message){
+        alert("You do not have Session Vote permissions.");
+        return;
+    }
 
-try{
 
-const response=
-await fetch(
-WORKER_URL+"/discord/send",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-content:message,
-username:"Texas State Roleplay"
-})
-}
-);
+    if (page === "announcements" &&
+        !permissions.announcements) {
 
-const data=
-await response.json();
+        alert("You do not have Announcement permissions.");
+        return;
+    }
 
-if(!data.success){
 
-showToast("Discord message failed.");
-return false;
+    if (page === "players" &&
+        !permissions.players) {
 
-}
+        alert("You do not have Player permissions.");
+        return;
+    }
 
-return true;
 
-}catch(error){
+    if (page === "moderation" &&
+        !permissions.moderation) {
 
-showToast("Discord Worker connection failed.");
-return false;
+        alert("You do not have Moderation permissions.");
+        return;
+    }
 
-}
+
+    if (page === "staff" &&
+        !permissions.moderation) {
+
+        alert("You do not have Staff permissions.");
+        return;
+    }
+
+
+    if (page === "applications" &&
+        !permissions.moderation) {
+
+        alert("You do not have Application permissions.");
+        return;
+    }
+
+
+    if (page === "owner" &&
+        !permissions.owner) {
+
+        alert("Owner permissions required.");
+        return;
+    }
+
+
+    document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+
+    document.getElementById(
+        "page-" + page
+    ).classList.add("active");
+
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+
+    if (button) {
+        button.classList.add("active");
+    }
 
 }
 
 
-/* =========================
+/* ============================================================
    START SESSION
-========================= */
+============================================================ */
 
-async function startSession(){
+async function startSession() {
 
-if(currentRole!=="Owner"){
+    if (currentRole !== "Owner") {
 
-showToast("Only Owner can start sessions.");
-return;
+        alert("Owner permissions required.");
+        return;
+    }
 
-}
 
-const input=
-document.getElementById("serverCode");
+    const code =
+        document.getElementById("serverCode")
+        .value.trim();
 
-let code=input.value.trim();
 
-if(!code){
+    if (!code) {
 
-code=prompt(
-"Enter the Roblox server code:"
-);
+        alert("Enter a server code first.");
+        return;
+    }
 
-if(!code)return;
 
-}
+    sessionOnline = true;
+    sessionHost = currentUser;
+    sessionServerCode = code;
 
-sessionOnline=true;
-sessionHost=currentUser;
-currentServerCode=code;
 
-updateSessionUI();
+    document.getElementById("sessionStatus")
+        .textContent = "Online";
 
-const message=
-`🚨 **TEXAS STATE ROLEPLAY — SESSION STARTED**
+    document.getElementById("sessionStatus")
+        .className = "big green";
 
-👤 **Host:** ${currentUser}
-🎮 **Server Code:** ${code}
-🟢 **Status:** Online
 
-@everyone`;
+    document.getElementById("currentHost")
+        .textContent = currentUser;
 
-const sent=
-await sendDiscord(message);
+    document.getElementById("currentCode")
+        .textContent = code;
 
-addLog(
-currentUser+
-" started a session."
-);
 
-if(sent){
-showToast(
-"Session started and Discord announced."
-);
-}
+    await sendDiscord(
+        "🚨 **TEXAS STATE ROLEPLAY — SESSION STARTED**\n\n" +
+        "👤 **Host:** " + currentUser + "\n" +
+        "🎮 **Server Code:** " + code + "\n" +
+        "🟢 **Status:** Online\n\n" +
+        "@everyone"
+    );
+
+
+    alert("TSRP session started.");
 
 }
 
 
-/* =========================
+/* ============================================================
    END SESSION
-========================= */
+============================================================ */
 
-async function endSession(){
+async function endSession() {
 
-if(currentRole!=="Owner"){
+    if (currentRole !== "Owner") {
 
-showToast("Only Owner can end sessions.");
-return;
+        alert("Owner permissions required.");
+        return;
+    }
 
-}
 
-if(!sessionOnline){
+    sessionOnline = false;
 
-showToast("There is no active session.");
-return;
 
-}
+    document.getElementById("sessionStatus")
+        .textContent = "Offline";
 
-const message=
-`🛑 **TEXAS STATE ROLEPLAY — SESSION ENDED**
+    document.getElementById("sessionStatus")
+        .className = "big red";
 
-👤 **Ended By:** ${currentUser}
-🔴 **Status:** Offline`;
 
-const sent=
-await sendDiscord(message);
+    document.getElementById("currentHost")
+        .textContent = "None";
 
-sessionOnline=false;
-sessionHost="";
-currentServerCode="";
+    document.getElementById("currentCode")
+        .textContent = "None";
 
-updateSessionUI();
 
-addLog(
-currentUser+
-" ended the session."
-);
+    await sendDiscord(
+        "🛑 **TEXAS STATE ROLEPLAY — SESSION ENDED**\n\n" +
+        "👤 **Ended By:** " + currentUser + "\n" +
+        "🔴 **Status:** Offline"
+    );
 
-if(sent){
-showToast(
-"Session ended and Discord announced."
-);
-}
+
+    alert("TSRP session ended.");
 
 }
 
 
-/* =========================
+/* ============================================================
    SESSION VOTE
-========================= */
+============================================================ */
 
-async function sessionVote(){
+async function sendVote() {
 
-if(currentRole!=="Owner"){
+    if (currentRole !== "Owner") {
 
-showToast("Only Owner can start a session vote.");
-return;
+        alert("Owner permissions required.");
+        return;
+    }
 
-}
 
-const message=
-`🗳️ **TEXAS STATE ROLEPLAY — SESSION VOTE**
+    await sendDiscord(
+        "🗳️ **TEXAS STATE ROLEPLAY — SESSION VOTE**\n\n" +
+        "Should we start a TSRP session?\n\n" +
+        "React below if you would like to participate.\n\n" +
+        "@everyone"
+    );
 
-Should we start a TSRP session?
 
-React below if you would like to participate.
-
-@everyone`;
-
-const sent=
-await sendDiscord(message);
-
-addLog(
-currentUser+
-" started a session vote."
-);
-
-if(sent){
-showToast("Session vote sent.");
-}
+    alert("Session vote sent to Discord.");
 
 }
 
 
-/* =========================
-   SESSION UI
-========================= */
+/* ============================================================
+   ANNOUNCEMENT
+============================================================ */
 
-function updateSessionUI(){
+async function sendAnnouncement() {
 
-if(sessionOnline){
+    if (currentRole !== "Owner") {
 
-document.getElementById("sessionCard")
-.textContent="Online";
+        alert("Owner permissions required.");
+        return;
+    }
 
-document.getElementById("sessionStatus")
-.textContent="Online";
 
-document.getElementById("sessionStatus")
-.style.color="#69e58a";
+    const text =
+        document.getElementById(
+            "announcementText"
+        ).value.trim();
 
-document.getElementById("sessionHost")
-.textContent=
-"Host: "+sessionHost;
 
-document.getElementById("sessionCode")
-.textContent=
-"Server Code: "+currentServerCode;
+    if (!text) {
 
-}else{
+        alert("Enter an announcement.");
+        return;
+    }
 
-document.getElementById("sessionCard")
-.textContent="Offline";
 
-document.getElementById("sessionStatus")
-.textContent="Offline";
+    await sendDiscord(
+        "📢 **TSRP ANNOUNCEMENT**\n\n" +
+        text +
+        "\n\n👤 **Sent by:** " +
+        currentUser
+    );
 
-document.getElementById("sessionStatus")
-.style.color="";
 
-document.getElementById("sessionHost")
-.textContent="No active host";
+    document.getElementById(
+        "announcementText"
+    ).value = "";
 
-document.getElementById("sessionCode")
-.textContent="No server code";
 
-}
+    alert("Announcement sent.");
 
 }
 
 
-/* =========================
-   ANNOUNCEMENTS
-========================= */
+/* ============================================================
+   DISCORD SEND
+============================================================ */
 
-async function sendCustomAnnouncement(){
+async function sendDiscord(message) {
 
-if(currentRole!=="Owner"){
+    try {
 
-showToast(
-"Only Owner can send announcements."
-);
+        const response =
+            await fetch(
+                WORKER_URL + "/discord/send",
+                {
+                    method: "POST",
 
-return;
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-}
-
-const text=
-document.getElementById("announcementText")
-.value.trim();
-
-if(!text){
-
-showToast(
-"Write an announcement first."
-);
-
-return;
-
-}
-
-const message=
-`📢 **TSRP ANNOUNCEMENT**
-
-${text}
-
-👤 **Sent by:** ${currentUser}`;
-
-const sent=
-await sendDiscord(message);
-
-if(sent){
-
-document.getElementById(
-"announcementText"
-).value="";
-
-showToast("Announcement sent.");
-
-}
-
-addLog(
-currentUser+
-" sent an announcement."
-);
-
-}
+                    body: JSON.stringify({
+                        content: message,
+                        username:
+                            "Texas State Roleplay"
+                    })
+                }
+            );
 
 
-async function quickAnnouncement(text){
+        const data =
+            await response.json();
 
-if(currentRole!=="Owner"){
 
-showToast(
-"Only Owner can send announcements."
-);
+        if (!data.success) {
 
-return;
+            alert(
+                "Discord error: " +
+                (data.error || "Unknown error")
+            );
 
-}
+            return false;
+        }
 
-const message=
-`📢 **TEXAS STATE ROLEPLAY**
 
-${text}
+        return true;
 
-👤 **Sent by:** ${currentUser}`;
+    } catch (error) {
 
-const sent=
-await sendDiscord(message);
+        alert(
+            "Could not connect to Discord Worker."
+        );
 
-if(sent){
-showToast("Announcement sent.");
-}
-
-addLog(
-currentUser+
-" sent a quick announcement."
-);
+        return false;
+    }
 
 }
 
 
-/* =========================
+/* ============================================================
+   DISCORD STATUS
+============================================================ */
+
+async function checkDiscord() {
+
+    try {
+
+        const response =
+            await fetch(
+                WORKER_URL +
+                "/discord/status"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        const status =
+            document.getElementById(
+                "discordStatus"
+            );
+
+
+        if (data.connected) {
+
+            status.innerHTML =
+                '<span class="green">● Connected</span>';
+
+        } else {
+
+            status.innerHTML =
+                '<span class="red">● Not Connected</span>';
+
+        }
+
+    } catch {
+
+        document.getElementById(
+            "discordStatus"
+        ).innerHTML =
+            '<span class="red">● Worker Offline</span>';
+
+    }
+
+}
+
+
+/* ============================================================
+   PLAYER SEARCH
+============================================================ */
+
+function searchPlayer() {
+
+    const username =
+        document.getElementById(
+            "playerSearch"
+        ).value.trim();
+
+
+    if (!username) {
+
+        alert("Enter a Roblox username.");
+        return;
+    }
+
+
+    document.getElementById(
+        "playerResult"
+    ).innerHTML =
+
+        "<strong>" +
+        username +
+        "</strong><br><br>" +
+
+        "Player lookup is ready for a Roblox API/backend connection.";
+
+}
+
+
+/* ============================================================
    MODERATION
-========================= */
+============================================================ */
 
-function moderationAction(action){
+async function moderationAction(action) {
 
-if(!PERMISSIONS[currentRole].moderation){
+    if (!PERMISSIONS[currentRole].moderation) {
 
-showToast(
-"You do not have moderation permissions."
+        alert("You do not have moderation permissions.");
+        return;
+    }
+
+
+    let username = "";
+
+
+    if (action === "Warn") {
+
+        username =
+            document.getElementById(
+                "warnPlayer"
+            ).value.trim();
+
+    }
+
+
+    if (action === "Kick") {
+
+        username =
+            document.getElementById(
+                "kickPlayer"
+            ).value.trim();
+
+    }
+
+
+    if (action === "Ban") {
+
+        username =
+            document.getElementById(
+                "banPlayer"
+            ).value.trim();
+
+    }
+
+
+    if (!username) {
+
+        alert("Enter a username.");
+        return;
+    }
+
+
+    await sendDiscord(
+        "🛡️ **TSRP MODERATION ACTION**\n\n" +
+        "👤 **Player:** " + username + "\n" +
+        "⚙️ **Action:** " + action + "\n" +
+        "🧑‍💼 **Staff:** " + currentUser + "\n" +
+        "🏷️ **Rank:** " + currentRole
+    );
+
+
+    alert(
+        action +
+        " action logged for " +
+        username
+    );
+
+}
+
+
+/* ============================================================
+   OWNER ACCOUNT LIST
+============================================================ */
+
+function loadAccounts() {
+
+    const list =
+        document.getElementById(
+            "accountList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    Object.keys(ACCOUNTS)
+        .forEach(username => {
+
+            const account =
+                ACCOUNTS[username];
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className = "account";
+
+
+            div.innerHTML =
+
+                "<div>" +
+
+                "<div class='account-name'>" +
+                username +
+                "</div>" +
+
+                "<div class='account-role'>" +
+                account.role +
+                "</div>" +
+
+                "</div>";
+
+
+            list.appendChild(div);
+
+        });
+
+}
+
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+
+function logout() {
+
+    localStorage.removeItem(
+        "tsrpUser"
+    );
+
+    localStorage.removeItem(
+        "tsrpRole"
+    );
+
+
+    currentUser = null;
+    currentRole = null;
+
+
+    location.reload();
+
+}
+
+
+/* ============================================================
+   ENTER KEY LOGIN
+============================================================ */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            document.getElementById(
+                "loginScreen"
+            ).style.display !== "none"
+        ) {
+
+            login();
+
+        }
+
+    }
 );
 
-return;
 
-}
+/* ============================================================
+   AUTO LOGIN
+============================================================ */
 
-const player=
-document.getElementById("modPlayer").value.trim();
+window.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-const reason=
-document.getElementById("modReason").value.trim();
+        const savedUser =
+            localStorage.getItem(
+                "tsrpUser"
+            );
 
-if(!player){
+        const savedRole =
+            localStorage.getItem(
+                "tsrpRole"
+            );
 
-showToast("Enter a username.");
-return;
 
-}
+        if (
+            savedUser &&
+            savedRole &&
+            ACCOUNTS[savedUser] &&
+            ACCOUNTS[savedUser].role === savedRole
+        ) {
 
-showToast(
-action.toUpperCase()+
-" recorded for "+
-player
+            currentUser = savedUser;
+            currentRole = savedRole;
+
+            openDashboard();
+
+        }
+
+    }
 );
-
-addLog(
-currentUser+
-" used "+
-action+
-" on "+
-player+
-(reason ? " — "+reason : "")
-);
-
-}
-
-
-/* =========================
-   LOGS
-========================= */
-
-function addLog(text){
-
-const logs=
-document.getElementById("logsList");
-
-if(logs.textContent==="No activity yet."){
-
-logs.innerHTML="";
-
-}
-
-const item=
-document.createElement("div");
-
-item.style.padding="10px 0";
-item.style.borderBottom=
-"1px solid #252c37";
-
-item.textContent=
-new Date().toLocaleTimeString()+
-" — "+
-text;
-
-logs.prepend(item);
-
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-function showToast(message){
-
-const toast=
-document.getElementById("toast");
-
-toast.textContent=message;
-toast.style.display="block";
-
-setTimeout(function(){
-
-toast.style.display="none";
-
-},3000);
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-updateSessionUI();
 
 </script>
 
